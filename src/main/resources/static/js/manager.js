@@ -7,7 +7,9 @@ Vue.createApp({
             editorial: "", // Agregado
             genero: "", // Agregado
             outPut: "",
-            libros: []
+            nuevaCategoria: "",
+            libros: [],
+            generos: []
         };
     },
     created() {
@@ -21,15 +23,21 @@ Vue.createApp({
                     // handle success
                     this.outPut = response.data;
                     this.libros = response.data._embedded.libros;
+                    this.genero = response.data._embedded.genero;
+                    this.generos = response.data._embedded.genero;
+
                 })
                 .catch((error) => {
                     alert("Error loading libros: " + error);
                 });
         },
         // handler for when user clicks add libros
-        addlibros() { // Corregido el nombre de la función
+        addlibros() {
             if (this.titulo.length > 1 && this.autor.length > 1 && this.ilustrador.length > 1) {
-                this.postlibros(this.titulo, this.autor, this.ilustrador, this.editorial, this.genero); // Agregados los últimos dos parámetros
+                const categoria = this.genero === 'OTRA' ? this.nuevaCategoria : this.genero;
+                this.postlibros(this.titulo, this.autor, this.ilustrador, this.editorial, categoria);
+            } else {
+                alert("Asegúrese de completar todos los campos.");
             }
         },
         // code to post a new libro using AJAX

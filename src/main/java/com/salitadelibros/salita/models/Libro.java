@@ -1,5 +1,6 @@
 package com.salitadelibros.salita.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -8,7 +9,7 @@ public class Libro {
 @Id
 
     private Long id;
-
+@Column(name = "Titulo",nullable = false)
     private String titulo;
 
     private String autor;
@@ -17,7 +18,7 @@ public class Libro {
 
     private String editorial;
 
-    private String genero;
+    private Genero genero;
 
     public Libro() {
     }
@@ -54,14 +55,15 @@ public class Libro {
         this.editorial = editorial;
     }
 
-    public String getGenero() {
+    public Genero getGenero() {
         return genero;
     }
 
-    public void setGenero(String genero) {
+    public void setGenero(Genero genero) {
         this.genero = genero;
     }
-    public void addLibro(String titulo, String autor, String ilustrador, String editorial, String genero) {
+
+    public void addLibro(String titulo, String autor, String ilustrador, String editorial, Genero genero) {
         this.titulo = titulo;
         this.autor = autor;
         this.ilustrador = ilustrador;
