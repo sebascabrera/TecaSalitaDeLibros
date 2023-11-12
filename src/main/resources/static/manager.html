@@ -24,11 +24,11 @@
         <div class="col">
             <h1>Libros Manager</h1>
             
-                <form action="#" onsubmit="return false">
+                <form action="/api/libros" onsubmit="return false">
                     <legend>Formulario de carga de datos</legend>
                     <div class="mb-3">
                         <label for="titulo" class="form-label">Título:</label>
-                        <input type="text" v-model="titulo" class="form-control" id="titulo" placeholder="aca va el titulo" required>
+                        <input type="text" v-model="titulo" class="form-control" id="titulo" placeholder="titulo del libro" required>
                     </div>
                     <div class="mb-3">
                         <label for="autor" class="form-label">Autor:</label>
@@ -43,12 +43,15 @@
                         <input type="text" v-model="editorial" class="form-control" id="editorial" placeholder="nombre de la editorial" required>
                     </div>
                     <div class="mb-3">
-                        <label for="genero" class="form-label">Género:</label>
-                        <select v-model="genero" class="form-select" id="genero" required>
-                            <option value="">Seleccione un género</option>
-                            <option v-for="genre in generos" :key="genre.id" :value="genre.id">{{ genre.nombre }}</option>
-                        </select>
+                        <label class="form-label">Género:</label>
+                        <div v-for="(genre, index) in listaGeneros" :key="index" class="form-check">
+                            <input type="checkbox" class="form-check-input" :id="'genero_'+ index" :value="genre" v-model="generosSeleccionados">
+                            <label class="form-check-label" :for="'genero_' + index">{{ genre }}</label>
+                        </div>
                     </div>
+                    <div>{{ listaGeneros }}</div>           <!-- Debo agregarun DTO para mostrar los generos-->         
+                    
+                    
                     <div class="mb-3">
                         <label for="nuevaCategoriaInput" class="form-label">Nueva Categoría:</label>
                         <input type="text" v-model="nuevaCategoria" class="form-control" id="nuevaCategoriaInput" placeholder="Ingrese una nueva categoría">
@@ -81,7 +84,7 @@
 
                  -->
                     
-                    <button type="submit" class="btn btn-success" id="add_libros" v-on:click="addlibros">Agregar Libro</button>
+                    <button type="submit" class="btn btn-success" id="add_libros" @click="addlibros">Agregar Libro</button>
                 </form>
             
 

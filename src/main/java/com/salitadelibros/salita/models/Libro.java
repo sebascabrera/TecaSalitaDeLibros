@@ -1,8 +1,6 @@
 package com.salitadelibros.salita.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Libro {
@@ -17,7 +15,7 @@ public class Libro {
     private String ilustrador;
 
     private String editorial;
-
+    @Enumerated(EnumType.STRING)
     private Genero genero;
 
     public Libro() {

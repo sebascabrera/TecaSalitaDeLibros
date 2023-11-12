@@ -9,15 +9,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class LibroServicio {
+public abstract class LibroServicio {
 
     @Autowired
     LibroRepositorio libroRepositorio;
 // Metodos para obtener(listar) guardar o modificar y eliminar --> estos metodos los llamo desde el controlador
-    public List<Libro> getLibros(){
+    public List<Libro> getLibro(){
         return libroRepositorio.findAll();
     }
-    public Optional<Libro> getLibros(Long id){
+
+    public abstract List<Libro> getLibros();
+
+    public Optional<Libro> getLibro(Long id){
         return libroRepositorio.findById(id);
     }
 

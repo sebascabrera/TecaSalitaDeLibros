@@ -9,7 +9,8 @@ Vue.createApp({
             outPut: "",
             nuevaCategoria: "",
             libros: [],
-            generos: []
+            listaGeneros: [],
+            generosSeleccionados: []
         };
     },
     created() {
@@ -18,13 +19,13 @@ Vue.createApp({
     methods: {
         // load and display JSON sent by server for /libros
         loadData() {
-            axios.get("/libros")
+            axios.get("/api/libros")
                 .then((response) => {
                     // handle success
                     this.outPut = response.data;
                     this.libros = response.data._embedded.libros;
-                    this.genero = response.data._embedded.genero;
-                    this.generos = response.data._embedded.genero;
+                    const uniqueGeneros = [...new Set(response.data._embedded.libros.map(libro => libro.genero))];
+                    this.listaGeneros = uniqueGeneros;
 
                 })
                 .catch((error) => {
@@ -43,7 +44,7 @@ Vue.createApp({
         // code to post a new libro using AJAX
         // on success, reload and display the updated data from the server
         postlibros(titulo, autor, ilustrador, editorial, genero) { // Agregados los parámetros
-            axios.post("/libros", {
+            axios.post("/api/libros", {
                 "titulo": titulo,
                 "autor": autor,
                 "ilustrador": ilustrador,
