@@ -9,8 +9,8 @@ Vue.createApp({
             outPut: "",
             nuevaCategoria: "",
             libros: [],
-            listaGeneros: [],
-            generosSeleccionados: []
+            listaGeneros: ["POESIA", "TEATRO", "NARRATIVA"],
+            generosSeleccionado: null
         };
     },
     created() {
@@ -21,11 +21,11 @@ Vue.createApp({
         loadData() {
             axios.get("/api/libros")
                 .then((response) => {
+                    console.log(response.data);
                     // handle success
                     this.outPut = response.data;
-                    this.libros = response.data._embedded.libros;
-                    const uniqueGeneros = [...new Set(response.data._embedded.libros.map(libro => libro.genero))];
-                    this.listaGeneros = uniqueGeneros;
+                    this.libros = response.data.libros;
+                    this.listaGeneros = ["POESIA", "TEATRO", "NARRATIVA"]; 
 
                 })
                 .catch((error) => {
@@ -34,9 +34,9 @@ Vue.createApp({
         },
         // handler for when user clicks add libros
         addlibros() {
-            if (this.titulo.length > 1 && this.autor.length > 1 && this.ilustrador.length > 1) {
-                const categoria = this.genero === 'OTRA' ? this.nuevaCategoria : this.genero;
-                this.postlibros(this.titulo, this.autor, this.ilustrador, this.editorial, categoria);
+            if (this.titulo.length > 1 && this.autor.length > 1 && this.ilustrador.length > 1 && this.generosSeleccionado.length > 1) {
+                
+                this.postlibros(this.titulo, this.autor, this.ilustrador, this.editorial, this.genero);
             } else {
                 alert("Asegúrese de completar todos los campos.");
             }

@@ -27,6 +27,12 @@
                 <form action="/api/libros" onsubmit="return false">
                     <legend>Formulario de carga de datos</legend>
                     <div class="mb-3">
+                        <label class="form-label">Género:</label>
+                        <div v-for="(genre, index) in listaGeneros" :key="index" class="form-check">
+                            <input type="radio" class="form-check-input" :id="'genero_'+ index" :value="genre" v-model="generoSeleccionado">
+                            <label class="form-check-label" :for="'genero_' + index">{{ genre }}</label>
+                        </div>
+                    <div class="mb-3">
                         <label for="titulo" class="form-label">Título:</label>
                         <input type="text" v-model="titulo" class="form-control" id="titulo" placeholder="titulo del libro" required>
                     </div>
@@ -42,16 +48,8 @@
                         <label for="editorial" class="form-label">Editorial:</label>
                         <input type="text" v-model="editorial" class="form-control" id="editorial" placeholder="nombre de la editorial" required>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Género:</label>
-                        <div v-for="(genre, index) in listaGeneros" :key="index" class="form-check">
-                            <input type="checkbox" class="form-check-input" :id="'genero_'+ index" :value="genre" v-model="generosSeleccionados">
-                            <label class="form-check-label" :for="'genero_' + index">{{ genre }}</label>
-                        </div>
+
                     </div>
-                    <div>{{ listaGeneros }}</div>           <!-- Debo agregarun DTO para mostrar los generos-->         
-                    
-                    
                     <div class="mb-3">
                         <label for="nuevaCategoriaInput" class="form-label">Nueva Categoría:</label>
                         <input type="text" v-model="nuevaCategoria" class="form-control" id="nuevaCategoriaInput" placeholder="Ingrese una nueva categoría">
@@ -106,16 +104,16 @@
                         <td>{{ autor }}</td>
                         <td>{{ ilustrador }}</td>
                         <td>{{ editorial }}</td>
-                        <td>{{ genero }}</td>
+                        <td>{{ generoSeleccionado  }}</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="col pt-5">
+        <!-- <div class="col pt-5">
             <h2>Libros REST response</h2>
             <pre id="output">{{ outPut }}</pre>
-        </div>
+        </div> -->
     </div>
 </div>
 
