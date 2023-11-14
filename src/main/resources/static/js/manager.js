@@ -7,10 +7,13 @@ Vue.createApp({
             editorial: "", // Agregado
             genero: "", // Agregado
             outPut: "",
-            nuevaCategoria: "",
+            categoriasInput: '',
+            categorias: [],
             libros: [],
             listaGeneros: ["POESIA", "TEATRO", "NARRATIVA"],
-            generosSeleccionado: null
+            generosSeleccionado: null,
+            categoriasexistentes: [],
+            categoriasSeleccionadas: []
         };
     },
     created() {
@@ -26,7 +29,7 @@ Vue.createApp({
                     this.outPut = response.data;
                     this.libros = response.data.libros;
                     this.listaGeneros = ["POESIA", "TEATRO", "NARRATIVA"]; 
-
+                    this.categoriasexistentes = response.data.libros.categorias
                 })
                 .catch((error) => {
                     alert("Error loading libros: " + error);
@@ -34,32 +37,38 @@ Vue.createApp({
         },
         // handler for when user clicks add libros
         addlibros() {
-            if (this.titulo.length > 1 && this.autor.length > 1 && this.ilustrador.length > 1 && this.generosSeleccionado.length > 1) {
-                
-                this.postlibros(this.titulo, this.autor, this.ilustrador, this.editorial, this.genero);
+            if (this.titulo.length > 1 && this.autor.length > 1 && this.ilustrador.length > 1 && this.generosSeleccionado.length > 1 && this.categoriasInput.length > 1) {
+                // Separar las categorías ingresadas por coma y eliminar espacios en blanco
+                this.categorias = this.categoriasInput.split(',').map(categoria => categoria.trim());
+        
+                // Combina las categorías ingresadas con las categorías existentes seleccionadas
+                this.categorias = this.categorias.concat(this.categoriasSeleccionadas);
+        
+                this.postlibros(this.titulo, this.autor, this.ilustrador, this.editorial, this.genero, this.categorias);
             } else {
                 alert("Asegúrese de completar todos los campos.");
             }
         },
-        // code to post a new libro using AJAX
-        // on success, reload and display the updated data from the server
-        postlibros(titulo, autor, ilustrador, editorial, genero) { // Agregados los parámetros
+        
+    
+        postlibros(titulo, autor, ilustrador, editorial, genero, categorias) {
             axios.post("/api/libros", {
                 "titulo": titulo,
                 "autor": autor,
                 "ilustrador": ilustrador,
-                "editorial": editorial, // Agregado
-                "genero": genero // Agregado
+                "editorial": editorial,
+                "genero": genero,
+                "categorias": categorias  // Enviar las categorías al servidor
             })
-                .then((response) => {
-                    // handle success
-                    this.loadData();
-                    this.clearData();
-                })
-                .catch((error) => {
-                    // handle error
-                    alert("Error to create libro: " + error);
-                });
+            .then((response) => {
+                // handle success
+                this.loadData();
+                this.clearData();
+            })
+            .catch((error) => {
+                // handle error
+                alert("Error al crear libro: " + error);
+            });
         },
         clearData() {
             this.autor = "";

@@ -1,6 +1,7 @@
 package com.salitadelibros.salita.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Libro {
@@ -18,8 +19,9 @@ public class Libro {
     @Enumerated(EnumType.STRING)
     private Genero genero;
 
-    public Libro() {
-    }
+    @ElementCollection
+    private List<String> categorias;
+
 
     public String getTitulo() {
         return titulo;
@@ -61,11 +63,34 @@ public class Libro {
         this.genero = genero;
     }
 
-    public void addLibro(String titulo, String autor, String ilustrador, String editorial, Genero genero) {
+    public List<String> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<String> categorias) {
+        this.categorias = categorias;
+    }
+// Constructores
+
+    public Libro() {
+    }
+
+    public Libro(String titulo, String autor, String ilustrador, String editorial, Genero genero, List<String> categorias) {
         this.titulo = titulo;
         this.autor = autor;
         this.ilustrador = ilustrador;
         this.editorial = editorial;
         this.genero = genero;
+        this.categorias = categorias;
     }
+
+    public void addLibro(String titulo, String autor, String ilustrador, String editorial, Genero genero, List<String> categorias) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.ilustrador = ilustrador;
+        this.editorial = editorial;
+        this.genero = genero;
+        this.categorias = categorias;
+    }
+
 }
