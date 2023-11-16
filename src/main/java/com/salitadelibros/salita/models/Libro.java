@@ -1,14 +1,17 @@
 package com.salitadelibros.salita.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 public class Libro {
-@Id
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     private Long id;
-@Column(name = "Titulo",nullable = false)
+    @Column(name = "Titulo", nullable = false)
     private String titulo;
 
     private String autor;
@@ -22,6 +25,12 @@ public class Libro {
     @ElementCollection
     private List<String> categorias;
 
+// getters y setters
+
+    // id tiene solo get
+    public Long getId() {
+        return id;
+    }
 
     public String getTitulo() {
         return titulo;
@@ -84,13 +93,5 @@ public class Libro {
         this.categorias = categorias;
     }
 
-    public void addLibro(String titulo, String autor, String ilustrador, String editorial, Genero genero, List<String> categorias) {
-        this.titulo = titulo;
-        this.autor = autor;
-        this.ilustrador = ilustrador;
-        this.editorial = editorial;
-        this.genero = genero;
-        this.categorias = categorias;
-    }
 
 }

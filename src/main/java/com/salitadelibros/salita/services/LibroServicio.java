@@ -13,21 +13,23 @@ public abstract class LibroServicio {
 
     @Autowired
     LibroRepositorio libroRepositorio;
-// Metodos para obtener(listar) guardar o modificar y eliminar --> estos metodos los llamo desde el controlador
-    public List<Libro> getLibro(){
+
+    // Metodos para obtener(listar) guardar o modificar y eliminar --> estos metodos los llamo desde el controlador
+    public List<Libro> getLibro() {
         return libroRepositorio.findAll();
     }
 
     public abstract List<Libro> getLibros();
 
-    public Optional<Libro> getLibro(Long id){
+    public Optional<Libro> getLibro(Long id) {
         return libroRepositorio.findById(id);
     }
 
-    public void saveOrUpdate(Libro libro){
+    public void saveOrUpdate(Libro libro) {
         libroRepositorio.save(libro);
     }
-    public void delete(Long id){
+
+    public void delete(Long id) {
         libroRepositorio.deleteById(id);
     }
 }
