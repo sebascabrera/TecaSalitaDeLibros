@@ -17,13 +17,28 @@ public class Libro {
     private String autor;
 
     private String ilustrador;
-
-    private String editorial;
+    @ManyToOne
+    @JoinColumn(name = "editorial_id")
+    private Editorial editorial;
     @Enumerated(EnumType.STRING)
     private Genero genero;
 
     @ElementCollection
     private List<String> categorias;
+
+    // Constructores
+
+    public Libro() {
+    }
+
+    public Libro(String titulo, String autor, String ilustrador, Editorial editorial, Genero genero, List<String> categorias) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.ilustrador = ilustrador;
+        this.editorial = editorial;
+        this.genero = genero;
+        this.categorias = categorias;
+    }
 
 // getters y setters
 
@@ -56,11 +71,11 @@ public class Libro {
         this.ilustrador = ilustrador;
     }
 
-    public String getEditorial() {
+    public Editorial getEditorial() {
         return editorial;
     }
 
-    public void setEditorial(String editorial) {
+    public void setEditorial(Editorial editorial) {
         this.editorial = editorial;
     }
 
@@ -79,19 +94,5 @@ public class Libro {
     public void setCategorias(List<String> categorias) {
         this.categorias = categorias;
     }
-// Constructores
-
-    public Libro() {
-    }
-
-    public Libro(String titulo, String autor, String ilustrador, String editorial, Genero genero, List<String> categorias) {
-        this.titulo = titulo;
-        this.autor = autor;
-        this.ilustrador = ilustrador;
-        this.editorial = editorial;
-        this.genero = genero;
-        this.categorias = categorias;
-    }
-
 
 }
