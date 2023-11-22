@@ -1,6 +1,7 @@
 package com.salitadelibros.salita.models;
 
 import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,12 +22,12 @@ public class Editorial {
     public Editorial() {
     }
 
-    public Editorial(String nombre, Set<Libro> libros) {
+    public Editorial(String nombre) {
         this.nombre = nombre;
-        this.libros = libros;
+
     }
 
-    // getters y setters
+    // getters
 
     public Long getId() {
         return id;
@@ -40,11 +41,16 @@ public class Editorial {
         return libros;
     }
 
+// setters
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public void setLibros(Set<Libro> libros) {
-        this.libros = libros;
+    public void addLibro(Libro libro) {
+        this.libros.add(libro); // agrego libro al Set<libro>
+        libro.setEditorial(this);// agrego la editorial al libro
+
     }
+
 }

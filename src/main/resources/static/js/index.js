@@ -8,45 +8,47 @@ Vue.createApp({
             generoSeleccionado: null,
             categoriasInput: '',
             categorias: [],
+            libros: [],
             listaGeneros: ["POESIA", "TEATRO", "NARRATIVA"],
             categoriasexistentes: [],
             categoriasSeleccionadas: []
         };
     },
     created() {
-        this.loadCategorias();
+        this.loadData();
     },
     methods: {
-        loadCategorias() {
-            axios.get("/api/libros/categorias")
+        loadData() {
+            axios.get("/api/libros")
                 .then((response) => {
-                    this.categoriasexistentes = response.data;
+                    this.libros = response.data;
+                    this.categoriasexistentes = response.data.categorias;
                 })
                 .catch((error) => {
-                    alert("Error loading categorías: " + error);
+                    alert("Error loading libros: " + error);
                 });
         },
-        addLibros() {
-            if (this.titulo && this.autor && this.ilustrador && this.generoSeleccionado && this.categoriasInput) {
+        addlibros() {
+            if (this.titulo.length > 1 && this.autor.length > 1 && this.ilustrador.length > 1 && this.generoSeleccionado && this.categoriasInput.length > 1) {
                 this.categorias = this.categoriasInput.split(',').map(categoria => categoria.trim());
                 this.categorias = this.categorias.concat(this.categoriasSeleccionadas);
 
-                this.postLibros();
+                this.postlibros(this.titulo, this.autor, this.ilustrador, this.editorial, this.generoSeleccionado, this.categorias);
             } else {
                 alert("Asegúrese de completar todos los campos.");
             }
         },
-        postLibros() {
+        postlibros(titulo, autor, ilustrador, editorial, genero, categorias) {
             axios.post("/api/libros", {
-                "titulo": this.titulo,
-                "autor": this.autor,
-                "ilustrador": this.ilustrador,
-                "editorial": this.editorial,
-                "genero": this.generoSeleccionado,
-                "categorias": this.categorias
+                "titulo": titulo,
+                "autor": autor,
+                "ilustrador": ilustrador,
+                "editorial": editorial,
+                "genero": genero,
+                "categorias": categorias
             })
                 .then((response) => {
-                    alert("Libro creado exitosamente");
+                    this.loadData();
                     this.clearData();
                 })
                 .catch((error) => {

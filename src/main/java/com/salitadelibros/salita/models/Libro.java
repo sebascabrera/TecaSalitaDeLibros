@@ -1,5 +1,6 @@
 package com.salitadelibros.salita.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ public class Libro {
     private String autor;
 
     private String ilustrador;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
     @Enumerated(EnumType.STRING)
@@ -40,8 +41,7 @@ public class Libro {
         this.categorias = categorias;
     }
 
-// getters y setters
-
+// getters
     // id tiene solo get
     public Long getId() {
         return id;
@@ -51,44 +51,46 @@ public class Libro {
         return titulo;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
     public String getAutor() {
         return autor;
-    }
-
-    public void setAutor(String autor) {
-        this.autor = autor;
     }
 
     public String getIlustrador() {
         return ilustrador;
     }
 
-    public void setIlustrador(String ilustrador) {
-        this.ilustrador = ilustrador;
-    }
-
     public Editorial getEditorial() {
         return editorial;
-    }
-
-    public void setEditorial(Editorial editorial) {
-        this.editorial = editorial;
     }
 
     public Genero getGenero() {
         return genero;
     }
 
-    public void setGenero(Genero genero) {
-        this.genero = genero;
-    }
-
     public List<String> getCategorias() {
         return categorias;
+    }
+
+    //y setters
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public void setIlustrador(String ilustrador) {
+        this.ilustrador = ilustrador;
+    }
+
+   public void setEditorial(Editorial editorial) {
+        this.editorial = editorial;
+    }
+
+    public void setGenero(Genero genero) {
+        this.genero = genero;
     }
 
     public void setCategorias(List<String> categorias) {
