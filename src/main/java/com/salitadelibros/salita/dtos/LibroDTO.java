@@ -3,7 +3,6 @@ package com.salitadelibros.salita.dtos;
 import com.salitadelibros.salita.models.Editorial;
 import com.salitadelibros.salita.models.Genero;
 import com.salitadelibros.salita.models.Libro;
-
 import javax.persistence.*;
 import java.util.List;
 // no realizo setter, eso lo  hago desde las entidades
@@ -27,7 +26,7 @@ public class LibroDTO {
         titulo = libro.getTitulo();
         autor = libro.getAutor();
         ilustrador = libro.getIlustrador();
-        editorial = libro.getEditorial(); // hacer stream de EditorialDTO
+        editorial = libro.getEditorial();
         genero = libro.getGenero();
         categorias = libro.getCategorias();
     }
