@@ -16,6 +16,7 @@ public class LibroDTO {
     private String editorialNombre;  // Cambiado para extraer solo el nombre
     private String generoNombre;  // Cambiado para extraer solo el nombre
     private List<String> categorias;
+    private int fechaDeEdicion;
 
     public LibroDTO(Libro libro) {
         id = libro.getId();
@@ -25,6 +26,7 @@ public class LibroDTO {
         editorialNombre = obtenerNombreEditorial(libro);
         generoNombre = obtenerNombreGenero(libro);
         categorias = libro.getCategorias();
+        fechaDeEdicion = libro.getFechaDeEdicion();
     }
 
     public Long getId() {
@@ -53,6 +55,10 @@ public class LibroDTO {
 
     public List<String> getCategorias() {
         return categorias;
+    }
+
+    public int getFechaDeEdicion() {
+        return fechaDeEdicion;
     }
 
     // Método privado para obtener la representación de cadena de los autores

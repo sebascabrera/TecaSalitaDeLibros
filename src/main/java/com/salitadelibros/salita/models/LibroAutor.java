@@ -3,6 +3,7 @@ package com.salitadelibros.salita.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+
 @Entity
 public class LibroAutor {
     @Id
@@ -10,7 +11,7 @@ public class LibroAutor {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
 
-@ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Libro libro;
 
     @ManyToOne(fetch = FetchType.EAGER)

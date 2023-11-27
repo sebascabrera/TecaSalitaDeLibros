@@ -1,5 +1,7 @@
 package com.salitadelibros.salita.dtos;
+
 import com.salitadelibros.salita.models.Editorial;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -10,7 +12,7 @@ public class EditorialDTO {
 
     private Set<LibroDTO> libros;
 
-    public EditorialDTO(Editorial editorial){
+    public EditorialDTO(Editorial editorial) {
         id = editorial.getId();
         nombre = editorial.getNombre();
         libros = editorial.getLibros().stream().map(libro -> new LibroDTO(libro)).collect(Collectors.toSet());

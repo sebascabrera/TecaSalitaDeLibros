@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+
 @Entity
 public class Autor {
     @Id
@@ -16,8 +17,8 @@ public class Autor {
 
     private String apellidoAutor;
 
-@OneToMany(fetch = FetchType.EAGER, mappedBy = "autor")
-private Set<LibroAutor> librosAutores = new HashSet<>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "autor")
+    private Set<LibroAutor> librosAutores = new HashSet<>();
 
     // Constructores
 
@@ -25,11 +26,12 @@ private Set<LibroAutor> librosAutores = new HashSet<>();
     }
 
     public Autor(String nombreAutor, String apellidoAutor) {
-        this.nombreAutor = nombreAutor; this.apellidoAutor = apellidoAutor;
+        this.nombreAutor = nombreAutor;
+        this.apellidoAutor = apellidoAutor;
     }
 
 
-//getters
+    //getters
     public Long getId() {
         return id;
     }
@@ -58,7 +60,7 @@ private Set<LibroAutor> librosAutores = new HashSet<>();
 
     // metodo add
 
-    public void addLibroAutor(LibroAutor libroAutor){
+    public void addLibroAutor(LibroAutor libroAutor) {
         libroAutor.setAutor(this);
         librosAutores.add(libroAutor);
     }
