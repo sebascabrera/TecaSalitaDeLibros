@@ -1,33 +1,29 @@
 package com.salitadelibros.salita.dtos;
 
+import com.salitadelibros.salita.models.Autor;
 import com.salitadelibros.salita.models.Editorial;
 import com.salitadelibros.salita.models.Genero;
 import com.salitadelibros.salita.models.Libro;
-import javax.persistence.*;
+
 import java.util.List;
-// no realizo setter, eso lo  hago desde las entidades
+import java.util.stream.Collectors;
+
 public class LibroDTO {
     private Long id;
-
     private String titulo;
-
-    private String autor;
-
+    private String autor;  // Cambiado para ser más significativo
     private String ilustrador;
-
-    private Editorial editorial;
-
-    private Genero genero;
-
+    private String editorialNombre;  // Cambiado para extraer solo el nombre
+    private String generoNombre;  // Cambiado para extraer solo el nombre
     private List<String> categorias;
 
-    public LibroDTO(Libro libro){
+    public LibroDTO(Libro libro) {
         id = libro.getId();
         titulo = libro.getTitulo();
-        autor = libro.getAutor();
+        autor = obtenerAutores(libro);
         ilustrador = libro.getIlustrador();
-        editorial = libro.getEditorial();
-        genero = libro.getGenero();
+        editorialNombre = obtenerNombreEditorial(libro);
+        generoNombre = obtenerNombreGenero(libro);
         categorias = libro.getCategorias();
     }
 
@@ -47,15 +43,36 @@ public class LibroDTO {
         return ilustrador;
     }
 
-    public Editorial getEditorial() {
-        return editorial;
+    public String getEditorialNombre() {
+        return editorialNombre;
     }
 
-    public Genero getGenero() {
-        return genero;
+    public String getGeneroNombre() {
+        return generoNombre;
     }
 
     public List<String> getCategorias() {
         return categorias;
+    }
+
+    // Método privado para obtener la representación de cadena de los autores
+    private String obtenerAutores(Libro libro) {
+        return libro.getLibrosAutores()
+                .stream()
+                .map(libroAutor -> {
+                    Autor autor = libroAutor.getAutor();
+                    return autor.getNombreAutor() + " " + autor.getApellidoAutor();
+                })  // Suponiendo que 'Autor' tiene un campo 'nombre'
+                .collect(Collectors.joining(", "));
+    }
+
+    // Método privado para obtener el nombre de la editorial
+    private String obtenerNombreEditorial(Libro libro) {
+        return (libro.getEditorial() != null) ? libro.getEditorial().getNombre() : null;
+    }
+
+    // Método privado para obtener el nombre del género
+    private String obtenerNombreGenero(Libro libro) {
+        return (libro.getGenero() != null) ? libro.getGenero().name() : null;
     }
 }

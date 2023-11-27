@@ -28,7 +28,7 @@ Vue.createApp({
                     alert("Error loading libros: " + error);
                 });
         },
-        addlibros() {
+        addLibros() {
             if (this.titulo.length > 1 && this.autor.length > 1 && this.ilustrador.length > 1 && this.generoSeleccionado && this.categoriasInput.length > 1) {
                 this.categorias = this.categoriasInput.split(',').map(categoria => categoria.trim());
                 this.categorias = this.categorias.concat(this.categoriasSeleccionadas);
@@ -38,7 +38,7 @@ Vue.createApp({
                 alert("Asegúrese de completar todos los campos.");
             }
         },
-        postlibros(titulo, autor, ilustrador, editorial, genero, categorias) {
+        postLibros(titulo, autor, ilustrador, editorial, genero, categorias) {
             axios.post("/api/libros", {
                 "titulo": titulo,
                 "autor": autor,

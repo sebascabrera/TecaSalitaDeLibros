@@ -1,10 +1,11 @@
 package com.salitadelibros.salita.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Libro {
@@ -14,8 +15,8 @@ public class Libro {
     private Long id;
     @Column(name = "Titulo", nullable = false)
     private String titulo;
-
-    private String autor;
+@OneToMany(fetch = FetchType.EAGER, mappedBy = "libro")
+    private Set<LibroAutor> librosAutores = new HashSet<>();
 
     private String ilustrador;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -32,9 +33,9 @@ public class Libro {
     public Libro() {
     }
 
-    public Libro(String titulo, String autor, String ilustrador, Editorial editorial, Genero genero, List<String> categorias) {
+    public Libro(String titulo, String ilustrador, Editorial editorial, Genero genero, List<String> categorias) {
         this.titulo = titulo;
-        this.autor = autor;
+
         this.ilustrador = ilustrador;
         this.editorial = editorial;
         this.genero = genero;
@@ -51,8 +52,8 @@ public class Libro {
         return titulo;
     }
 
-    public String getAutor() {
-        return autor;
+    public Set<LibroAutor> getLibrosAutores() {
+        return librosAutores;
     }
 
     public String getIlustrador() {
@@ -77,9 +78,7 @@ public class Libro {
         this.titulo = titulo;
     }
 
-    public void setAutor(String autor) {
-        this.autor = autor;
-    }
+
 
     public void setIlustrador(String ilustrador) {
         this.ilustrador = ilustrador;
@@ -97,4 +96,13 @@ public class Libro {
         this.categorias = categorias;
     }
 
+
+
+    //metodo de add autorLibro
+
+
+    public void addLibroAutor(LibroAutor libroAutor) {
+        libroAutor.setLibro(this);
+        librosAutores.add(libroAutor);
+    }
 }
