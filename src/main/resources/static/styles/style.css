@@ -1,8 +1,84 @@
-
+/* Reset de estilos y configuración básica */
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    background: #a9bdc4;
+}
+
+body {
+    background-color: #f2e9e4; /* Tono de melocotón claro */
     font-family: 'Roboto Slab', serif;
+}
+
+/* Contenedor principal */
+#api-libros-form {
+    max-width: 800px;
+    margin: 20px auto;
+    background: #ead3cb; /* Fondo blanco roto */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sutil sombra */
+}
+
+/* Encabezado y título */
+h1, legend {
+    color: #445e68; /* Azul claro apagado */
+    text-align: center;
+}
+
+/* Formulario de carga de datos */
+form {
+    margin-bottom: 20px;
+}
+
+/* Etiquetas y entradas de formulario */
+label {
+    color: #445e68;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #8fa2ad; /* Borde gris azulado */
+    border-radius: 5px;
+}
+
+/* Botones */
+.btn {
+    background: #f0b5af; /* Tono de rosa melocotón */
+    color: #273a47;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background: #d3948f; /* Tono de rosa melocotón más oscuro al pasar el ratón */
+}
+
+/* Tabla de libros */
+.table {
+    margin-top: 20px;
+}
+
+/* Estilo para el modal */
+.modal-content {
+    background: #fce4d6; /* Fondo del modal - tono melocotón claro */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Texto dentro del modal */
+.modal-body,
+.modal-title,
+.modal-footer {
+    color: #557a95;
+}
+
+/* Estilo para las filas de la tabla dentro del modal */
+.modal-body table tbody tr {
+    background: #fff; /* Fondo blanco */
 }

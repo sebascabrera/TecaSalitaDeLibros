@@ -44,9 +44,8 @@ Vue.createApp({
             new bootstrap.Modal(document.getElementById('editarLibrosModal')).show();
         },
         editarLibro(libro) {
-            // Asigna directamente el objeto libro seleccionado
-  
-            this.libroSeleccionado = this.libros[index];
+            // Obtén el índice del libro seleccionado
+            this.libroSeleccionadoIndex = this.libros.indexOf(libro);
     
             // Establecer los datos del libro seleccionado en el formulario del modal
             this.titulo = libro.titulo;
@@ -59,7 +58,7 @@ Vue.createApp({
             this.categoriasSeleccionadas = libro.categorias;
     
             // Abre el modal de edición
-            this.mostrarModalEditarLibros();
+            new bootstrap.Modal(document.getElementById('editarLibrosModal')).show();
         },
         enviarLibros() {
             if (this.libroSeleccionado) {
