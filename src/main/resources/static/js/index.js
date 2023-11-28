@@ -2,10 +2,13 @@ Vue.createApp({
     data() {
         return {
             titulo: "",
-            autor: "",
+            nombreAutor: "",
+            apellidoAutor: "",
             ilustrador: "",
             editorial: "",
             generoSeleccionado: null,
+            libroSeleccionado: null,
+            libroSeleccionadoIndex: null,
             categoriasInput: '',
             categorias: [],
             libros: [],
@@ -29,34 +32,96 @@ Vue.createApp({
                 });
         },
         addLibros() {
-            if (this.titulo.length > 1 && this.autor.length > 1 && this.ilustrador.length > 1 && this.generoSeleccionado && this.categoriasInput.length > 1) {
+            if (this.libros.length > 0) {
+                // Abre el modal para confirmar la edición antes de enviar
+                this.mostrarModalEditarLibros();
+            } else {
+                alert("Agregue al menos un libro antes de enviar.");
+            }
+        },
+        mostrarModalEditarLibros() {
+            // Abre el modal
+            new bootstrap.Modal(document.getElementById('editarLibrosModal')).show();
+        },
+        editarLibro(libro) {
+            // Asigna directamente el objeto libro seleccionado
+  
+            this.libroSeleccionado = this.libros[index];
+    
+            // Establecer los datos del libro seleccionado en el formulario del modal
+            this.titulo = libro.titulo;
+            this.nombreAutor = libro.nombreAutor;
+            this.apellidoAutor = libro.apellidoAutor;
+            this.ilustrador = libro.ilustrador;
+            this.editorial = libro.editorial;
+            this.generoSeleccionado = libro.genero;
+            this.categoriasInput = libro.categorias.join(', ');
+            this.categoriasSeleccionadas = libro.categorias;
+    
+            // Abre el modal de edición
+            this.mostrarModalEditarLibros();
+        },
+        enviarLibros() {
+            if (this.libroSeleccionado) {
+                // Si hay un libro seleccionado, actualiza sus valores
+                this.libros[this.libroSeleccionadoIndex] = {
+                        titulo: this.titulo,
+                        nombreAutor: this.nombreAutor,
+                        apellidoAutor: this.apellidoAutor,
+                        ilustrador: this.ilustrador,
+                        editorial: this.editorial,
+                        genero: this.generoSeleccionado,
+                        categorias: this.categoriasInput.split(',').map(categoria => categoria.trim())
+                                    };
+            } else {
+                // Si no hay libro seleccionado, agrega uno nuevo
+                this.libros.push({
+                    titulo: this.titulo,
+                    nombreAutor: this.nombreAutor,
+                    apellidoAutor: this.apellidoAutor,
+                    ilustrador: this.ilustrador,
+                    editorial: this.editorial,
+                    genero: this.generoSeleccionado,
+                    categorias: this.categorias
+                });
+            }
+           
+            new bootstrap.Modal(document.getElementById('editarLibrosModal')).hide();
+            // Aquí puedes enviar los libros al servidor
+            axios.post("/api/libros-varios", this.libros)
+                .then((response) => {
+                    this.loadData();
+                    this.clearData();
+                    // Cierra el modal después de enviar los libros
+                    new bootstrap.Modal(document.getElementById('editarLibrosModal')).hide();
+                })
+                .catch((error) => {
+                    alert("Error al crear/editar libros: " + error);
+                });
+        },
+        addLibroLocal() {
+            if (this.titulo.length > 1 && this.nombreAutor.length > 1 && this.apellidoAutor.length > 1 && this.ilustrador.length > 1 && this.generoSeleccionado && this.categoriasInput.length > 1) {
                 this.categorias = this.categoriasInput.split(',').map(categoria => categoria.trim());
                 this.categorias = this.categorias.concat(this.categoriasSeleccionadas);
 
-                this.postlibros(this.titulo, this.autor, this.ilustrador, this.editorial, this.generoSeleccionado, this.categorias);
+                this.libros.push({
+                    titulo: this.titulo,
+                    nombreAutor: this.nombreAutor,
+                    apellidoAutor: this.apellidoAutor,
+                    ilustrador: this.ilustrador,
+                    editorial: this.editorial,
+                    genero: this.generoSeleccionado,
+                    categorias: this.categorias
+                });
+
+                this.clearData();
             } else {
                 alert("Asegúrese de completar todos los campos.");
             }
         },
-        postLibros(titulo, autor, ilustrador, editorial, genero, categorias) {
-            axios.post("/api/libros", {
-                "titulo": titulo,
-                "autor": autor,
-                "ilustrador": ilustrador,
-                "editorial": editorial,
-                "genero": genero,
-                "categorias": categorias
-            })
-                .then((response) => {
-                    this.loadData();
-                    this.clearData();
-                })
-                .catch((error) => {
-                    alert("Error al crear libro: " + error);
-                });
-        },
         clearData() {
-            this.autor = "";
+            this.nombreAutor = "";
+            this.apellidoAutor = "";
             this.ilustrador = "";
             this.titulo = "";
             this.editorial = "";

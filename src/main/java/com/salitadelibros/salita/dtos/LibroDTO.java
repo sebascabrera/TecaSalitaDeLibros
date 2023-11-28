@@ -68,7 +68,7 @@ public class LibroDTO {
                 .map(libroAutor -> {
                     Autor autor = libroAutor.getAutor();
                     return autor.getNombreAutor() + " " + autor.getApellidoAutor();
-                })  // Suponiendo que 'Autor' tiene un campo 'nombre'
+                })
                 .collect(Collectors.joining(", "));
     }
 
