@@ -4,7 +4,8 @@ Vue.createApp({
             titulo: "",
             nombreAutor: "",
             apellidoAutor: "",
-            ilustrador: "",
+            nombreIlustrador: "",
+            apellidoIlustrador: "", // Nuevo campo para el ilustrador
             editorial: "",
             generoSeleccionado: null,
             libroSeleccionado: null,
@@ -46,17 +47,18 @@ Vue.createApp({
         editarLibro(libro) {
             // Obtén el índice del libro seleccionado
             this.libroSeleccionadoIndex = this.libros.indexOf(libro);
-    
+
             // Establecer los datos del libro seleccionado en el formulario del modal
             this.titulo = libro.titulo;
             this.nombreAutor = libro.nombreAutor;
             this.apellidoAutor = libro.apellidoAutor;
-            this.ilustrador = libro.ilustrador;
+            this.nombreIlustrador = libro.nombreIlustrador
+            this.apellidoIlustrador = libro.apellidoIlustrador; // Nuevo campo para el ilustrador
             this.editorial = libro.editorial;
             this.generoSeleccionado = libro.genero;
             this.categoriasInput = libro.categorias.join(', ');
             this.categoriasSeleccionadas = libro.categorias;
-    
+
             // Abre el modal de edición
             new bootstrap.Modal(document.getElementById('editarLibrosModal')).show();
         },
@@ -64,27 +66,29 @@ Vue.createApp({
             if (this.libroSeleccionado) {
                 // Si hay un libro seleccionado, actualiza sus valores
                 this.libros[this.libroSeleccionadoIndex] = {
-                        titulo: this.titulo,
-                        nombreAutor: this.nombreAutor,
-                        apellidoAutor: this.apellidoAutor,
-                        ilustrador: this.ilustrador,
-                        editorial: this.editorial,
-                        genero: this.generoSeleccionado,
-                        categorias: this.categoriasInput.split(',').map(categoria => categoria.trim())
-                                    };
+                    titulo: this.titulo,
+                    nombreAutor: this.nombreAutor,
+                    apellidoAutor: this.apellidoAutor,
+                    nombreIlustrador: this.nombreIlustrador,
+                    apellidoIlustrador: this.apellidoIlustrador, // Nuevo campo para el ilustrador
+                    editorial: this.editorial,
+                    genero: this.generoSeleccionado,
+                    categorias: this.categoriasInput.split(',').map(categoria => categoria.trim())
+                };
             } else {
                 // Si no hay libro seleccionado, agrega uno nuevo
                 this.libros.push({
                     titulo: this.titulo,
                     nombreAutor: this.nombreAutor,
                     apellidoAutor: this.apellidoAutor,
-                    ilustrador: this.ilustrador,
+                    nombreIlustrador: this.nombreIlustrador,
+                    apellidoIlustrador: this.apellidoIlustrador, // Nuevo campo para el ilustrador
                     editorial: this.editorial,
                     genero: this.generoSeleccionado,
                     categorias: this.categorias
                 });
             }
-           
+
             new bootstrap.Modal(document.getElementById('editarLibrosModal')).hide();
             // Aquí puedes enviar los libros al servidor
             axios.post("/api/libros-varios", this.libros)
@@ -107,7 +111,8 @@ Vue.createApp({
                     titulo: this.titulo,
                     nombreAutor: this.nombreAutor,
                     apellidoAutor: this.apellidoAutor,
-                    ilustrador: this.ilustrador,
+                    nombreIlustrador: this.nombreIlustrador,
+                    apellidoIlustrador: this.apellidoIlustrador, // Nuevo campo para el ilustrador
                     editorial: this.editorial,
                     genero: this.generoSeleccionado,
                     categorias: this.categorias
@@ -121,7 +126,8 @@ Vue.createApp({
         clearData() {
             this.nombreAutor = "";
             this.apellidoAutor = "";
-            this.ilustrador = "";
+            this.nombreIlustrador = "";
+            this.apellidoIlustrador = ""; // Nuevo campo para el ilustrador
             this.titulo = "";
             this.editorial = "";
             this.generoSeleccionado = null;

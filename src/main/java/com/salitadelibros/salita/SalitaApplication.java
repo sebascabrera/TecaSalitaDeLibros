@@ -13,5 +13,7 @@ public class SalitaApplication {
 		SpringApplication.run(SalitaApplication.class, args);
 	}
 
+
+
 }
 

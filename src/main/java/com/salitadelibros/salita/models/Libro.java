@@ -13,12 +13,17 @@ public class Libro {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
+
+    private int fechaDeEdicion;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "libro")
+    private Set<LibroIlustrador> librosIlustradores = new HashSet<>();
+
     @Column(name = "Titulo", nullable = false)
     private String titulo;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "libro")
     private Set<LibroAutor> librosAutores = new HashSet<>();
 
-    private String ilustrador;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
@@ -28,17 +33,16 @@ public class Libro {
     @ElementCollection
     private List<String> categorias;
 
-    private int fechaDeEdicion;
 
     // Constructores
 
     public Libro() {
     }
 
-    public Libro(String titulo, String ilustrador, Editorial editorial, Genero genero, List<String> categorias, int fechaDeEdicion ) {
+    public Libro(String titulo, Editorial editorial, Genero genero, List<String> categorias, int fechaDeEdicion) {
         this.titulo = titulo;
         this.fechaDeEdicion = fechaDeEdicion;
-        this.ilustrador = ilustrador;
+
         this.editorial = editorial;
         this.genero = genero;
         this.categorias = categorias;
@@ -58,8 +62,8 @@ public class Libro {
         return librosAutores;
     }
 
-    public String getIlustrador() {
-        return ilustrador;
+    public Set<LibroIlustrador> getLibrosIlustradores() {
+        return librosIlustradores;
     }
 
     public Editorial getEditorial() {
@@ -85,10 +89,6 @@ public class Libro {
     }
 
 
-    public void setIlustrador(String ilustrador) {
-        this.ilustrador = ilustrador;
-    }
-
     public void setEditorial(Editorial editorial) {
         this.editorial = editorial;
     }
@@ -112,4 +112,10 @@ public class Libro {
         libroAutor.setLibro(this);
         librosAutores.add(libroAutor);
     }
+
+    public void addLibroIlustrador(LibroIlustrador libroIlustrador){
+        libroIlustrador.setLibro(this);
+        libroIlustradores.add(libroIlustrador);
+    }
+
 }

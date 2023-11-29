@@ -54,9 +54,14 @@
                                 placeholder="Apellido del autor" required>
                         </div>
                         <div class="mb-3">
-                            <label for="ilustrador" class="form-label">Ilustrador:</label>
-                            <input type="text" v-model="ilustrador" class="form-control" id="ilustrador"
+                            <label for="nombreIlustrador" class="form-label">Nombre del Ilustrador:</label>
+                            <input type="text" v-model="ilustrador" class="form-control" id="nombreIlustrador"
                                 placeholder="nombre del ilustrador" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="apellidoIlustrador" class="form-label">Apellido del Ilustrador:</label>
+                            <input type="text" v-model="ilustrador" class="form-control" id="apellidoIlustrador"
+                                placeholder="apellido del ilustrador" required>
                         </div>
                         <div class="mb-3">
                             <label for="editorial" class="form-label">Editorial:</label>
@@ -91,7 +96,8 @@
                             <th>Título</th>
                             <th>Nombre Autor</th>
                             <th>Apellido Autor</th>
-                            <th>Ilustrador</th>
+                            <th>Nombre Ilustrador</th>
+                            <th>Apellido Ilustrador</th>
                             <th>Editorial</th>
                             <th>Género</th>
                             <th>Categorías</th>
@@ -102,7 +108,8 @@
                             <td>{{ libro.titulo }}</td>
                             <td>{{ libro.nombreAutor }}</td>
                             <td>{{ libro.apellidoAutor }}</td>
-                            <td>{{ libro.ilustrador }}</td>
+                            <td>{{ libro.NombreIlustrador }}</td>
+                            <td>{{ libro.ApellidoIlustrador }}</td>
                             <td>{{ libro.editorial }}</td>
                             <td>{{ libro.genero }}</td>
                             <td>{{ libro.categorias.join(', ') }}</td>
@@ -135,7 +142,8 @@
                                         <th>Título</th>
                                         <th>Nombre Autor</th>
                                         <th>Apellido Autor</th>
-                                        <th>Ilustrador</th>
+                                        <th>Nombre Ilustrador</th>
+                                        <th>Apellido Ilustrador</th>
                                         <th>Editorial</th>
                                         <th>Género</th>
                                         <th>Categorías</th>
@@ -147,7 +155,8 @@
                                         <td>{{ libro.titulo }}</td>
                                         <td>{{ libro.nombreAutor }}</td>
                                         <td>{{ libro.apellidoAutor }}</td>
-                                        <td>{{ libro.ilustrador }}</td>
+                                        <td>{{ libro.NombreIlustrador }}</td>
+                                        <td>{{ libro.ApellidoIlustrador }}</td>
                                         <td>{{ libro.editorial }}</td>
                                         <td>{{ libro.genero }}</td>
                                         <td>{{ libro.categorias.join(', ') }}</td>

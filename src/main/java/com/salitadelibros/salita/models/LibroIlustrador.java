@@ -4,48 +4,50 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
-@Entity
-public class LibroAutor {
+public class LibroIlustrador {
+
+   // public void setLibro(Libro libro) {
+   // }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private Libro libro;
+    private Ilustrador ilustrador;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private Autor autor;
+    private Libro libro;
 
-    // Constructor
-    public LibroAutor() {
+    // Constructores
+
+    public LibroIlustrador() {
     }
 
-    // Getters
+    // getters
+
 
     public Long getId() {
         return id;
+    }
+
+    public Ilustrador getIlustrador() {
+        return ilustrador;
     }
 
     public Libro getLibro() {
         return libro;
     }
 
-    public Autor getAutor() {
-        return autor;
-    }
+    // setters
 
-    // Setters
+
+    public void setIlustrador(Ilustrador ilustrador) {
+        this.ilustrador = ilustrador;
+    }
 
     public void setLibro(Libro libro) {
-        if (libro != null) {
-            this.libro = libro;
-        }
-    }
-
-    public void setAutor(Autor autor) {
-        if (autor != null) {
-            this.autor = autor;
-        }
+        this.libro = libro;
     }
 }

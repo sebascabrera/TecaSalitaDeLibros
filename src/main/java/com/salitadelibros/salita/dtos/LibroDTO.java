@@ -1,8 +1,7 @@
 package com.salitadelibros.salita.dtos;
 
 import com.salitadelibros.salita.models.Autor;
-import com.salitadelibros.salita.models.Editorial;
-import com.salitadelibros.salita.models.Genero;
+import com.salitadelibros.salita.models.Ilustrador;
 import com.salitadelibros.salita.models.Libro;
 
 import java.util.List;
@@ -22,7 +21,7 @@ public class LibroDTO {
         id = libro.getId();
         titulo = libro.getTitulo();
         autor = obtenerAutores(libro);
-        ilustrador = libro.getIlustrador();
+        ilustrador = obtenerIlustrador(libro);
         editorialNombre = obtenerNombreEditorial(libro);
         generoNombre = obtenerNombreGenero(libro);
         categorias = libro.getCategorias();
@@ -81,4 +80,15 @@ public class LibroDTO {
     private String obtenerNombreGenero(Libro libro) {
         return (libro.getGenero() != null) ? libro.getGenero().name() : null;
     }
+
+    private String obtenerIlustrador(Libro libro) {
+        return (libro.getLibrosIlustradores() != null) ? libro.getLibrosIlustradores()
+                .stream()
+                .map(libroIlustrador -> {
+                    Ilustrador ilustrador = libroIlustrador.getIlustrador();
+                    return ilustrador.getNombreIlustrador() + " " + ilustrador.getApellidoIlustrador();
+                })
+                .collect(Collectors.joining(", ")) : "";
+    }
+
 }

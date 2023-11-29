@@ -11,10 +11,9 @@ public class Autor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private Long id;
+    private long id;
 
     private String nombreAutor;
-
     private String apellidoAutor;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "autor")
@@ -23,16 +22,18 @@ public class Autor {
     // Constructores
 
     public Autor() {
+        this.librosAutores = new HashSet<>();
     }
 
     public Autor(String nombreAutor, String apellidoAutor) {
         this.nombreAutor = nombreAutor;
         this.apellidoAutor = apellidoAutor;
+        this.librosAutores = new HashSet<>();
     }
 
+    // Getters
 
-    //getters
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -48,9 +49,9 @@ public class Autor {
         return librosAutores;
     }
 
-    //Setters
+    // Setters
 
-    public void setnombreAutor(String nombreAutor) {
+    public void setNombreAutor(String nombreAutor) {
         this.nombreAutor = nombreAutor;
     }
 
@@ -58,11 +59,12 @@ public class Autor {
         this.apellidoAutor = apellidoAutor;
     }
 
-    // metodo add
+    // Método addLibroAutor
 
     public void addLibroAutor(LibroAutor libroAutor) {
-        libroAutor.setAutor(this);
-        librosAutores.add(libroAutor);
+        if (!librosAutores.contains(libroAutor)) {
+            libroAutor.setAutor(this);
+            librosAutores.add(libroAutor);
+        }
     }
-
 }
