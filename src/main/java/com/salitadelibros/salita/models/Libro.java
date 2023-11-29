@@ -115,7 +115,7 @@ public class Libro {
 
     public void addLibroIlustrador(LibroIlustrador libroIlustrador){
         libroIlustrador.setLibro(this);
-        libroIlustradores.add(libroIlustrador);
+        librosIlustradores.add(libroIlustrador);
     }
 
 }
