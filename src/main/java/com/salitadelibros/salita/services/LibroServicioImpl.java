@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class LibroServicioImpl extends LibroServicio {
@@ -32,6 +33,15 @@ public class LibroServicioImpl extends LibroServicio {
     @Override
     public void delete(Long libroId) {
         libroRepositorio.deleteById(libroId);
+    }
+
+    @Override
+    public List<String> getCategorias() {
+        List<Libro> libros = libroRepositorio.findAll();
+        return libros.stream()
+                .flatMap(libro -> libro.getCategorias().stream())
+                .distinct()
+                .collect(Collectors.toList());
     }
 }
 

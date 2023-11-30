@@ -34,11 +34,5 @@ public abstract class LibroServicio {
         libroRepositorio.deleteById(id);
     }
 
-    public List<String> getCategorias() {
-       List<Libro> libros =  libroRepositorio.findAll();
-        return libros.stream()
-                .flatMap(libro -> libro.getCategorias().stream())
-                .distinct()
-                .collect(Collectors.toList());
-    }
+    public abstract List<String> getCategorias();
 }

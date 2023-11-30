@@ -103,7 +103,7 @@ Vue.createApp({
                 });
         },
         addLibroLocal() {
-            if (this.titulo.length > 1 && this.nombreAutor.length > 1 && this.apellidoAutor.length > 1 && this.ilustrador.length > 1 && this.generoSeleccionado && this.categoriasInput.length > 1) {
+            if (this.titulo.length > 1 && this.nombreAutor.length > 1 && this.apellidoAutor.length > 1 && this.nombreIlustrador.length > 1 && this.apellidoIlustrador.length > 1 && this.generoSeleccionado && this.categoriasInput.length > 1) {
                 this.categorias = this.categoriasInput.split(',').map(categoria => categoria.trim());
                 this.categorias = this.categorias.concat(this.categoriasSeleccionadas);
 
@@ -112,7 +112,7 @@ Vue.createApp({
                     nombreAutor: this.nombreAutor,
                     apellidoAutor: this.apellidoAutor,
                     nombreIlustrador: this.nombreIlustrador,
-                    apellidoIlustrador: this.apellidoIlustrador, // Nuevo campo para el ilustrador
+                    apellidoIlustrador: this.apellidoIlustrador,
                     editorial: this.editorial,
                     genero: this.generoSeleccionado,
                     categorias: this.categorias

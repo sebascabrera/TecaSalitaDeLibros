@@ -1,3 +1,5 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@1,900&display=swap'); 
 /* Reset de estilos y configuración básica */
 * {
     padding: 0;
@@ -6,7 +8,8 @@
 }
 
 body {
-    background-color: #f2e9e4; /* Tono de melocotón claro */
+    background-color: #f2e9e4;
+     /* Tono de melocotón claro */
     font-family: 'Roboto Slab', serif;
 }
 
@@ -24,6 +27,7 @@ body {
 h1, legend {
     color: #445e68; /* Azul claro apagado */
     text-align: center;
+    font-family: 'Raleway', sans-serif;
 }
 
 /* Formulario de carga de datos */

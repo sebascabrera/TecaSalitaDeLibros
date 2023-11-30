@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 import java.util.Arrays;
 
@@ -27,6 +26,9 @@ public class SalitaApplication implements CommandLineRunner {
 
 	@Autowired
 	private LibroAutorRepositorio libroAutorRepositorio;
+
+	@Autowired
+	private UsuarioRepositorio usuarioRepositorio;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SalitaApplication.class, args);
@@ -52,6 +54,7 @@ public class SalitaApplication implements CommandLineRunner {
 		libro.addLibroIlustrador(new LibroIlustrador(libro, ilustrador));
 		libroRepository.save(libro);
 
-
+	Usuario usuario1 = new Usuario("Sebastian","sebasfedele@gmail.com", "17defebrero");
+	usuarioRepositorio.save(usuario1);
 	}
 }
