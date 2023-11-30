@@ -16,13 +16,13 @@ public class Autor {
     private String nombreAutor;
     private String apellidoAutor;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "autor")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "autor", cascade = CascadeType.ALL)
     private Set<LibroAutor> librosAutores = new HashSet<>();
 
     // Constructores
 
     public Autor() {
-        this.librosAutores = new HashSet<>();
+
     }
 
     public Autor(String nombreAutor, String apellidoAutor) {

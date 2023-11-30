@@ -15,7 +15,7 @@ public class Ilustrador {
     private String nombreIlustrador;
     private String apellidoIlustrador;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "ilustrador")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "ilustrador", cascade = CascadeType.ALL)
     private Set<LibroIlustrador> libroIlustradores = new HashSet<>();
 
     // constructores
@@ -29,7 +29,7 @@ public class Ilustrador {
     }
 
     //getters
-    public long getId() { return id; }
+    public Long getId() { return id; }
     public String getNombreIlustrador() {
         return nombreIlustrador;
     }

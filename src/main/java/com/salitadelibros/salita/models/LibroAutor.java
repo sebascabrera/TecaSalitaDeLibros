@@ -21,6 +21,11 @@ public class LibroAutor {
     public LibroAutor() {
     }
 
+    public LibroAutor(Libro libro, Autor autor) {
+        this.libro = libro;
+        this.autor = autor;
+    }
+
     // Getters
 
     public Long getId() {

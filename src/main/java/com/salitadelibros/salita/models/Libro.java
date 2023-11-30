@@ -16,12 +16,12 @@ public class Libro {
 
     private int fechaDeEdicion;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "libro")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "libro", cascade = CascadeType.ALL)
     private Set<LibroIlustrador> librosIlustradores = new HashSet<>();
 
     @Column(name = "Titulo", nullable = false)
     private String titulo;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "libro")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "libro", cascade = CascadeType.ALL)
     private Set<LibroAutor> librosAutores = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -109,9 +109,15 @@ public class Libro {
 
 
     public void addLibroAutor(LibroAutor libroAutor) {
+        // Crea una nueva instancia de LibroAutor si no se proporciona
+        if (libroAutor == null) {
+            libroAutor = new LibroAutor();
+        }
+
         libroAutor.setLibro(this);
         librosAutores.add(libroAutor);
     }
+
 
     public void addLibroIlustrador(LibroIlustrador libroIlustrador){
         libroIlustrador.setLibro(this);

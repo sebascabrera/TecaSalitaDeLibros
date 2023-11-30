@@ -15,7 +15,7 @@ public class Editorial {
 
     private String nombre;
 
-    @OneToMany(mappedBy = "editorial", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "editorial", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Libro> libros = new HashSet<>();
 
     //Constructores
