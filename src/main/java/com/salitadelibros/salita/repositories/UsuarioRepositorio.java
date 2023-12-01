@@ -9,10 +9,11 @@ import java.util.List;
 @RepositoryRestResource
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
 
+    Usuario findByEmail(String email);
+
     @Override
     List<Usuario> findAllById(Iterable<Long> longs);
 
-    List<Usuario> findByMail(String mail);
 
 
 }

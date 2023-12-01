@@ -2,10 +2,8 @@ package com.salitadelibros.salita.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 @Entity
 public class Usuario {
     @Id
@@ -14,17 +12,17 @@ public class Usuario {
     private long id;
 
     private String nombreUsuario;
-
-    private String mail;
+@Column(unique = true)
+    private String email;
 
     private String password;
 
     public Usuario() {
     }
 //Constructor
-    public Usuario(String nombreUsuario, String mail, String password) {
+    public Usuario(String nombreUsuario, String email, String password) {
         this.nombreUsuario = nombreUsuario;
-        this.mail = mail;
+        this.email = email;
         this.password = password;
     }
     //getters y setters
@@ -38,12 +36,12 @@ public class Usuario {
         this.nombreUsuario = nombreUsuario;
     }
 
-    public String getMail() {
-        return mail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
