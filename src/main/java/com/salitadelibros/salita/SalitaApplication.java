@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 
@@ -30,6 +31,8 @@ public class SalitaApplication implements CommandLineRunner {
 	@Autowired
 	private UsuarioRepositorio usuarioRepositorio;
 
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	public static void main(String[] args) {
 		SpringApplication.run(SalitaApplication.class, args);
 	}
@@ -54,7 +57,7 @@ public class SalitaApplication implements CommandLineRunner {
 		libro.addLibroIlustrador(new LibroIlustrador(libro, ilustrador));
 		libroRepository.save(libro);
 
-	Usuario usuario1 = new Usuario("Sebastian","sebasfedele@gmail.com", "17defebrero");
+	Usuario usuario1 = new Usuario("Sebastian","sebasfedele@gmail.com", passwordEncoder.encode("17defebrero"));
 	usuarioRepositorio.save(usuario1);
 	}
 }

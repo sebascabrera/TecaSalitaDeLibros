@@ -1,8 +1,11 @@
 package com.salitadelibros.salita.models;
 
+import com.salitadelibros.salita.models.Roles;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Usuario {
@@ -12,21 +15,25 @@ public class Usuario {
     private long id;
 
     private String nombreUsuario;
-@Column(unique = true)
+
+    @Column(unique = true)
     private String email;
 
     private String password;
 
+    @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Roles> roles = new HashSet<>();
+
     public Usuario() {
     }
-//Constructor
+
     public Usuario(String nombreUsuario, String email, String password) {
         this.nombreUsuario = nombreUsuario;
         this.email = email;
         this.password = password;
     }
-    //getters y setters
-
 
     public String getNombreUsuario() {
         return nombreUsuario;
@@ -50,5 +57,23 @@ public class Usuario {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Roles    > getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Roles> roles) {
+        this.roles = roles;
+    }
+
+    public void addRol(String rol) {
+        // mapear los roles
+        if ("USUARIO".equals(rol)) {
+            roles.add(Roles.USUARIO);
+        } else if ("ADMIN".equals(rol)) {
+            roles.add(Roles.ADMIN);
+        }
+
     }
 }

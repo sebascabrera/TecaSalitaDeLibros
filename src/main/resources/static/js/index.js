@@ -23,7 +23,7 @@ Vue.createApp({
     },
     methods: {
         loadData() {
-            axios.get("/api/libros")
+            axios.get("api/libros")
                 .then((response) => {
                     this.libros = response.data;
                     this.categoriasexistentes = response.data.categorias;
