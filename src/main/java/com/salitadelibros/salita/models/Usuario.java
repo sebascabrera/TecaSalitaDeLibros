@@ -59,7 +59,7 @@ public class Usuario {
         this.password = password;
     }
 
-    public Set<Roles    > getRoles() {
+    public Set<Roles> getRoles() {
         return roles;
     }
 

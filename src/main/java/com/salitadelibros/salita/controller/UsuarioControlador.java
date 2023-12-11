@@ -50,7 +50,7 @@ public class UsuarioControlador {
             @RequestParam String email,
             @RequestParam String password) {
 
-        // Realizar la autenticación (ejemplo básico)
+        // Realizar la autenticación
         boolean authenticated = performAuthentication(email, password);
 
         if (authenticated) {

@@ -15,13 +15,13 @@ Vue.createApp({
                     'content-type': 'application/x-www-form-urlencoded'
                 }
             };
-            axios.post('/auth/signup', `nombreUsuario=${this.nombreUsuario}&email=${this.email}&password=${this.password}`, config)
+            axios.post('/auth/signup', `nombreUsuario=${this.nombreUsuario.toLowerCase()}&email=${this.email}&password=${this.password}`, config)
                 .then(() => {
-                    // Puedes redirigir a otra página después del registro si lo deseas
-                    window.location.href = "/ingreso.html";
+                    // redirigir a otra página
+                    window.location.href = "/index.html";
                 })
                 .catch(() => {
-                    this.errorMsg = "Sign up failed, check the information";
+                    this.errorMsg = "Falló el intento de registro";
                     // Mostrar mensaje de error o manejar de alguna otra manera
                     // Puedes utilizar un Toast o mostrarlo de alguna forma en tu interfaz
                 });
