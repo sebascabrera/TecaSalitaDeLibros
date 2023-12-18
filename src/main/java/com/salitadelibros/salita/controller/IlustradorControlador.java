@@ -18,7 +18,7 @@ public class IlustradorControlador {
     @Autowired
     private ServicioComun servicioComun;
 
-    @GetMapping
+    @GetMapping("/ilustradores")
     public List<Ilustrador> getIlustradores() {
         return ilustradorServicio.getIlustradores();
     }
@@ -28,13 +28,13 @@ public class IlustradorControlador {
         return ResponseEntity.of(ilustradorServicio.getIlustrador(id));
     }
 
-    @PostMapping("/guardar")
+    @PostMapping("/guardar-ilustrador")
     public ResponseEntity<String> saveOrUpdate(@RequestBody Ilustrador ilustrador) {
         servicioComun.saveOrUpdateIlustrador(ilustrador);
         return ResponseEntity.ok("Ilustrador guardado o actualizado exitosamente");
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/borrar/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         ilustradorServicio.delete(id);
         return ResponseEntity.ok("Ilustrador eliminado exitosamente");

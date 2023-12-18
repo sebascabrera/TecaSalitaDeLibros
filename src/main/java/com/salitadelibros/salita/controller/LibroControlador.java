@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/libros")
 public class LibroControlador {
     @Autowired
     private LibroServicio libroServicio;
@@ -63,7 +63,7 @@ public class LibroControlador {
         return editorialDTOList;
     }
 
-    @PostMapping("/guardar")
+    @PostMapping("/guardar-libro")
             public ResponseEntity<String> saveOrUpdateLibro(@RequestBody Libro libro) {
             servicioComun.saveOrUpdateLibro(libro);
             return ResponseEntity.ok("Libro guardado o actualizado exitosamente");

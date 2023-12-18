@@ -19,7 +19,7 @@ public class AutorControlador {
     ServicioComun servicioComun;
 
 
-    @GetMapping
+    @GetMapping("/autores")
     public List<Autor> getAutores() {
         return autorServicio.getAutores();
     }
@@ -31,7 +31,7 @@ public class AutorControlador {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/guardar")
     public ResponseEntity<String> saveOrUpdate(@RequestBody Autor autor) {
         servicioComun.saveOrUpdateAutor(autor);
         return ResponseEntity.ok("Autor guardado o actualizado exitosamente");
