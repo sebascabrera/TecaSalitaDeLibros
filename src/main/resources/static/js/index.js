@@ -56,7 +56,7 @@ Vue.createApp({
             this.apellidoIlustrador = libro.apellidoIlustrador; // Nuevo campo para el ilustrador
             this.editorial = libro.editorial;
             this.generoSeleccionado = libro.genero;
-            this.categoriasInput = libro.categorias.join(', ');
+            this.categoriasInput = libro.categorias;
             this.categoriasSeleccionadas = libro.categorias;
 
             // Abre el modal de edición
@@ -77,30 +77,40 @@ Vue.createApp({
                 };
             } else {
                 // Si no hay libro seleccionado, agrega uno nuevo
-                this.libros.push({
+                let nuevoLibro = {
                     titulo: this.titulo,
                     nombreAutor: this.nombreAutor,
                     apellidoAutor: this.apellidoAutor,
                     nombreIlustrador: this.nombreIlustrador,
-                    apellidoIlustrador: this.apellidoIlustrador, // Nuevo campo para el ilustrador
+                    apellidoIlustrador: this.apellidoIlustrador,
                     editorial: this.editorial,
                     genero: this.generoSeleccionado,
-                    categorias: this.categorias
-                });
+                };
+                if (this.categoriasInput.length > 0) {
+                    nuevoLibro.categorias = this.categoriasInput.split(',').map(categoria => categoria.trim());
+                } else {
+                    nuevoLibro.categorias = [];
+                }
+        
+                this.libros.push(nuevoLibro);
+                console.log("Antes de la asignación:", this.libros);
+                axios.post("/api/guardar-libros", this.libros)
+                    .then((response) => {
+                        console.log("Respuesta de la API:", response.data);
+                        this.loadData();
+                        this.clearData();
+                        console.log("Después de la asignación:", this.libros);
+                        // Cierra el modal después de enviar los libros
+                        new bootstrap.Modal(document.getElementById('editarLibrosModal')).hide();
+                    })
+                    .catch((error) => {
+                        alert("Error al crear/editar libros: " + error);
+                    });
             }
 
             new bootstrap.Modal(document.getElementById('editarLibrosModal')).hide();
             // Aquí puedes enviar los libros al servidor
-            axios.post("/api/guardar-libros", this.libros)
-                .then((response) => {
-                    this.loadData();
-                    this.clearData();
-                    // Cierra el modal después de enviar los libros
-                    new bootstrap.Modal(document.getElementById('editarLibrosModal')).hide();
-                })
-                .catch((error) => {
-                    alert("Error al crear/editar libros: " + error);
-                });
+           
         },
         addLibroLocal() {
             if (this.titulo.length > 1 && this.nombreAutor.length > 1 && this.apellidoAutor.length > 1 && this.nombreIlustrador.length > 1 && this.apellidoIlustrador.length > 1 && this.generoSeleccionado && this.categoriasInput.length > 1) {

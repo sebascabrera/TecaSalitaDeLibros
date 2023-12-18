@@ -8,6 +8,7 @@ import com.salitadelibros.salita.repositories.EditorialRepositorio;
 import com.salitadelibros.salita.repositories.LibroRepositorio;
 import com.salitadelibros.salita.services.LibroServicio;
 import com.salitadelibros.salita.services.LibroServicioImpl;
+import com.salitadelibros.salita.services.ServicioComun;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,8 @@ public class LibroControlador {
     private EditorialRepositorio editorialRepositorio;
     @Autowired
     private LibroServicioImpl libroServicioimpl;
+    @Autowired
+    private ServicioComun servicioComun;
 
 
     // metodo que va a devolver una lista de libros que se la pido al repositorio por eso esta inyectada
