@@ -15,7 +15,7 @@ public class EditorialControlador {
 
 
 
-    @PostMapping("/guardar-editorial")
+    @PostMapping("/guardar")
     public ResponseEntity<String> saveOrUpdateEditorial(@RequestBody Editorial editorial) {
         servicioComun.saveOrUpdateEditorial(editorial);
 

@@ -63,9 +63,9 @@ public class LibroControlador {
         return editorialDTOList;
     }
 
-    @PostMapping("/guardar-libros")
-            public ResponseEntity<String> saveOrUpdate(@RequestBody Libro libro) {
-            libroServicio.saveOrUpdate(libro);
+    @PostMapping("/guardar")
+            public ResponseEntity<String> saveOrUpdateLibro(@RequestBody Libro libro) {
+            servicioComun.saveOrUpdateLibro(libro);
             return ResponseEntity.ok("Libro guardado o actualizado exitosamente");
         }
 
