@@ -91,7 +91,7 @@ Vue.createApp({
 
             new bootstrap.Modal(document.getElementById('editarLibrosModal')).hide();
             // Aquí puedes enviar los libros al servidor
-            axios.post("/api/libros-varios", this.libros)
+            axios.post("/api/guardar-libros", this.libros)
                 .then((response) => {
                     this.loadData();
                     this.clearData();

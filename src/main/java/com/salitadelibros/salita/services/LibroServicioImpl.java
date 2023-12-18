@@ -10,10 +10,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class LibroServicioImpl extends LibroServicio {
+public class LibroServicioImpl implements LibroServicio {
 
     @Autowired
-    private LibroRepositorio libroRepositorio; // Asumiendo que tienes un repositorio para la entidad Libro
+    private LibroRepositorio libroRepositorio;
 
     @Override
     public List<Libro> getLibros() {
@@ -44,4 +44,3 @@ public class LibroServicioImpl extends LibroServicio {
                 .collect(Collectors.toList());
     }
 }
-

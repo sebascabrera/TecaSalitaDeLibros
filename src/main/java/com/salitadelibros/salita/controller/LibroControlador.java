@@ -7,7 +7,9 @@ import com.salitadelibros.salita.models.Libro;
 import com.salitadelibros.salita.repositories.EditorialRepositorio;
 import com.salitadelibros.salita.repositories.LibroRepositorio;
 import com.salitadelibros.salita.services.LibroServicio;
+import com.salitadelibros.salita.services.LibroServicioImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +27,9 @@ public class LibroControlador {
     private LibroRepositorio libroRepositorio;
     @Autowired
     private EditorialRepositorio editorialRepositorio;
+    @Autowired
+    private LibroServicioImpl libroServicioimpl;
+
 
     // metodo que va a devolver una lista de libros que se la pido al repositorio por eso esta inyectada
     // /api/libros servlet una ruta de una petición asociado a un metodo
@@ -34,7 +39,7 @@ public class LibroControlador {
 
         List<LibroDTO> libroDTOList = libroServicio.getLibros()
                 .stream()
-                .map(libro -> new LibroDTO(libro))
+                .map(libro -> new LibroDTO((Libro) libro))
                 .collect(Collectors.toList());
 
         List<String> categorias = libroServicio.getCategorias();
@@ -54,6 +59,13 @@ public class LibroControlador {
                 .collect(Collectors.toList());
         return editorialDTOList;
     }
+
+    @PostMapping("/guardar-libros")
+            public ResponseEntity<String> saveOrUpdate(@RequestBody Libro libro) {
+            libroServicio.saveOrUpdate(libro);
+            return ResponseEntity.ok("Libro guardado o actualizado exitosamente");
+        }
+
   /*
     @GetMapping("/categorias")
     public List<String> getCategorias() {
