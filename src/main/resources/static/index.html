@@ -31,29 +31,31 @@
                 <h1>Salita de ingresos</h1>
 
 
-                <form id="formularioLibro" action="/api/guardar" method="post" class="container mt-5">
+                <form id="formularioLibro" action="/api/libros/guardar-libro" method="post" class="container mt-5">
+
                     <!-- Campos del formulario -->
                     <div class="mb-3">
                         <label for="titulo" class="form-label">Título:</label>
                         <input type="text" class="form-control" id="titulo" name="titulo" required>
                     </div>
 
-                    <!-- Campo de selección para editoriales existentes -->
-                    <div class="mb-3">
-                        <label for="editorialSeleccionada" class="form-label">Seleccionar Editorial Existente:</label>
-                        <select v-model="editorialSeleccionada" class="form-select" id="editorialSeleccionada"
-                            name="editorialSeleccionada">
-                            <option value="" disabled>Seleccionar Editorial Existente</option>
-                            <option v-for="editorial in editoriales" :value="editorial.id">{{ editorial.nombre }}
+                    <div>
+                        <label for="editorial" class="form-label">Editorial:</label>
+                        <select v-model="editorialSeleccionada">
+                            <option v-for="editorial in editoriales" :key="editorial.id" :value="editorial.id">
+                                {{ editorial.nombre }}
                             </option>
                         </select>
+                        <button @click="mostrarNuevaEditorial">Mostrar Nueva Editorial</button>
+
                     </div>
 
-                    <!-- Campo para ingresar una nueva editorial -->
-                    <div class="mb-3">
-                        <label for="nuevaEditorial" class="form-label">Ingresar Nueva Editorial:</label>
-                        <input v-model="nuevaEditorial" type="text" class="form-control" id="nuevaEditorial"
-                            name="nuevaEditorial" required>
+                    <!-- Otro código de tu formulario -->
+
+                    <div v-if="nuevaEditorialVisible">
+                        <!-- Contenido para agregar una nueva editorial -->
+                        <label for="nuevaEditorial" class="form-label">Nueva Editorial:</label>
+                        <input type="text" v-model="nuevaEditorial"id="editorial" name="editorial">
                     </div>
 
 
@@ -84,59 +86,55 @@
                         <label for="fechaDeEdicion" class="form-label">Fecha de Edición:</label>
                         <input type="number" class="form-control" id="fechaDeEdicion" name="fechaDeEdicion" required>
                     </div>
-
-                    <!-- Campos del formulario para el Autor -->
-                    <!-- Campo de selección para autores existentes -->
-                    <div class="mb-3">
-                        <label for="autorSeleccionado" class="form-label">Seleccionar Autor Existente:</label>
-                        <select v-model="autorSeleccionado" class="form-select" id="autorSeleccionado"
-                            name="autorSeleccionado">
-                            <option value="" disabled>Seleccionar Autor Existente</option>
-                            <option v-for="autor in autores" :value="autor.id">{{ autor.nombreAutor }} {{
-                                autor.apellidoAutor }}</option>
-                        </select>
-                    </div>
-
-                    <!-- Campos para ingresar un nuevo autor -->
-                    <div class="mb-3">
-                        <label for="nuevoAutor" class="form-label">Ingresar Nuevo Autor:</label>
-                        <div class="mb-3">
-                            <label for="nombreNuevoAutor" class="form-label">Nombre del Autor:</label>
-                            <input v-model="nuevoAutor.nombre" type="text" class="form-control" id="nombreNuevoAutor"
-                                name="nombreNuevoAutor" required>
+                   
+                        <!-- Campos del formulario para el Autor -->
+                        <!-- Campo de selección para autores existentes -->
+                        <div class="mb-3" v-if="autores && autores.length">
+                            <label for="autorSeleccionado" class="form-label">Seleccionar Autor Existente:</label>
+                            <select v-model="autorSeleccionado" class="form-select" id="autorSeleccionado"
+                                name="autorSeleccionado">
+                                <option value="" disabled>Seleccionar Autor Existente</option>
+                                <option v-for="autor in autores" :key="autor.id" :value="autor.id">{{ autor.nombreAutor
+                                    }} {{ autor.apellidoAutor }}</option>
+                            </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="apellidoNuevoAutor" class="form-label">Apellido del Autor:</label>
-                            <input v-model="nuevoAutor.apellido" type="text" class="form-control"
-                                id="apellidoNuevoAutor" name="apellidoNuevoAutor" required>
-                        </div>
-                    </div>
 
+                <!-- Campos para ingresar un nuevo autor -->
+<div class="mb-3">
+    <label for="nuevoAutor" class="form-label">Ingresar Nuevo Autor:</label>
+    <div class="mb-3">
+        <label for="nombreNuevoAutor" class="form-label">Nombre del Autor:</label>
+        <input v-model="nuevoAutor.nombreAutor" type="text" class="form-control" id="nombreNuevoAutor" name="nombreNuevoAutor" required>
+    </div>
+    <div class="mb-3">
+        <label for="apellidoNuevoAutor" class="form-label">Apellido del Autor:</label>
+        <input v-model="nuevoAutor.apellidoAutor" type="text" class="form-control" id="apellidoNuevoAutor" name="apellidoNuevoAutor" required>
+    </div>
+</div>
+               
                     <!-- Campos del formulario para el Ilustrador -->
                     <!-- Campo de selección para ilustradores existentes -->
-                    <div class="mb-3">
+                    <div class="mb-3" v-if="ilustradores && ilustradores.length">
                         <label for="ilustradorSeleccionado" class="form-label">Seleccionar Ilustrador Existente:</label>
                         <select v-model="ilustradorSeleccionado" class="form-select" id="ilustradorSeleccionado"
                             name="ilustradorSeleccionado">
                             <option value="" disabled>Seleccionar Ilustrador Existente</option>
-                            <option v-for="ilustrador in ilustradores" :value="ilustrador.id">
-                                {{ ilustrador.nombreIlustrador }} {{ ilustrador.apellidoIlustrador }}
-                            </option>
+                            <option v-for="ilustrador in ilustradores" :key="ilustrador.id" :value="ilustrador.id">{{
+                                ilustrador.nombreIlustrador }} {{ ilustrador.apellidoIlustrador }}</option>
                         </select>
                     </div>
 
-                    <!-- Campos para ingresar un nuevo ilustrador -->
-                    <div class="mb-3">
-                        <label for="nuevoIlustrador" class="form-label">Ingresar Nuevo Ilustrador:</label>
-                        <input v-model="nuevoIlustrador.nombreIlustrador" type="text" class="form-control"
-                            id="nombreIlustrador" name="nombreIlustrador" required placeholder="Nombre">
-                        <input v-model="nuevoIlustrador.apellidoIlustrador" type="text" class="form-control"
-                            id="apellidoIlustrador" name="apellidoIlustrador" required placeholder="Apellido">
-                    </div>
-
+                <!-- Campos para ingresar un nuevo ilustrador -->
+<div class="mb-3">
+    <label for="nuevoIlustrador" class="form-label">Ingresar Nuevo Ilustrador:</label>
+    <input v-model="nuevoIlustrador.nombreIlustrador" type="text" class="form-control" id="nombreIlustrador" name="nombreIlustrador" required placeholder="Nombre">
+    <input v-model="nuevoIlustrador.apellidoIlustrador" type="text" class="form-control" id="apellidoIlustrador" name="apellidoIlustrador" required placeholder="Apellido">
+</div>
 
                     <!-- Botón de envío -->
-                    <button type="submit" class="btn btn-primary">Guardar Libro</button>
+                    <!-- Botón de envío -->
+<button type="button" @click="enviarFormulario" class="btn btn-primary">Guardar Libro</button>
+
                 </form>
             </div>
         </div>

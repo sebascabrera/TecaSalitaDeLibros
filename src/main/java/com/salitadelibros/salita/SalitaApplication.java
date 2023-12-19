@@ -40,7 +40,7 @@ public class SalitaApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// Crear una editorial
-		Editorial editorial = new Editorial("Editorial XYZ");
+		/*Editorial editorial = new Editorial("Editorial XYZ");
 		editorialRepository.save(editorial);
 
 		// Crear un autor
@@ -58,6 +58,6 @@ public class SalitaApplication implements CommandLineRunner {
 		libroRepository.save(libro);
 
 	Usuario usuario1 = new Usuario("Sebastian","sebasfedele@gmail.com", passwordEncoder.encode("17defebrero"));
-	usuarioRepositorio.save(usuario1);
+	usuarioRepositorio.save(usuario1);*/
 	}
 }

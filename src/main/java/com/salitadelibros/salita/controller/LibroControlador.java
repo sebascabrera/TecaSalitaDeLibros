@@ -10,6 +10,7 @@ import com.salitadelibros.salita.services.LibroServicio;
 import com.salitadelibros.salita.services.LibroServicioImpl;
 import com.salitadelibros.salita.services.ServicioComun;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -33,9 +34,6 @@ public class LibroControlador {
     @Autowired
     private ServicioComun servicioComun;
 
-
-    // metodo que va a devolver una lista de libros que se la pido al repositorio por eso esta inyectada
-    // /api/libros servlet una ruta de una petición asociado a un metodo
     @GetMapping("/libros")
     public Map<String, Object> getLibros() {
         Map<String, Object> response = new HashMap<>();
@@ -64,24 +62,16 @@ public class LibroControlador {
     }
 
     @PostMapping("/guardar-libro")
-            public ResponseEntity<String> saveOrUpdateLibro(@RequestBody Libro libro) {
+    public ResponseEntity<String> saveOrUpdateLibro(@RequestBody Libro libro) {
+        try {
+            if (libro.getTitulo() == null || libro.getTitulo().isEmpty()) {
+                return ResponseEntity.badRequest().body("El título del libro es obligatorio");
+            }
+
             servicioComun.saveOrUpdateLibro(libro);
             return ResponseEntity.ok("Libro guardado o actualizado exitosamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar el libro: " + e.getMessage());
         }
-
-  /*
-    @GetMapping("/categorias")
-    public List<String> getCategorias() {
-        return LibroRepositorio.getCategorias();
     }
-
-    @PostMapping
-    public void saveOrUpdate(@RequestBody Libro libro) {
-        LibroRepositorio.saveOrUpdate(libro);
-    }
-
-    @DeleteMapping("/{libroId}")
-    public void delete(@PathVariable("libroId") Long libroId) {
-        LibroRepositorio.delete(libroId);
-    }*/
 }

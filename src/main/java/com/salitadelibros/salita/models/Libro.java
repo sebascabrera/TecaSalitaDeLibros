@@ -3,6 +3,7 @@ package com.salitadelibros.salita.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,7 +15,8 @@ public class Libro {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
 
-    private int fechaDeEdicion;
+    @Column(name = "fecha_de_edicion")
+    private LocalDate fechaDeEdicion;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "libro", cascade = CascadeType.ALL)
     private Set<LibroIlustrador> librosIlustradores = new HashSet<>();
@@ -39,7 +41,7 @@ public class Libro {
     public Libro() {
     }
 
-    public Libro(String titulo, Editorial editorial, Genero genero, List<String> categorias, int fechaDeEdicion) {
+    public Libro(String titulo, Editorial editorial, Genero genero, List<String> categorias, LocalDate fechaDeEdicion) {
         this.titulo = titulo;
         this.fechaDeEdicion = fechaDeEdicion;
 
@@ -78,7 +80,7 @@ public class Libro {
         return categorias;
     }
 
-    public int getFechaDeEdicion() {
+    public LocalDate getFechaDeEdicion() {
         return fechaDeEdicion;
     }
 
@@ -101,7 +103,7 @@ public class Libro {
         this.categorias = categorias;
     }
 
-    public void setFechaDeEdicion(int fechaDeEdicion) {
+    public void setFechaDeEdicion(LocalDate fechaDeEdicion) {
         this.fechaDeEdicion = fechaDeEdicion;
     }
 

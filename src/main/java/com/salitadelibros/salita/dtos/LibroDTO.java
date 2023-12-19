@@ -4,6 +4,7 @@ import com.salitadelibros.salita.models.Autor;
 import com.salitadelibros.salita.models.Ilustrador;
 import com.salitadelibros.salita.models.Libro;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,7 +16,7 @@ public class LibroDTO {
     private String editorialNombre;  // Cambiado para extraer solo el nombre
     private String generoNombre;  // Cambiado para extraer solo el nombre
     private List<String> categorias;
-    private int fechaDeEdicion;
+    private LocalDate fechaDeEdicion;
 
     public LibroDTO(Libro libro) {
         id = libro.getId();
@@ -56,7 +57,7 @@ public class LibroDTO {
         return categorias;
     }
 
-    public int getFechaDeEdicion() {
+    public LocalDate getFechaDeEdicion() {
         return fechaDeEdicion;
     }
 
