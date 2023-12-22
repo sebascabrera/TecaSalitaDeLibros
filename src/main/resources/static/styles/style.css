@@ -14,7 +14,7 @@ body {
 }
 
 /* Contenedor principal */
-#api-libros-form {
+#contenedorformularioLibro {
     max-width: 800px;
     margin: 20px auto;
     background: #ead3cb; /* Fondo blanco roto */
@@ -28,6 +28,7 @@ h1, legend {
     color: #445e68; /* Azul claro apagado */
     text-align: center;
     font-family: 'Raleway', sans-serif;
+
 }
 
 /* Formulario de carga de datos */
@@ -86,3 +87,36 @@ input {
 .modal-body table tbody tr {
     background: #fff; /* Fondo blanco */
 }
+header {
+    background-color: #ffffff;
+    padding: 10px 0;
+  }
+  
+  .navbar {
+    border-radius: 0;
+  }
+  
+  .navbar-brand {
+    font-size: 2em;
+  }
+  
+  .navbar-nav li a {
+    font-size: 1.5em;
+  }
+  
+  .img-fluid {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  h1 {
+    font-size: 2.5em;
+    text-align: center
+  }
+  h2 {
+    
+    text-align: center
+  }
+  p {
+    font-size: 1.5em;
+  }

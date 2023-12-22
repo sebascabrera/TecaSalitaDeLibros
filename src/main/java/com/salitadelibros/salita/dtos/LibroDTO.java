@@ -92,4 +92,8 @@ public class LibroDTO {
                 .collect(Collectors.joining(", ")) : "";
     }
 
+    public Libro toEntity() {
+        Libro libro = new Libro();
+        return libro;
+    }
 }

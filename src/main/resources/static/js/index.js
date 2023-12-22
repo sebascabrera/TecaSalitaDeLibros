@@ -1,45 +1,41 @@
 Vue.createApp({
-
     data() {
         return {
-            // Define los datos de Vue que deseas usar en el formulario
-            // Puedes agregar más datos según sea necesario
             titulo: '',
-            editorial: '',
-            genero: [],
+            genero: '',
             categorias: '',
             fechaDeEdicion: '',
 
-            autorSeleccionado: '',  // ID del autor seleccionado
-            autores: [],  // Lista de autores disponibles
+            editorialSeleccionada: '',
+            editoriales: [],
+            nuevaEditorialVisible: false,
+            nuevaEditorial: '',
+
+            autorSeleccionado: '',
+            autores: [],
             nuevoAutor: {
                 nombreAutor: '',
                 apellidoAutor: ''
             },
 
-            editoriales: [],  // Lista de editoriales disponibles
-            editorialSeleccionada: '',  // ID de la editorial seleccionada
-            nuevaEditorialVisible: false,
-            nuevaEditorial: '',
-
-            ilustradorSeleccionado: '',  // ID del ilustrador seleccionado
-            ilustradores: [],  // Lista de ilustradores disponibles            
+            ilustradorSeleccionado: '',
+            ilustradores: [],
             nuevoIlustrador: {
                 nombreIlustrador: '',
                 apellidoIlustrador: ''
             }
-
         }
-
     },
     created() {
         this.loadData();
         this.loadAutores();
         this.loadEditoriales();
         this.loadIlustradores();
+        flatpickr("#fechaDeEdicion", {
+            dateFormat: "m/Y",
+        });
     },
     methods: {
-
         loadAutores() {
             axios.get("/api/autores/autores")
                 .then(response => {
@@ -76,46 +72,65 @@ Vue.createApp({
                 .catch((error) => {
                     alert("Error loading libros: " + error);
                 });
-
         },
         mostrarNuevaEditorial() {
+            // Al hacer clic en el botón, muestra el campo para una nueva editorial
             this.nuevaEditorialVisible = true;
+            // Limpia la selección de editorial existente
+            this.editorialSeleccionada = '';
         },
-
-        // Método para manejar el envío del formulario
-        enviarFormulario: function () {
-            // Aquí puedes realizar cualquier lógica necesaria antes de enviar el formulario
-            console.log("Datos enviados al servidor:", {
-                titulo: this.titulo,
-                editorial: this.editorialSeleccionada,
-                genero: this.genero,
-                categorias: this.categorias,
-                fechaDeEdicion: this.fechaDeEdicion,
-                nombreAutor: this.nuevoAutor.nombreAutor,
-                apellidoAutor: this.nuevoAutor.apellidoAutor,
-                nombreIlustrador: this.nuevoIlustrador.nombreIlustrador,
-                apellidoIlustrador: this.nuevoIlustrador.apellidoIlustrador
-            });
-            this.genero = document.querySelector('input[name="genero"]:checked').value;
+        enviarFormulario() {
+            // Crear el objeto que se enviará al backend
+            const libroData = {
+              ilustrador: this.ilustradorSeleccionado
+                ? { id: this.ilustradorSeleccionado }  // Si se selecciona un ilustrador existente
+                : {
+                    nombreIlustrador: this.nuevoIlustrador.nombreIlustrador,
+                    apellidoIlustrador: this.nuevoIlustrador.apellidoIlustrador
+                  },  // Si se ingresa un nuevo ilustrador
+              titulo: this.titulo,
+              editorial: this.nuevaEditorialVisible
+                ? { nombre: this.nuevaEditorial }  // Nueva editorial
+                : { id: this.editorialSeleccionada },
+              genero: this.genero,
+              categorias: this.categorias.split(',').map(categoria => categoria.trim()), // Convertir a lista
+              fechaDeEdicion: this.formatearFecha(this.fechaDeEdicion),
+              autor: this.autorSeleccionado
+                ? { id: this.autorSeleccionado }
+                : {
+                    nombreAutor: this.nuevoAutor.nombreAutor,
+                    apellidoAutor: this.nuevoAutor.apellidoAutor
+                  }
+            };
+          
+            console.log("Datos enviados al servidor:", libroData);
+          
             // Luego, envía el formulario usando Axios
-            axios.post('/api/libros/guardar-libro', {
-                titulo: this.titulo,
-                editorial: this.editorialSeleccionada,
-                genero: this.genero,
-                categorias: this.categorias,
-                fechaDeEdicion: this.fechaDeEdicion,
-                nombreAutor: this.nuevoAutor.nombreAutor,
-                apellidoAutor: this.nuevoAutor.apellidoAutor,
-                nombreIlustrador: this.nuevoIlustrador.nombreIlustrador,
-                apellidoIlustrador: this.nuevoIlustrador.apellidoIlustrador
-            }).then(response => {
+            axios.post('/api/libros/guardar-libro', libroData)
+              .then(response => {
+                alert("Libro guardado o actualizado exitosamente");
                 console.log("Libro guardado o actualizado exitosamente:", response.data);
-                // Maneja la respuesta si es necesario
-            }).catch(error => {
-                // Maneja el error si es necesario
+                // Restablece los campos del formulario o realiza otras acciones necesarias
+                this.titulo = '';
+                this.editorialSeleccionada = '';
+                this.genero = '';
+                this.categorias = '';
+                this.fechaDeEdicion = '';
+                this.autorSeleccionado = '';
+                this.nuevoAutor.nombreAutor = '';
+                this.nuevoAutor.apellidoAutor = '';
+                this.ilustradorSeleccionado = '';
+                this.nuevoIlustrador.nombreIlustrador = '';
+                this.nuevoIlustrador.apellidoIlustrador = '';
+              })
+              .catch(error => {
                 console.error("Error al procesar el libro:", error);
-            });
+                alert("Error al procesar el libro: " + error.response.data);
+                // Maneja el error si es necesario
+              });
+          },
+        formatearFecha(fecha) {
+            return fecha ? new Date(fecha).toISOString().split('T')[0] : null;
         }
     }
-
 }).mount("#formularioLibro");
