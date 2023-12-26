@@ -106,7 +106,7 @@ Vue.createApp({
             console.log("Datos enviados al servidor:", libroData);
           
             // Luego, envía el formulario usando Axios
-            axios.post('/api/libros/guardar-libro', libroData)
+            axios.post('/api/libros/guardarLibro', libroData)
               .then(response => {
                 alert("Libro guardado o actualizado exitosamente");
                 console.log("Libro guardado o actualizado exitosamente:", response.data);
