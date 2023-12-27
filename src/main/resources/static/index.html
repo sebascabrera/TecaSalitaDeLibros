@@ -51,7 +51,7 @@
         <div class="row">
             <div class="col">
                 <h2 class="align-content-center">Salita de ingresos</h2>
-                <form id="contenedorformularioLibro" action="/api/libros/guardar-libro" method="post"
+                <form id="contenedorformularioLibro" action="/api/libros/guardarLibro" method="post"
                     class="container mt-5">
 
                     <!-- Campos del formulario -->
@@ -96,7 +96,7 @@
                     <div class="mb-3">
                         <label for="fechaDeEdicion" class="form-label">Fecha de Edición:</label>
                         <input type="date" class="form-control" id="fechaDeEdicion" name="fechaDeEdicion"
-                            placeholder="mm/aaaa" required>
+                            value="mm/aaaa" v-model="fechaDeEdicion" required>
                     </div>
 
                     <!-- Autor -->

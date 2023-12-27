@@ -35,20 +35,25 @@ public class Libro {
     @ElementCollection
     private List<String> categorias;
 
+    private String isbn;
+
 
     // Constructores
 
     public Libro() {
     }
 
-    public Libro(String titulo, Editorial editorial, Genero genero, List<String> categorias, LocalDate fechaDeEdicion) {
+    public Libro(String titulo, Editorial editorial, Genero genero, List<String> categorias, LocalDate fechaDeEdicion, String isbn) {
         this.titulo = titulo;
         this.fechaDeEdicion = fechaDeEdicion;
 
         this.editorial = editorial;
         this.genero = genero;
         this.categorias = categorias;
+        this.isbn= isbn;
     }
+
+
 
     // getters
     // id tiene solo get
@@ -84,6 +89,10 @@ public class Libro {
         return fechaDeEdicion;
     }
 
+    public String getIsbn() {
+        return isbn;
+    }
+
     //y setters
 
     public void setTitulo(String titulo) {
@@ -105,6 +114,10 @@ public class Libro {
 
     public void setFechaDeEdicion(LocalDate fechaDeEdicion) {
         this.fechaDeEdicion = fechaDeEdicion;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     //metodo de add autorLibro

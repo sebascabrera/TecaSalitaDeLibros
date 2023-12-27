@@ -11,20 +11,22 @@ public class LibroDTO {
     private String titulo;
     private String autor;  // Cambiado para ser más significativo
     private String ilustrador;
-    private Editorial editorialNombre;  // Cambiado para extraer solo el nombre
-    private Genero generoNombre;  // Cambiado para extraer solo el nombre
+    private Editorial editorial;  // Cambiado para extraer solo el nombre
+    private Genero genero;  // Cambiado para extraer solo el nombre
     private List<String> categorias;
     private LocalDate fechaDeEdicion;
+    private String isbn;
 
     public LibroDTO(Libro libro) {
         id = libro.getId();
         titulo = libro.getTitulo();
         autor = obtenerAutores(libro);
         ilustrador = obtenerIlustrador(libro);
-        editorialNombre = obtenerNombreEditorial(libro);
-        generoNombre = obtenerNombreGenero(libro);
+        editorial = obtenerNombreEditorial(libro);
+        genero = obtenerNombreGenero(libro);
         categorias = libro.getCategorias();
         fechaDeEdicion = libro.getFechaDeEdicion();
+        isbn = libro.getIsbn();
     }
 
     public Long getId() {
@@ -43,12 +45,12 @@ public class LibroDTO {
         return ilustrador;
     }
 
-    public Editorial getNombreEditorial() {
-        return editorialNombre;
+    public Editorial getEditorialNombre() {
+        return editorial;
     }
 
     public Genero getGeneroNombre() {
-        return generoNombre;
+        return genero;
     }
 
     public List<String> getCategorias() {
@@ -57,6 +59,10 @@ public class LibroDTO {
 
     public LocalDate getFechaDeEdicion() {
         return fechaDeEdicion;
+    }
+
+    public String getIsbn() {
+        return isbn;
     }
 
     // Método privado para obtener la representación de cadena de los autores
@@ -71,12 +77,12 @@ public class LibroDTO {
     }
 
     // Método privado para obtener el nombre de la editorial
-    private String obtenerNombreEditorial(Libro libro) {
+    private Editorial obtenerNombreEditorial(Libro libro) {
         return (libro.getEditorial() != null) ? libro.getEditorial().getNombre() : null;
     }
 
     // Método privado para obtener el nombre del género
-    private String obtenerNombreGenero(Libro libro) {
+    private Genero obtenerNombreGenero(Libro libro) {
         return (libro.getGenero() != null) ? libro.getGenero().name() : null;
     }
 
