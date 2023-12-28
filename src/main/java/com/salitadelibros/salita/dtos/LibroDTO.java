@@ -67,7 +67,7 @@ public class LibroDTO {
 
     // Método privado para obtener la representación de cadena de los autores
     private String obtenerAutores(Libro libro) {
-        return libro.getLibrosAutores()
+        return libro.getAutores()
                 .stream()
                 .map(libroAutor -> {
                     Autor autor = libroAutor.getAutor();
@@ -87,7 +87,7 @@ public class LibroDTO {
     }
 
     private String obtenerIlustrador(Libro libro) {
-        return (libro.getLibrosIlustradores() != null) ? libro.getLibrosIlustradores()
+        return (libro.getIlustradores() != null) ? libro.getIlustradores()
                 .stream()
                 .map(libroIlustrador -> {
                     Ilustrador ilustrador = libroIlustrador.getIlustrador();

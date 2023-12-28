@@ -16,7 +16,7 @@ public class Ilustrador {
     private String apellidoIlustrador;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "ilustrador", cascade = CascadeType.ALL)
-    private Set<LibroIlustrador> libroIlustradores = new HashSet<>();
+    private Set<LibroIlustrador> libros = new HashSet<>();
 
     // constructores
 
@@ -38,8 +38,8 @@ public class Ilustrador {
         return apellidoIlustrador;
     }
 
-    public Set<LibroIlustrador> getLibroIlustradores() {
-        return libroIlustradores;
+    public Set<LibroIlustrador> getLibros() {
+        return libros;
     }
 
 
@@ -58,7 +58,7 @@ public class Ilustrador {
 
     public void addLibroIlustrador (LibroIlustrador libroIlustrador) {
         libroIlustrador.setIlustrador(this);
-        libroIlustradores.add(libroIlustrador);
+        libros.add(libroIlustrador);
     }
 
 

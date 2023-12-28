@@ -17,7 +17,7 @@ public class Autor {
     private String apellidoAutor;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "autor", cascade = CascadeType.ALL)
-    private Set<LibroAutor> librosAutores = new HashSet<>();
+    private Set<LibroAutor> libros = new HashSet<>();
 
     // Constructores
 
@@ -28,7 +28,7 @@ public class Autor {
     public Autor(String nombreAutor, String apellidoAutor) {
         this.nombreAutor = nombreAutor;
         this.apellidoAutor = apellidoAutor;
-        this.librosAutores = new HashSet<>();
+
     }
 
     // Getters
@@ -45,8 +45,8 @@ public class Autor {
         return apellidoAutor;
     }
 
-    public Set<LibroAutor> getLibrosAutores() {
-        return librosAutores;
+    public Set<LibroAutor> getLibros() {
+        return libros;
     }
 
     // Setters
@@ -61,10 +61,8 @@ public class Autor {
 
     // Método addLibroAutor
 
-    public void addLibroAutor(LibroAutor libroAutor) {
-        if (!librosAutores.contains(libroAutor)) {
-            libroAutor.setAutor(this);
-            librosAutores.add(libroAutor);
-        }
+    public void addLibroAutor(LibroAutor libroAutor ) {
+        libroAutor.setAutor(this);
+        libros.add(libroAutor);
     }
 }

@@ -112,16 +112,16 @@ Vue.createApp({
                 console.log("Libro guardado o actualizado exitosamente:", response.data);
                 // Restablece los campos del formulario o realiza otras acciones necesarias
                 this.titulo = '';
-                this.editorialSeleccionada = '';
-                this.genero = '';
-                this.categorias = '';
-                this.fechaDeEdicion = '';
                 this.autorSeleccionado = '';
                 this.nuevoAutor.nombreAutor = '';
                 this.nuevoAutor.apellidoAutor = '';
                 this.ilustradorSeleccionado = '';
                 this.nuevoIlustrador.nombreIlustrador = '';
                 this.nuevoIlustrador.apellidoIlustrador = '';
+                this.editorialSeleccionada = '';
+                this.genero = '';
+                this.categorias = '';
+                this.fechaDeEdicion = '';              
               })
               .catch(error => {
                 console.error("Error al procesar el libro:", error);

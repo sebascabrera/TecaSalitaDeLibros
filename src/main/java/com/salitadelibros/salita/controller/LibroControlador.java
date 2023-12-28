@@ -18,7 +18,6 @@ import com.salitadelibros.salita.services.ServicioComun;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -98,7 +97,7 @@ public class LibroControlador {
             Libro libro = new Libro(libroDTO.getTitulo(), libroDTO.getEditorialNombre(), libroDTO.getGeneroNombre(), libroDTO.getFechaDeEdicion());
 
             // Guardar Ilustradores
-            Set<Ilustrador> ilustradores = libro.getLibrosIlustradores()
+            Set<Ilustrador> ilustradores = libro.getIlustradores()
                     .stream()
                     .map(LibroIlustrador::getIlustrador)
                     .collect(Collectors.toSet());
@@ -110,7 +109,7 @@ public class LibroControlador {
             }
 
             // Guardar Autores
-            Set<Autor> autores = libro.getLibrosAutores()
+            Set<Autor> autores = libro.getAutores()
                     .stream()
                     .map(LibroAutor::getAutor)
                     .collect(Collectors.toSet());

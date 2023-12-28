@@ -6,9 +6,6 @@ import javax.persistence.*;
 @Entity
 public class LibroIlustrador {
 
-   // public void setLibro(Libro libro) {
-   // }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")

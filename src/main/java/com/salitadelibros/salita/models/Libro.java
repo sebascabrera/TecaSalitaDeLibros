@@ -19,12 +19,12 @@ public class Libro {
     private LocalDate fechaDeEdicion;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "libro", cascade = CascadeType.ALL)
-    private Set<LibroIlustrador> librosIlustradores = new HashSet<>();
+    private Set<LibroIlustrador> ilustradores = new HashSet<>();
 
     @Column(name = "Titulo", nullable = false)
     private String titulo;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "libro", cascade = CascadeType.ALL)
-    private Set<LibroAutor> librosAutores = new HashSet<>();
+    private Set<LibroAutor> autores = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "editorial_id")
@@ -65,12 +65,12 @@ public class Libro {
         return titulo;
     }
 
-    public Set<LibroAutor> getLibrosAutores() {
-        return librosAutores;
+    public Set<LibroAutor> getAutores() {
+        return autores;
     }
 
-    public Set<LibroIlustrador> getLibrosIlustradores() {
-        return librosIlustradores;
+    public Set<LibroIlustrador> getIlustradores() {
+        return ilustradores;
     }
 
     public Editorial getEditorial() {
@@ -120,23 +120,17 @@ public class Libro {
         this.isbn = isbn;
     }
 
-    //metodo de add autorLibro
-
+    //metodos de add
 
     public void addLibroAutor(LibroAutor libroAutor) {
-        // Crea una nueva instancia de LibroAutor si no se proporciona
-        if (libroAutor == null) {
-            libroAutor = new LibroAutor();
-        }
-
         libroAutor.setLibro(this);
-        librosAutores.add(libroAutor);
+        autores.add(libroAutor);
     }
 
 
     public void addLibroIlustrador(LibroIlustrador libroIlustrador){
         libroIlustrador.setLibro(this);
-        librosIlustradores.add(libroIlustrador);
+        ilustradores.add(libroIlustrador);
     }
 
 }
