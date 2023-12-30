@@ -72,29 +72,28 @@ public class LibroControlador {
     }
 
     @PostMapping("/guardarLibro")
-    public ResponseEntity<String> saveOrUpdateLibro(@RequestBody LibroDTO libroDTO) {
+    public ResponseEntity<String> saveOrUpdateLibro(@RequestBody Libro libro) {
         try {
-            System.out.println("Solicitud recibida: " + libroDTO);
-            if (libroDTO == null) {
+            System.out.println("Solicitud recibida: " + libro);
+            if (libro == null) {
                 return ResponseEntity.badRequest().body("El libro no puede ser nulo");
             }
-            if (libroDTO.getTitulo() == null || libroDTO.getTitulo().isEmpty()) {
+            if (libro.getTitulo() == null || libro.getTitulo().isEmpty()) {
                 return ResponseEntity.badRequest().body("El título del libro es obligatorio");
             }
-            if (libroDTO.getGeneroNombre() == null) {
+            if (libro.getGenero() == null) {
                 return ResponseEntity.badRequest().body("El género del libro es obligatorio");
             }
-            if (libroDTO.getFechaDeEdicion() == null) {
+            if (libro.getFechaDeEdicion() == null) {
                 return ResponseEntity.badRequest().body("La fecha de edición del libro es obligatoria");
             }
-            if (libroDTO.getAutor() == null || libroDTO.getAutor().isEmpty()) {
+            if (libro.getAutores() == null || libro.getAutores().isEmpty()) {
                 return ResponseEntity.badRequest().body("Debes asociar al menos un autor al libro");
             }
-            if (libroDTO.getIlustrador() == null || libroDTO.getIlustrador().isEmpty()) {
+            if (libro.getIlustradores() == null || libro.getIlustradores().isEmpty()) {
                 return ResponseEntity.badRequest().body("Debes asociar al menos un ilustrador al libro");
             }
 
-            Libro libro = new Libro(libroDTO.getTitulo(), libroDTO.getEditorialNombre(), libroDTO.getGeneroNombre(), libroDTO.getFechaDeEdicion());
 
             // Guardar Ilustradores
             Set<Ilustrador> ilustradores = libro.getIlustradores()

@@ -3,6 +3,7 @@ package com.salitadelibros.salita.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+
 @Entity
 public class LibroIlustrador {
 

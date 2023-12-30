@@ -7,6 +7,11 @@ public class LibroAutorDTO {
     private LibroDTO libroDTO;
     private AutorDTO autorDTO;
 
+    //constructores
+    public LibroAutorDTO(){
+
+    }
+
     public LibroAutorDTO(LibroAutor libroAutor) {
         id = libroAutor.getId();
         libroDTO = new LibroDTO(libroAutor.getLibro());
