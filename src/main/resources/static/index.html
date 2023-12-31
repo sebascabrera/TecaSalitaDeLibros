@@ -63,21 +63,15 @@
                     </div>
 
                     <!-- Editorial -->
-                    <div>
-                        <label for="editorial" class="form-label">Editorial:</label>
-                        <select v-model="editorialSeleccionada" class="m-4 p-1">
-                            <option v-for="editorial in editoriales" :key="editorial.id" :value="editorial.id">
-                                {{ editorial.nombre }}
-                            </option>
-                        </select>
-                        <button @click="mostrarNuevaEditorial">Mostrar Nueva Editorial</button>
-
-                        <!-- Mostrar el campo de nueva editorial solo si es visible -->
-                        <div v-if="nuevaEditorialVisible">
-                            <label for="nuevaEditorial" class="form-label">Nueva Editorial:</label>
-                            <input type="text" id="nuevaEditorial" v-model="nuevaEditorial">
-                        </div>
+                    <label for="editorial" class="form-label">Editorial:</label>
+                    <select v-model="editorialSeleccionada" class="m-4 p-1" name="editorialSeleccionada">...</select>
+                    <button @click="mostrarNuevaEditorial">Mostrar Nueva Editorial</button>
+                    <!-- Mostrar el campo de nueva editorial solo si es visible -->
+                    <div v-if="nuevaEditorialVisible">
+                        <label for="nuevaEditorial" class="form-label">Nueva Editorial:</label>
+                        <input type="text" id="nuevaEditorial" v-model="nuevaEditorial">
                     </div>
+
                     <div>
                         <label for="genero" class="form-label">Género:</label>
                         <select v-model="genero" id="genero" name="genero" required>
@@ -96,7 +90,7 @@
                     <div class="mb-3">
                         <label for="fechaDeEdicion" class="form-label">Fecha de Edición:</label>
                         <input type="date" class="form-control" id="fechaDeEdicion" name="fechaDeEdicion"
-                            value="mm/aaaa" v-model="fechaDeEdicion" required>
+                             v-model="fechaDeEdicion" required>
                     </div>
 
                     <!-- Autor -->

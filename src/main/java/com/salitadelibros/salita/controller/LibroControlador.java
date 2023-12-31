@@ -1,13 +1,8 @@
 package com.salitadelibros.salita.controller;
 
-import com.salitadelibros.salita.models.LibroIlustrador;
-import com.salitadelibros.salita.models.LibroAutor;
+import com.salitadelibros.salita.models.*;
 import com.salitadelibros.salita.dtos.EditorialDTO;
 import com.salitadelibros.salita.dtos.LibroDTO;
-import com.salitadelibros.salita.models.Autor;
-import com.salitadelibros.salita.models.Editorial;
-import com.salitadelibros.salita.models.Ilustrador;
-import com.salitadelibros.salita.models.Libro;
 import com.salitadelibros.salita.repositories.AutorRepositorio;
 import com.salitadelibros.salita.repositories.EditorialRepositorio;
 import com.salitadelibros.salita.repositories.IlustradorRepositorio;
@@ -20,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,6 +90,52 @@ public class LibroControlador {
                 return ResponseEntity.badRequest().body("Debes asociar al menos un ilustrador al libro");
             }
 
+            // Guardar Titulo
+            String titulo = libro.getTitulo();
+            if(titulo == null){
+                return ResponseEntity.badRequest().body("El TITULO del libro es obligatoria");
+            }
+            // Asignar titulo al libro
+            libro.setTitulo(titulo);
+
+            // Fecha de Edición
+            LocalDate fechaDeEdicion = libro.getFechaDeEdicion();
+            if (fechaDeEdicion == null) {
+                return ResponseEntity.badRequest().body("La fecha de edición del libro es obligatoria");
+            }
+            // Asignar la fecha de edición al libro
+            libro.setFechaDeEdicion(fechaDeEdicion);
+
+            // Guardar Editorial
+            Editorial editorial = libro.getEditorial();
+            if (editorial != null) {
+                if (editorial.getId() == null) {
+                    // La editorial es nueva
+                    servicioComun.saveOrUpdateEditorial(editorial);
+                }
+            }
+            // Asignar la editorial al libro
+            libro.setEditorial(editorial);
+
+            // Guardar el Género (Enum)
+            Genero genero = libro.getGenero();
+            libro.setGenero(genero);
+
+            // Guardar las Categorias
+            List<String> categorias = libro.getCategorias();
+            if (categorias != null && !categorias.isEmpty()) {
+                // Asignar las categorías al libro
+                libro.setCategorias(categorias);
+            }
+
+            // Gurdar ISBN
+            String isbn = libro.getIsbn();
+            if (isbn == null || isbn.isEmpty()){
+                return ResponseEntity.badRequest().body("El ISBN es obligatorio");
+            }
+            // Asignar ISBN al libro
+            libro.setIsbn(isbn);
+
 
             // Guardar Ilustradores
             Set<Ilustrador> ilustradores = libro.getIlustradores()
@@ -103,7 +145,7 @@ public class LibroControlador {
 
             for (Ilustrador ilustrador : ilustradores) {
                 if (ilustrador.getId() == null) {
-                    ilustradorRepositorio.save(ilustrador);
+                    servicioComun.saveOrUpdateIlustrador(ilustrador);
                 }
             }
 
@@ -115,16 +157,19 @@ public class LibroControlador {
 
             for (Autor autor : autores) {
                 if (autor.getId() != 0) {
-                    autorRepositorio.save(autor);
+                    servicioComun.saveOrUpdateAutor(autor);
+
                 }
             }
+
+            // Guardar libro
             servicioComun.saveOrUpdateLibro(libro);
+
             return ResponseEntity.ok("Libro guardado o actualizado exitosamente");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar el libro: " + e.getMessage());
         }
     }
-
 
 }

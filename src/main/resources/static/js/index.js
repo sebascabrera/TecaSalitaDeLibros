@@ -3,7 +3,7 @@ Vue.createApp({
         return {
             titulo: '',
             genero: '',
-            categorias: '',
+            categorias: [],
             fechaDeEdicion: '',
 
             editorialSeleccionada: '',
@@ -82,19 +82,28 @@ Vue.createApp({
         enviarFormulario() {
             // Crear el objeto que se enviará al backend
             const libroData = {
+            titulo: this.titulo,
+
+            fechaDeEdicion: this.fechaDeEdicion,
+
+ editorial: this.nuevaEditorialVisible
+    ? { nombre: this.nuevaEditorial }  // Nueva editorial
+    : { id: this.editorialSeleccionada },  // Editorial existente
+
+const categoriasLista = this.categorias.split(',').map(categoria => categoria.trim());
+    libroData.categorias = categoriasLista;
+
               ilustrador: this.ilustradorSeleccionado
                 ? { id: this.ilustradorSeleccionado }  // Si se selecciona un ilustrador existente
                 : {
                     nombreIlustrador: this.nuevoIlustrador.nombreIlustrador,
                     apellidoIlustrador: this.nuevoIlustrador.apellidoIlustrador
                   },  // Si se ingresa un nuevo ilustrador
-              titulo: this.titulo,
-              editorial: this.nuevaEditorialVisible
-                ? { nombre: this.nuevaEditorial }  // Nueva editorial
-                : { id: this.editorialSeleccionada },
+
+
               genero: this.genero,
               categorias: this.categorias.split(',').map(categoria => categoria.trim()), // Convertir a lista
-              fechaDeEdicion: this.formatearFecha(this.fechaDeEdicion),
+
               autor: this.autorSeleccionado
                 ? { id: this.autorSeleccionado }
                 : {

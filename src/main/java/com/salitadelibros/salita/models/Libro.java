@@ -15,45 +15,41 @@ public class Libro {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
 
-    @Column(name = "fecha_de_edicion")
-    private LocalDate fechaDeEdicion;
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "libro", cascade = CascadeType.ALL)
-    private Set<LibroIlustrador> ilustradores = new HashSet<>();
-
     @Column(name = "Titulo", nullable = false)
     private String titulo;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "libro", cascade = CascadeType.ALL)
-    private Set<LibroAutor> autores = new HashSet<>();
+    @Column(name = "fecha_de_edicion")
+    private LocalDate fechaDeEdicion;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
+
     @Enumerated(EnumType.STRING)
     private Genero genero;
-
     @ElementCollection
     private List<String> categorias;
 
     private String isbn;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "libro", cascade = CascadeType.ALL)
+    private Set<LibroIlustrador> ilustradores = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "libro", cascade = CascadeType.ALL)
+    private Set<LibroAutor> autores = new HashSet<>();
 
     // Constructores
 
     public Libro() {
     }
 
-    public Libro(String titulo, Editorial editorial, Genero genero, List<String> categorias, LocalDate fechaDeEdicion, String isbn) {
+    public Libro(String titulo, LocalDate fechaDeEdicion, Editorial editorial, Genero genero, List<String> categorias, String isbn) {
         this.titulo = titulo;
         this.fechaDeEdicion = fechaDeEdicion;
-
         this.editorial = editorial;
         this.genero = genero;
         this.categorias = categorias;
         this.isbn= isbn;
     }
-
-
 
     // getters
     // id tiene solo get
@@ -98,7 +94,6 @@ public class Libro {
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-
 
     public void setEditorial(Editorial editorial) {
         this.editorial = editorial;
