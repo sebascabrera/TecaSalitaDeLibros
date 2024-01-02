@@ -3,7 +3,6 @@ package com.salitadelibros.salita.dtos;
 import com.salitadelibros.salita.models.*;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -12,7 +11,7 @@ public class LibroDTO {
     private Long id;
     private String titulo;
     private Genero genero;
-    private List<String> categorias;
+    private Set<LibroCategoriaDTO> categorias;
     private EditorialDTO editorial;
     private Set<LibroAutorDTO> autores;
     private Set<LibroIlustradorDTO> ilustradores;
@@ -28,7 +27,10 @@ public class LibroDTO {
         id = libro.getId();
         titulo = libro.getTitulo();
         genero = libro.getGenero();
-        categorias = libro.getCategorias();
+        categorias = libro.getCategorias()
+                .stream()
+                .map(libroCategoria -> new LibroCategoriaDTO(libroCategoria))
+                .collect(Collectors.toSet());
         editorial = new EditorialDTO(libro.getEditorial());
         autores = libro.getAutores()
                 .stream()
@@ -57,7 +59,7 @@ public class LibroDTO {
         return genero;
     }
 
-    public List<String> getCategorias() {
+    public Set<LibroCategoriaDTO> getCategorias() {
         return categorias;
     }
 

@@ -26,7 +26,7 @@ public class EditorialControlador {
         return ResponseEntity.ok("Editorial guardada o actualizada exitosamente");
     }
 
-    @GetMapping("/editorial")
+    @GetMapping("/editoriales")
     public List<Editorial> getEditoriales(){
         return editorialServicio.getEditoriales();
     }

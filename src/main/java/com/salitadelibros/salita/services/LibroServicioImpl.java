@@ -1,6 +1,7 @@
 package com.salitadelibros.salita.services;
 
 import com.salitadelibros.salita.models.Libro;
+import com.salitadelibros.salita.models.LibroCategoria;
 import com.salitadelibros.salita.repositories.LibroRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,12 +37,5 @@ public class LibroServicioImpl implements LibroServicio {
         libroRepositorio.deleteById(libroId);
     }
 
-    @Override
-    public List<String> getCategorias() {
-        List<Libro> libros = libroRepositorio.findAll();
-        return libros.stream()
-                .flatMap(libro -> libro.getCategorias().stream())
-                .distinct()
-                .collect(Collectors.toList());
-    }
+
 }

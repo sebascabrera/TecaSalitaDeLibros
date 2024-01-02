@@ -26,8 +26,8 @@ public class Libro {
 
     @Enumerated(EnumType.STRING)
     private Genero genero;
-    @ElementCollection
-    private List<String> categorias;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "libro", cascade = CascadeType.ALL)
+    private Set<LibroCategoria> categorias = new HashSet<>();
 
     private String isbn;
 
@@ -42,12 +42,11 @@ public class Libro {
     public Libro() {
     }
 
-    public Libro(String titulo, LocalDate fechaDeEdicion, Editorial editorial, Genero genero, List<String> categorias, String isbn) {
+    public Libro(String titulo, LocalDate fechaDeEdicion, Editorial editorial, Genero genero, String isbn) {
         this.titulo = titulo;
         this.fechaDeEdicion = fechaDeEdicion;
         this.editorial = editorial;
         this.genero = genero;
-        this.categorias = categorias;
         this.isbn= isbn;
     }
 
@@ -77,7 +76,7 @@ public class Libro {
         return genero;
     }
 
-    public List<String> getCategorias() {
+    public Set<LibroCategoria> getCategorias() {
         return categorias;
     }
 
@@ -103,10 +102,6 @@ public class Libro {
         this.genero = genero;
     }
 
-    public void setCategorias(List<String> categorias) {
-        this.categorias = categorias;
-    }
-
     public void setFechaDeEdicion(LocalDate fechaDeEdicion) {
         this.fechaDeEdicion = fechaDeEdicion;
     }
@@ -127,5 +122,8 @@ public class Libro {
         libroIlustrador.setLibro(this);
         ilustradores.add(libroIlustrador);
     }
-
+    public void addLibroCategoria(LibroCategoria libroCategoria){
+        libroCategoria.setLibro(this);
+        categorias.add(libroCategoria);
+    }
 }

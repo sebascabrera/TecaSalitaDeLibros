@@ -3,10 +3,7 @@ package com.salitadelibros.salita.controller;
 import com.salitadelibros.salita.models.*;
 import com.salitadelibros.salita.dtos.EditorialDTO;
 import com.salitadelibros.salita.dtos.LibroDTO;
-import com.salitadelibros.salita.repositories.AutorRepositorio;
-import com.salitadelibros.salita.repositories.EditorialRepositorio;
-import com.salitadelibros.salita.repositories.IlustradorRepositorio;
-import com.salitadelibros.salita.repositories.LibroRepositorio;
+import com.salitadelibros.salita.repositories.*;
 import com.salitadelibros.salita.services.LibroServicio;
 import com.salitadelibros.salita.services.LibroServicioImpl;
 import com.salitadelibros.salita.services.ServicioComun;
@@ -38,6 +35,8 @@ public class LibroControlador {
     @Autowired
     private AutorRepositorio autorRepositorio;
     @Autowired
+    CategoriaRepositorio categoriaRepositorio;
+    @Autowired
     private ServicioComun servicioComun;
 
     @GetMapping("/libros")
@@ -49,10 +48,10 @@ public class LibroControlador {
                 .map(libro -> new LibroDTO((Libro) libro))
                 .collect(Collectors.toList());
 
-        List<String> categorias = libroServicio.getCategorias();
+      //  List<String> categorias = libroServicio.getCategorias();
 
-        response.put("libros", libroDTOList);
-        response.put("categoriasexistentes", categorias);
+      //  response.put("libros", libroDTOList);
+      //  response.put("categoriasexistentes", categorias);
 
         return response;
     }
@@ -122,10 +121,14 @@ public class LibroControlador {
             libro.setGenero(genero);
 
             // Guardar las Categorias
-            List<String> categorias = libro.getCategorias();
-            if (categorias != null && !categorias.isEmpty()) {
-                // Asignar las categorías al libro
-                libro.setCategorias(categorias);
+          Set<Categoria> categorias = libro.getCategorias()
+                  .stream()
+                  .map(LibroCategoria::getCategoria)
+                  .collect(Collectors.toSet());
+            for (Categoria categoria : categorias){
+                if(categoria.getId() == null){
+                    servicioComun.saveOrUpdateCategoria(categoria);
+                }
             }
 
             // Gurdar ISBN

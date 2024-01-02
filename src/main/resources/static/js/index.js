@@ -3,7 +3,12 @@ Vue.createApp({
         return {
             titulo: '',
             genero: '',
+
+            categoriaExistente: '',
             categorias: [],
+            nuevaCategoria: {
+                palabraCategoria:''
+            },
             fechaDeEdicion: '',
 
             editorialSeleccionada: '',
@@ -27,13 +32,11 @@ Vue.createApp({
         }
     },
     created() {
-        this.loadData();
+        this.loadCategorias();
         this.loadAutores();
         this.loadEditoriales();
         this.loadIlustradores();
-        flatpickr("#fechaDeEdicion", {
-            dateFormat: "m/Y",
-        });
+       
     },
     methods: {
         loadAutores() {
@@ -46,7 +49,7 @@ Vue.createApp({
                 });
         },
         loadEditoriales() {
-            axios.get("/api/editoriales/editorial")
+            axios.get("/api/editoriales/editoriales")
                 .then(response => {
                     this.editoriales = response.data;
                 })
@@ -63,11 +66,10 @@ Vue.createApp({
                     console.error("Error loading ilustradores: ", error);
                 });
         },
-        loadData() {
-            axios.get("api/libros/libros")
+        loadCategorias() {
+            axios.get("api/categorias/categorias")
                 .then((response) => {
-                    this.libros = response.data;
-                    this.categoriasexistentes = response.data.categorias;
+                    this.categorias = response.data;
                 })
                 .catch((error) => {
                     alert("Error loading libros: " + error);
@@ -90,8 +92,9 @@ Vue.createApp({
     ? { nombre: this.nuevaEditorial }  // Nueva editorial
     : { id: this.editorialSeleccionada },  // Editorial existente
 
-const categoriasLista = this.categorias.split(',').map(categoria => categoria.trim());
-    libroData.categorias = categoriasLista;
+    categoria: this.categoriaExistente
+    ? { id: this.categoriaExistente }
+    : { palabraCategoria: this.nuevaCategoria.palabraCategoria },
 
               ilustrador: this.ilustradorSeleccionado
                 ? { id: this.ilustradorSeleccionado }  // Si se selecciona un ilustrador existente
@@ -102,7 +105,8 @@ const categoriasLista = this.categorias.split(',').map(categoria => categoria.tr
 
 
               genero: this.genero,
-              categorias: this.categorias.split(',').map(categoria => categoria.trim()), // Convertir a lista
+              categorias: this.categoriasexistentes ? this.categoriasexistentes.map(categoria => categoria.id) : [], // Convertir a lista
+ 
 
               autor: this.autorSeleccionado
                 ? { id: this.autorSeleccionado }

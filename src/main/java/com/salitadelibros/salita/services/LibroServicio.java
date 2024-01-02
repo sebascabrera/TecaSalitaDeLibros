@@ -11,5 +11,5 @@ public interface LibroServicio {
     Optional<Libro> getLibro(Long id);
     void saveOrUpdate(Libro libro);
     void delete(Long id);
-    List<String> getCategorias();
+
 }

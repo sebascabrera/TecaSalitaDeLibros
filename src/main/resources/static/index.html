@@ -82,11 +82,23 @@
                     </div>
 
                     <!-- Categorías -->
+                    <!-- Campo de selección para Categorías existentes -->
                     <div class="mb-3">
-                        <label for="categorias" class="form-label">Categorías (separadas por comas):</label>
-                        <input type="text" class="form-control" id="categorias" name="categorias" v-model="categorias"
-                            required>
+                        <label for="categoriaExistente" class="form-label">Categorías Existentes:</label>
+                        <select v-model="categoriaExistente" class="form-select" id="categoriaExistente" name="categoriaExistente">
+                            <option value="" disabled>Seleccionar Categorías Existente</option>
+                            <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">{{ categoria.palabraCategoria }}</option>
+
+                        </select>                       
                     </div>
+                    <!-- Campos para ingresar una nueva Categorías -->
+                    <div v-if="!categoriaExistente">
+                        <div class="mb-3">
+                            <label for="nombreNuevaCategoria"class="form-label">Nueva categoria</label>
+                            <input v-model="nuevaCategoria.palabraCategoria" type="text"class="form-control" id="nombreNuevaCategoria" name="nombreNuevaCategoria" required>
+                        </div>
+                    </div>
+                     <!-- fecha De Edicion -->
                     <div class="mb-3">
                         <label for="fechaDeEdicion" class="form-label">Fecha de Edición:</label>
                         <input type="date" class="form-control" id="fechaDeEdicion" name="fechaDeEdicion"
