@@ -49,7 +49,7 @@ public class Editorial {
 
     public void addLibro(Libro libro) {
         this.libros.add(libro); // agrego libro al Set<libro>
-        libro.setEditorial(this);// agrego la editorial al libro
+        libro.addEditorial(this) ;// agrego la editorial al libro
 
     }
 

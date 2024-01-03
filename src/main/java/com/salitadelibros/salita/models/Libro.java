@@ -42,10 +42,9 @@ public class Libro {
     public Libro() {
     }
 
-    public Libro(String titulo, LocalDate fechaDeEdicion, Editorial editorial, Genero genero, String isbn) {
+    public Libro(String titulo, LocalDate fechaDeEdicion, Genero genero, String isbn) {
         this.titulo = titulo;
         this.fechaDeEdicion = fechaDeEdicion;
-        this.editorial = editorial;
         this.genero = genero;
         this.isbn= isbn;
     }
@@ -94,10 +93,6 @@ public class Libro {
         this.titulo = titulo;
     }
 
-    public void setEditorial(Editorial editorial) {
-        this.editorial = editorial;
-    }
-
     public void setGenero(Genero genero) {
         this.genero = genero;
     }
@@ -125,5 +120,10 @@ public class Libro {
     public void addLibroCategoria(LibroCategoria libroCategoria){
         libroCategoria.setLibro(this);
         categorias.add(libroCategoria);
+    }
+
+    public void addEditorial(Editorial editorial){
+        this.editorial = editorial;
+        editorial.getLibros().add(this);
     }
 }

@@ -111,10 +111,11 @@ public class LibroControlador {
                 if (editorial.getId() == null) {
                     // La editorial es nueva
                     servicioComun.saveOrUpdateEditorial(editorial);
+                    editorial.addLibro(libro);
                 }
             }
             // Asignar la editorial al libro
-            libro.setEditorial(editorial);
+            libro.addEditorial(editorial);
 
             // Guardar el Género (Enum)
             Genero genero = libro.getGenero();
@@ -128,6 +129,7 @@ public class LibroControlador {
             for (Categoria categoria : categorias){
                 if(categoria.getId() == null){
                     servicioComun.saveOrUpdateCategoria(categoria);
+                    libro.addLibroCategoria(new LibroCategoria(libro, categoria));
                 }
             }
 
@@ -149,6 +151,7 @@ public class LibroControlador {
             for (Ilustrador ilustrador : ilustradores) {
                 if (ilustrador.getId() == null) {
                     servicioComun.saveOrUpdateIlustrador(ilustrador);
+                    libro.addLibroIlustrador(new LibroIlustrador(libro, ilustrador));
                 }
             }
 
@@ -161,7 +164,7 @@ public class LibroControlador {
             for (Autor autor : autores) {
                 if (autor.getId() != 0) {
                     servicioComun.saveOrUpdateAutor(autor);
-
+                    libro.addLibroAutor(new LibroAutor(libro, autor));
                 }
             }
 

@@ -39,6 +39,8 @@ public class SalitaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+
+
 		// Crear una editorial
 		/*Editorial editorial = new Editorial("Editorial XYZ");
 		editorialRepository.save(editorial);
@@ -52,7 +54,7 @@ public class SalitaApplication implements CommandLineRunner {
 		ilustradorRepository.save(ilustrador);
 
 		// Crear un libro con autor, ilustrador y editorial
-		Libro libro = new Libro("Libro 1", editorial, Genero.NARRATIVA, Arrays.asList("Aventura", "Fantasía"), 2020);
+		Libro libro = new Libro("Renata", 25/05/1984, );
 		libro.addLibroAutor(new LibroAutor(libro, autor));
 		libro.addLibroIlustrador(new LibroIlustrador(libro, ilustrador));
 		libroRepository.save(libro);
