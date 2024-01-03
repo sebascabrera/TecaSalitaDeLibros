@@ -15,6 +15,11 @@ Vue.createApp({
       axios.post('/api/autores', this.nuevoAutor)
         .then(response => {
           console.log(response.data);
+            // Limpiar el formulario
+            this.nuevoAutor.nombreAutor = '';
+            this.nuevoAutor.apellidoAutor = '';
+            // Mostrar mensaje de "Registro correcto"
+            alert('Registro correcto');
           // Puedes redirigir a otra página o realizar otras acciones después de guardar
         })
         .catch(error => {
@@ -22,4 +27,5 @@ Vue.createApp({
         });
     }
   }
+
 }).mount('#autor');
