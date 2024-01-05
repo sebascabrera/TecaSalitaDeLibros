@@ -52,13 +52,14 @@ Vue.createApp({
         },
         loadEditoriales() {
             axios.get("/api/editoriales/editoriales")
-                .then(response => {
-                    this.editoriales = response.data;
-                })
-                .catch(error => {
-                    console.error("Error loading editoriales: ", error);
-                });
-        },
+              .then(response => {
+                console.log("Datos de editoriales:", response.data);
+                this.editoriales = response.data;
+              })
+              .catch(error => {
+                console.error("Error loading editoriales: ", error);
+              });
+          },
         loadIlustradores() {
             axios.get("/api/ilustradores/ilustradores")
                 .then(response => {

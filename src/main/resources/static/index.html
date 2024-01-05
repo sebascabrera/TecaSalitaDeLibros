@@ -67,15 +67,16 @@
                     <select v-model="editorialExistente" class="form-select" name="editorialExistente"
                         id="editorialExistente">
                         <option value="" disabled>Seleccionar Editorial Existente</option>
-                        <option v-for="editorial in Editoriales" :key="editorial.id" :value="editorial.id">{{
-                            editorial.nombre }}</option>
+                        <option v-for="editorial in editoriales" :key="editorial.id" :value="editorial.id">
+                            {{ editorial.nombre }}
+                        </option>
                     </select>
-
                     <!-- Mostrar el campo de nueva editorial solo si es visible -->
                     <div>
                         <button type="button" @click="nuevaEditorialForm" class="btn btn-secondary">Registrar Nueva
                             Editorial</button>
                     </div>
+
 
                     <!-- genero -->
                     <div>
