@@ -18,13 +18,16 @@ Vue.createApp({
                 }
             };
             axios.post('/auth/signin', `email=${this.email}&password=${this.password}`, config)
-                .then(response => window.location.href = "/static/index.html")
+                .then(response => window.location.href = "../../index.html")
                 .catch(() => {
                     this.errorMsg = "Sign in failed, check the information";
                     this.errorToast.show();
                 });
         },
-  
+        registroLink: function(event) {
+            event.preventDefault();
+            window.location.href = '../registro/registro.html'; 
+        }
     },
     mounted: function () {
         this.errorToast = new bootstrap.Toast(document.getElementById('danger-toast'));

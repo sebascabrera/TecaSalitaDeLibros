@@ -32,8 +32,12 @@
                     <input v-model="nuevoIlustrador.apellidoIlustrador" type="text" id="apellidoIlustrador" required>
                     <p></p>
                 </div>
-                <div class="form-control"> 
-                    <button type="submit">Guardar</button>
+                <div class="form-control">
+                    <button type="submit" class="btnGuardar">Guardar</button>
+                </div>
+                <div>
+                    <button type="button" @click="volverAlFormulario" class="btn btn-secondary btnVolver">Volver al formulario
+                        </button>
                 </div>
                 </form>
             

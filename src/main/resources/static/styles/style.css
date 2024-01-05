@@ -11,6 +11,7 @@ body {
     background-color: #f2e9e4;
      /* Tono de melocotón claro */
     font-family: 'Roboto Slab', serif;
+    
 }
 
 /* Contenedor principal */
@@ -21,6 +22,8 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sutil sombra */
+    display: flex;
+    flex-direction: column;
 }
 
 /* Encabezado y título */
@@ -54,6 +57,7 @@ input {
     background: #f0b5af; /* Tono de rosa melocotón */
     color: #273a47;
     padding: 10px 20px;
+    margin: 20px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -63,7 +67,11 @@ input {
 .btn:hover {
     background: #d3948f; /* Tono de rosa melocotón más oscuro al pasar el ratón */
 }
-
+.btnGuardar{
+  
+  align-items: flex-start;
+  
+}
 /* Tabla de libros */
 .table {
     margin-top: 20px;

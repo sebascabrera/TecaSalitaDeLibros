@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../styles/editorial.css">
+    <title>Editoriales</title>
+</head>
+
+<body>
+    <div id="editorial">
+        <div class="h1">
+            <h1>Salita de Editoriales</h1>
+        </div>
+        <div class="contenedor">
+            <div class="cabecera">
+                <h2>Formulario Nueva Editorial</h2>
+            </div>
+            <div>
+                <form @submit.prevent="guardarNuevaEditorial" id="formulario">
+                    <div class="form-control">
+                        <label for="nombre">Editorial:</label>
+                        <input v-model="nuevaEditorial.nombre" type="text" id="nombre" required>
+                        <p></p>
+                    </div>
+                    <div class="form-control">
+                        <button type="submit"class="btnGuardar">Guardar</button>
+                    </div>
+	  <div>
+                        <button type="button" @click="volverAlFormulario" class="btn btn-secondary btnVolver">Volver al formulario
+                            </button>
+                     </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
+    <script src="./edtorial.js"></script>
+</body>
+
+</html>

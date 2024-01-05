@@ -1,32 +1,53 @@
-// ilustrador.js
-
 const app = Vue.createApp({
-    data() {
-      return {
-        nuevoIlustrador: {
-          nombreIlustrador: '',
-          apellidoIlustrador: '',
-        },
-      };
-    },
-    methods: {
-      guardarNuevoIlustrador() {
-        // Aquí utilizas Axios para enviar la solicitud POST al endpoint correspondiente
-        axios.post('/api/ilustradores', this.nuevoIlustrador)
-          .then(response => {
-           // Limpiar el formulario
-           this.nuevoIlustrador.nombreIlustrador= '';
-           this.nuevoIlustrador.apellidoIlustrador='';
-           alert('Registro correcto');
-            console.log(response.data);
-          })
-          .catch(error => {
-            // Manejar el error, si es necesario
-            console.error(error);
-          });
+  data() {
+    return {
+      nuevoIlustrador: {
+        nombreIlustrador: '',
+        apellidoIlustrador: '',
       },
+    };
+  },
+  methods: {
+    capitalizarPalabra(palabra) {
+      // Capitalizar la primera letra y convertir las siguientes a minúsculas
+      return palabra.charAt(0).toUpperCase() + palabra.slice(1).toLowerCase();
     },
-  });
-  
-  app.mount('#ilustrador');
+    capitalizarNombreCompleto(nombreCompleto) {
+      // Dividir el nombre completo en palabras
+      const palabras = nombreCompleto.split(' ');
+
+      // Capitalizar cada palabra
+      const palabrasCapitalizadas = palabras.map(this.capitalizarPalabra);
+
+      // Unir las palabras capitalizadas de nuevo en un nombre completo
+      return palabrasCapitalizadas.join(' ');
+    },
+    volverAlFormulario(){
+      window.location.href = '../../index.html';
+  },
+    guardarNuevoIlustrador() {
+      // Capitalizar nombres y apellidos antes de enviarlos a la base de datos
+      this.nuevoIlustrador.nombreIlustrador = this.capitalizarNombreCompleto(this.nuevoIlustrador.nombreIlustrador);
+      this.nuevoIlustrador.apellidoIlustrador = this.capitalizarNombreCompleto(this.nuevoIlustrador.apellidoIlustrador);
+
+      // Resto del código para enviar a la base de datos
+      axios.post('/api/ilustradores', this.nuevoIlustrador)
+        .then(response => {
+          console.log(response.data);
+          // Limpiar el formulario
+          this.nuevoIlustrador.nombreIlustrador = '';
+          this.nuevoIlustrador.apellidoIlustrador = '';
+          // Mostrar mensaje de "Registro correcto"
+          alert('Registro correcto');
+          // Redirigir a otra página o realizar otras acciones después de guardar
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+  },
+});
+
+app.mount('#ilustrador');
+
   

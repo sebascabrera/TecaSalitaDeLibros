@@ -24,9 +24,9 @@ public class CaetgoriaControlador {
         return categoriaServicio.getCategorias();
     }
 
-    @PostMapping("/guardarCategoria")
-    public ResponseEntity<String> saveOrUpdateCategoria(@RequestBody Categoria categoria) {
-        servicioComun.saveOrUpdateCategoria(categoria);
+    @PostMapping
+    public ResponseEntity<String> saveOrUpdateCategoria(@RequestBody Categoria nuevaCategoria) {
+        servicioComun.saveOrUpdateCategoria(nuevaCategoria);
         return ResponseEntity.ok("Categoria guardada o actualizada exitosamente");
     }
 }

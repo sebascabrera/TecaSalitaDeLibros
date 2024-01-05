@@ -11,13 +11,15 @@ Vue.createApp({
             },
             fechaDeEdicion: '',
 
-            editorialSeleccionada: '',
-            editoriales: [],
-            nuevaEditorialVisible: false,
-            nuevaEditorial: '',
+            editorialExistente: '',
+            editoriales: [],           
+            nuevaEditorial:{
+                nombre:''
+            } ,
 
             autorSeleccionado: '',
             autores: [],
+            filtroAutor: '',
             nuevoAutor: {
                 nombreAutor: '',
                 apellidoAutor: ''
@@ -75,12 +77,19 @@ Vue.createApp({
                     alert("Error loading libros: " + error);
                 });
         },
-        mostrarNuevaEditorial() {
-            // Al hacer clic en el botón, muestra el campo para una nueva editorial
-            this.nuevaEditorialVisible = true;
-            // Limpia la selección de editorial existente
-            this.editorialSeleccionada = '';
+        nuevaEditorialForm(){
+            window.location.href = '../web/editorial/editorial.html'
         },
+        nuevoAutorForm() {
+            window.location.href = '../web/autor/autor.html'; 
+        },
+        nuevoIlustradorForm() {
+            window.location.href = '../web/ilustrador/ilustrador.html'; 
+        },
+        nuevaCategoriaForm(){
+            window.location.href = '../web/categoria/categoria.html';
+        },
+
         enviarFormulario() {
             // Crear el objeto que se enviará al backend
             const libroData = {
@@ -88,9 +97,9 @@ Vue.createApp({
 
             fechaDeEdicion: this.fechaDeEdicion,
 
- editorial: this.nuevaEditorialVisible
-    ? { nombre: this.nuevaEditorial }  // Nueva editorial
-    : { id: this.editorialSeleccionada },  // Editorial existente
+ editorial: this.editorialExistente
+    ? { nombre: this.nuevaEditorial.nombre }  // Nueva editorial
+    : { id: this.editorialExistente },  // Editorial existente
 
     categoria: this.categoriaExistente
     ? { id: this.categoriaExistente }
@@ -106,7 +115,7 @@ Vue.createApp({
 
               genero: this.genero,
               categorias: this.categoriasexistentes ? this.categoriasexistentes.map(categoria => categoria.id) : [], // Convertir a lista
- 
+              editoriales: this.editorialExistente ? this.editorialExistente.map(editorial => editorial.id) : [],
 
               autor: this.autorSeleccionado
                 ? { id: this.autorSeleccionado }
@@ -131,7 +140,7 @@ Vue.createApp({
                 this.ilustradorSeleccionado = '';
                 this.nuevoIlustrador.nombreIlustrador = '';
                 this.nuevoIlustrador.apellidoIlustrador = '';
-                this.editorialSeleccionada = '';
+                this.editoriales = '';
                 this.genero = '';
                 this.categorias = '';
                 this.fechaDeEdicion = '';              
@@ -144,6 +153,13 @@ Vue.createApp({
           },
         formatearFecha(fecha) {
             return fecha ? new Date(fecha).toISOString().split('T')[0] : null;
+        }
+    }, computed: {
+        filteredAutores() {
+            const filtro = this.filtroAutor.toLowerCase();
+            return this.autores.filter(autor =>
+                autor.apellidoAutor.toLowerCase().includes(filtro) || autor.nombreAutor.toLowerCase().includes(filtro)
+            );
         }
     }
 }).mount("#formularioLibro");

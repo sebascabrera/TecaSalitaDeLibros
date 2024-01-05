@@ -63,15 +63,21 @@
                     </div>
 
                     <!-- Editorial -->
-                    <label for="editorial" class="form-label">Editorial:</label>
-                    <select v-model="editorialSeleccionada" class="m-4 p-1" name="editorialSeleccionada">...</select>
-                    <button @click="mostrarNuevaEditorial">Mostrar Nueva Editorial</button>
+                    <label for="editorialExistente" class="form-label">Editorial Existente:</label>
+                    <select v-model="editorialExistente" class="form-select" name="editorialExistente"
+                        id="editorialExistente">
+                        <option value="" disabled>Seleccionar Editorial Existente</option>
+                        <option v-for="editorial in Editoriales" :key="editorial.id" :value="editorial.id">{{
+                            editorial.nombre }}</option>
+                    </select>
+
                     <!-- Mostrar el campo de nueva editorial solo si es visible -->
-                    <div v-if="nuevaEditorialVisible">
-                        <label for="nuevaEditorial" class="form-label">Nueva Editorial:</label>
-                        <input type="text" id="nuevaEditorial" v-model="nuevaEditorial">
+                    <div>
+                        <button type="button" @click="nuevaEditorialForm" class="btn btn-secondary">Registrar Nueva
+                            Editorial</button>
                     </div>
 
+                    <!-- genero -->
                     <div>
                         <label for="genero" class="form-label">Género:</label>
                         <select v-model="genero" id="genero" name="genero" required>
@@ -85,24 +91,24 @@
                     <!-- Campo de selección para Categorías existentes -->
                     <div class="mb-3">
                         <label for="categoriaExistente" class="form-label">Categorías Existentes:</label>
-                        <select v-model="categoriaExistente" class="form-select" id="categoriaExistente" name="categoriaExistente">
+                        <select v-model="categoriaExistente" class="form-select" id="categoriaExistente"
+                            name="categoriaExistente">
                             <option value="" disabled>Seleccionar Categorías Existente</option>
-                            <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">{{ categoria.palabraCategoria }}</option>
+                            <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">{{
+                                categoria.palabraCategoria }}</option>
 
-                        </select>                       
+                        </select>
                     </div>
                     <!-- Campos para ingresar una nueva Categorías -->
-                    <div v-if="!categoriaExistente">
-                        <div class="mb-3">
-                            <label for="nombreNuevaCategoria"class="form-label">Nueva categoria</label>
-                            <input v-model="nuevaCategoria.palabraCategoria" type="text"class="form-control" id="nombreNuevaCategoria" name="nombreNuevaCategoria" required>
-                        </div>
+                    <div>
+                        <button type="button" @click="nuevaCategoriaForm" class="btn btn-secondary">Registrar Nueva
+                            Categoria</button>
                     </div>
-                     <!-- fecha De Edicion -->
+                    <!-- fecha De Edicion -->
                     <div class="mb-3">
                         <label for="fechaDeEdicion" class="form-label">Fecha de Edición:</label>
                         <input type="date" class="form-control" id="fechaDeEdicion" name="fechaDeEdicion"
-                             v-model="fechaDeEdicion" required>
+                            v-model="fechaDeEdicion" required>
                     </div>
 
                     <!-- Autor -->
@@ -112,53 +118,42 @@
                         <select v-model="autorSeleccionado" class="form-select" id="autorSeleccionado"
                             name="autorSeleccionado">
                             <option value="" disabled>Seleccionar Autor Existente</option>
-                            <option v-for="autor in autores" :key="autor.id" :value="autor.id">{{ autor.nombreAutor }}
-                                {{ autor.apellidoAutor }}</option>
+                            <option v-for="autor in filteredAutores" :key="autor.id" :value="autor.id">
+                                {{ autor.apellidoAutor + ', ' + autor.nombreAutor }}
+                            </option>
                         </select>
                     </div>
+
                     <!-- Campos para ingresar un nuevo autor -->
-                    <div v-if="!autorSeleccionado">
-                        <div class="mb-3">
-                            <label for="nombreNuevoAutor" class="form-label">Nombre del Autor:</label>
-                            <input v-model="nuevoAutor.nombreAutor" type="text" class="form-control"
-                                id="nombreNuevoAutor" name="nombreNuevoAutor" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="apellidoNuevoAutor" class="form-label">Apellido del Autor:</label>
-                            <input v-model="nuevoAutor.apellidoAutor" type="text" class="form-control"
-                                id="apellidoNuevoAutor" name="apellidoNuevoAutor" required>
-                        </div>
+                    <!--  <a v-on:click="nuevoAutorForm($event)">Registrar Nuevo Autor</a>-->
+                    <div>
+                        <button type="button" @click="nuevoAutorForm" class="btn btn-secondary">Registrar Nuevo
+                            Autor</button>
                     </div>
+
 
                     <!-- ilustradores -->
                     <!-- Campo de selección para ilustradores existentes -->
-                    <div class="mb-3" v-if="ilustradores && ilustradores.length">
+                    <div class="mb-3">
                         <label for="ilustradorSeleccionado" class="form-label">Seleccionar Ilustrador Existente:</label>
                         <select v-model="ilustradorSeleccionado" class="form-select" id="ilustradorSeleccionado"
                             name="ilustradorSeleccionado">
                             <option value="" disabled>Seleccionar Ilustrador Existente</option>
                             <option v-for="ilustrador in ilustradores" :key="ilustrador.id" :value="ilustrador.id">
-                                {{ ilustrador.nombreIlustrador }} {{ ilustrador.apellidoIlustrador }}
+                                {{ ilustrador.nombreIlustrador + ', ' + ilustrador.apellidoIlustrador }}
                             </option>
                         </select>
                     </div>
                     <!-- Campos para ingresar un nuevo ilustrador -->
-                    <div v-if="!ilustradorSeleccionado">
-                        <div class="mb-3">
-                            <label for="nombreNuevoIlustrador" class="form-label">Nombre del Ilustrador:</label>
-                            <input v-model="nuevoIlustrador.nombreIlustrador" type="text" class="form-control"
-                                id="nombreNuevoIlustrador" name="nombreNuevoIlustrador" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="apellidoNuevoIlustrador" class="form-label">Apellido del Ilustrador:</label>
-                            <input v-model="nuevoIlustrador.apellidoIlustrador" type="text" class="form-control"
-                                id="apellidoNuevoIlustrador" name="apellidoNuevoIlustrador" required>
-                        </div>
+                    <div>
+                        <button type="button" @click="nuevoIlustradorForm" class="btn btn-secondary">Registrar Nuevo
+                            Ilustrador</button>
                     </div>
-
-                    <!-- Botón de envío -->
-                    <button type="button" @click="enviarFormulario" class="btn btn-primary">Guardar Libro</button>
-
+                    <div>
+                        <!-- Botón de envío -->
+                        <button type="button" @click="enviarFormulario" class="btn btn-primary btnGuardar">Guardar
+                            Libro</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -175,3 +170,5 @@
         crossorigin="anonymous"></script>
     <script src="./js/index.js"></script>
 </body>
+
+</html>
