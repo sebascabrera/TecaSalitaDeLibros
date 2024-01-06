@@ -110,7 +110,6 @@ public class LibroControlador {
             if (editorial != null) {
                 if (editorial.getId() == null) {
                     // La editorial es nueva
-                    servicioComun.saveOrUpdateEditorial(editorial);
                     editorial.addLibro(libro);
                 }
             }
@@ -128,7 +127,6 @@ public class LibroControlador {
                   .collect(Collectors.toSet());
             for (Categoria categoria : categorias){
                 if(categoria.getId() == null){
-                    servicioComun.saveOrUpdateCategoria(categoria);
                     libro.addLibroCategoria(new LibroCategoria(libro, categoria));
                 }
             }
@@ -150,7 +148,6 @@ public class LibroControlador {
 
             for (Ilustrador ilustrador : ilustradores) {
                 if (ilustrador.getId() == null) {
-                    servicioComun.saveOrUpdateIlustrador(ilustrador);
                     libro.addLibroIlustrador(new LibroIlustrador(libro, ilustrador));
                 }
             }
@@ -163,7 +160,6 @@ public class LibroControlador {
 
             for (Autor autor : autores) {
                 if (autor.getId() != 0) {
-                    servicioComun.saveOrUpdateAutor(autor);
                     libro.addLibroAutor(new LibroAutor(libro, autor));
                 }
             }
@@ -172,6 +168,7 @@ public class LibroControlador {
             servicioComun.saveOrUpdateLibro(libro);
 
             return ResponseEntity.ok("Libro guardado o actualizado exitosamente");
+
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar el libro: " + e.getMessage());

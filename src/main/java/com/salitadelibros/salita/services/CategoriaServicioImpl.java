@@ -30,4 +30,10 @@ public class CategoriaServicioImpl implements CategoriaServicio {
         categoriaRepositorio.deleteById(id);
     }
 
+    public Categoria findByPalabraCategoria(String palabraCategoria) {
+
+        return categoriaRepositorio.findByPalabraCategoria(palabraCategoria);
+    }
+
+
 }

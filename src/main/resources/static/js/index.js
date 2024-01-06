@@ -4,20 +4,20 @@ Vue.createApp({
             titulo: '',
             genero: '',
 
-            categoriaExistente: '',
+            categoriaExistente: [],
             categorias: [],
             nuevaCategoria: {
                 palabraCategoria:''
             },
             fechaDeEdicion: '',
 
-            editorialExistente: '',
+            editorialExistente: [],
             editoriales: [],           
             nuevaEditorial:{
                 nombre:''
             } ,
 
-            autorSeleccionado: '',
+            autorSeleccionado: [],
             autores: [],
             filtroAutor: '',
             nuevoAutor: {
@@ -32,18 +32,25 @@ Vue.createApp({
                 apellidoIlustrador: ''
             }
         }
-    },
+    }, 
+    watch: {
+        categoriaExistente: function(newValue, oldValue) {
+          this.manejarSeleccion();
+        },
+      },
     created() {
         this.loadCategorias();
         this.loadAutores();
         this.loadEditoriales();
         this.loadIlustradores();
        
+       
     },
     methods: {
         loadAutores() {
             axios.get("/api/autores/autores")
                 .then(response => {
+                    console.log("Datos de autores:", response.data);
                     this.autores = response.data;
                 })
                 .catch(error => {
@@ -63,6 +70,7 @@ Vue.createApp({
         loadIlustradores() {
             axios.get("/api/ilustradores/ilustradores")
                 .then(response => {
+                    console.log("Datos de ilustradores:", response.data);
                     this.ilustradores = response.data;
                 })
                 .catch(error => {
@@ -72,6 +80,7 @@ Vue.createApp({
         loadCategorias() {
             axios.get("api/categorias/categorias")
                 .then((response) => {
+                    console.log("Datos de categorias:", response.data);
                     this.categorias = response.data;
                 })
                 .catch((error) => {
@@ -90,6 +99,11 @@ Vue.createApp({
         nuevaCategoriaForm(){
             window.location.href = '../web/categoria/categoria.html';
         },
+        manejarSeleccion() {
+            console.log("Categorías seleccionadas:", this.categoriaExistente);
+            console.log("Categorías seleccionadas:", this.autorSeleccionado);
+          },
+         
 
         enviarFormulario() {
             // Crear el objeto que se enviará al backend
@@ -99,12 +113,13 @@ Vue.createApp({
             fechaDeEdicion: this.fechaDeEdicion,
 
  editorial: this.editorialExistente
-    ? { nombre: this.nuevaEditorial.nombre }  // Nueva editorial
-    : { id: this.editorialExistente },  // Editorial existente
-
+    ? { id: this.editorialExistente }  
+    : null,  
+    editoriales: this.editorialExistente,
     categoria: this.categoriaExistente
-    ? { id: this.categoriaExistente }
-    : { palabraCategoria: this.nuevaCategoria.palabraCategoria },
+  ? { id: this.categoriaExistente }
+  : null,
+  categorias: this.categoriaExistente ? this.categoriaExistente.map(categoria => categoria.id) : [], // Convertir a lista
 
               ilustrador: this.ilustradorSeleccionado
                 ? { id: this.ilustradorSeleccionado }  // Si se selecciona un ilustrador existente
@@ -115,15 +130,12 @@ Vue.createApp({
 
 
               genero: this.genero,
-              categorias: this.categoriasexistentes ? this.categoriasexistentes.map(categoria => categoria.id) : [], // Convertir a lista
-              editoriales: this.editorialExistente ? this.editorialExistente.map(editorial => editorial.id) : [],
+              
+             
 
-              autor: this.autorSeleccionado
-                ? { id: this.autorSeleccionado }
-                : {
-                    nombreAutor: this.nuevoAutor.nombreAutor,
-                    apellidoAutor: this.nuevoAutor.apellidoAutor
-                  }
+         //     autor: this.autorSeleccionado
+           //     ? { id: this.autorSeleccionado }
+             //   : null,
             };
           
             console.log("Datos enviados al servidor:", libroData);
@@ -135,12 +147,8 @@ Vue.createApp({
                 console.log("Libro guardado o actualizado exitosamente:", response.data);
                 // Restablece los campos del formulario o realiza otras acciones necesarias
                 this.titulo = '';
-                this.autorSeleccionado = '';
-                this.nuevoAutor.nombreAutor = '';
-                this.nuevoAutor.apellidoAutor = '';
-                this.ilustradorSeleccionado = '';
-                this.nuevoIlustrador.nombreIlustrador = '';
-                this.nuevoIlustrador.apellidoIlustrador = '';
+                this.autorSeleccionado = '';                
+                this.ilustradorSeleccionado = '';                
                 this.editoriales = '';
                 this.genero = '';
                 this.categorias = '';

@@ -8,17 +8,30 @@
 }
 
 body {
-    background-color: #f2e9e4;
+    background-color: #f1b8b8;
      /* Tono de melocotón claro */
     font-family: 'Roboto Slab', serif;
     
+}
+header {
+  display: flex;
+  flex-direction: row;
+    justify-content: space-evenly;
+    background-color: #efbbff;
+    padding: 10px 0;
+}
+.row{
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
 }
 
 /* Contenedor principal */
 #contenedorformularioLibro {
     max-width: 800px;
     margin: 20px auto;
-    background: #ead3cb; /* Fondo blanco roto */
+    background: #99f0b3; /* Fondo blanco roto */
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sutil sombra */
@@ -27,11 +40,16 @@ body {
 }
 
 /* Encabezado y título */
-h1, legend {
-    color: #445e68; /* Azul claro apagado */
-    text-align: center;
+h1{
+  display: flex;
+    color: #445e68; /* Azul claro apagado */   
     font-family: 'Raleway', sans-serif;
-
+  align-items: center;
+}
+h2{
+  color: #445e68;
+  margin: 10px 15px;
+  font-family: 'Raleway', sans-serif;
 }
 
 /* Formulario de carga de datos */
@@ -41,7 +59,8 @@ form {
 
 /* Etiquetas y entradas de formulario */
 label {
-    color: #445e68;
+    color: #3f4b50;
+    font-size: large;
 }
 
 input {
@@ -65,11 +84,16 @@ input {
 }
 
 .btn:hover {
-    background: #d3948f; /* Tono de rosa melocotón más oscuro al pasar el ratón */
+    background: #be4d45; /* Tono de rosa melocotón más oscuro al pasar el ratón */
 }
 .btnGuardar{
   
-  align-items: flex-start;
+  justify-content: center;
+  
+  
+}
+.btnGuardarContenedor{
+  align-items: center;
   
 }
 /* Tabla de libros */
@@ -79,7 +103,7 @@ input {
 
 /* Estilo para el modal */
 .modal-content {
-    background: #fce4d6; /* Fondo del modal - tono melocotón claro */
+    background: #ff8037; /* Fondo del modal - tono melocotón claro */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -93,12 +117,9 @@ input {
 
 /* Estilo para las filas de la tabla dentro del modal */
 .modal-body table tbody tr {
-    background: #fff; /* Fondo blanco */
+    background: #388b73; /* Fondo blanco */
 }
-header {
-    background-color: #ffffff;
-    padding: 10px 0;
-  }
+
   
   .navbar {
     border-radius: 0;
@@ -127,4 +148,34 @@ header {
   }
   p {
     font-size: 1.5em;
+    align-items: center;
   }
+  .categorias{
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .labelCategoria{
+    display: block;
+  }
+  .itemsCategorias{
+    display: flex;
+  }
+  .boxCategoria{
+    margin-right: 3px;
+  }
+.mb-3{
+  padding: 50px;
+  border-width: 20px;
+  border: 5px solid #808083;
+  display: block;
+  max-width: 100%;
+  min-width: 100%;
+  border-radius: 10px;
+}
+input[type="text"] {
+  appearance: none;
+}

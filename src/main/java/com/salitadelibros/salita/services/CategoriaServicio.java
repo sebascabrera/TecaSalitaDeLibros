@@ -14,4 +14,6 @@ public interface CategoriaServicio {
     void saveOrUpdate(Categoria categoria);
 
     void delete(Long id);
+
+    public Categoria findByPalabraCategoria(String palabraCategoria);
 }
