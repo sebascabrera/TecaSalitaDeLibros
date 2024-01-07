@@ -97,58 +97,26 @@ public class LibroControlador {
             // Asignar titulo al libro
             libro.setTitulo(titulo);
 
-            // Fecha de Edición
-            LocalDate fechaDeEdicion = libro.getFechaDeEdicion();
-            if (fechaDeEdicion == null) {
-                return ResponseEntity.badRequest().body("La fecha de edición del libro es obligatoria");
-            }
-            // Asignar la fecha de edición al libro
-            libro.setFechaDeEdicion(fechaDeEdicion);
-
-            // Guardar Editorial
-            Editorial editorial = libro.getEditorial();
-            if (editorial != null) {
-                if (editorial.getId() == null) {
-                    // La editorial es nueva
-                    editorial.addLibro(libro);
-                }
-            }
-            // Asignar la editorial al libro
-            libro.addEditorial(editorial);
-
             // Guardar el Género (Enum)
             Genero genero = libro.getGenero();
             libro.setGenero(genero);
 
             // Guardar las Categorias
-          Set<Categoria> categorias = libro.getCategorias()
-                  .stream()
-                  .map(LibroCategoria::getCategoria)
-                  .collect(Collectors.toSet());
+            Set<Categoria> categorias = libro.getCategorias()
+                    .stream()
+                    .map(LibroCategoria::getCategoria)
+                    .collect(Collectors.toSet());
             for (Categoria categoria : categorias){
                 if(categoria.getId() == null){
                     libro.addLibroCategoria(new LibroCategoria(libro, categoria));
                 }
             }
 
-            // Gurdar ISBN
-            String isbn = libro.getIsbn();
-            if (isbn == null || isbn.isEmpty()){
-                return ResponseEntity.badRequest().body("El ISBN es obligatorio");
-            }
-            // Asignar ISBN al libro
-            libro.setIsbn(isbn);
-
-
-            // Guardar Ilustradores
-            Set<Ilustrador> ilustradores = libro.getIlustradores()
-                    .stream()
-                    .map(LibroIlustrador::getIlustrador)
-                    .collect(Collectors.toSet());
-
-            for (Ilustrador ilustrador : ilustradores) {
-                if (ilustrador.getId() == null) {
-                    libro.addLibroIlustrador(new LibroIlustrador(libro, ilustrador));
+            // Guardar Editorial
+            Editorial editorialLibro = libro.getEditorial();
+            if (editorialLibro != null) {
+                if (editorialLibro.getId() != null) {
+                    libro.addEditorial(editorialLibro);
                 }
             }
 
@@ -157,16 +125,40 @@ public class LibroControlador {
                     .stream()
                     .map(LibroAutor::getAutor)
                     .collect(Collectors.toSet());
-
             for (Autor autor : autores) {
                 if (autor.getId() != 0) {
                     libro.addLibroAutor(new LibroAutor(libro, autor));
                 }
             }
 
+            // Guardar Ilustradores
+            Set<Ilustrador> ilustradores = libro.getIlustradores()
+                    .stream()
+                    .map(LibroIlustrador::getIlustrador)
+                    .collect(Collectors.toSet());
+            for (Ilustrador ilustrador : ilustradores) {
+                if (ilustrador.getId() == null) {
+                    libro.addLibroIlustrador(new LibroIlustrador(libro, ilustrador));
+                }
+            }
+
+            // Fecha de Edición
+            LocalDate fechaDeEdicion = libro.getFechaDeEdicion();
+            if (fechaDeEdicion == null) {
+                return ResponseEntity.badRequest().body("La fecha de edición del libro es obligatoria");
+            }                     // Asignar la fecha de edición al libro
+            libro.setFechaDeEdicion(fechaDeEdicion);
+
+            // Gurdar ISBN
+            String isbn = libro.getIsbn();
+            if (isbn == null || isbn.isEmpty()){
+                return ResponseEntity.badRequest().body("El ISBN es obligatorio");
+            }            // Asignar ISBN al libro
+            libro.setIsbn(isbn);
+
             // Guardar libro
             servicioComun.saveOrUpdateLibro(libro);
-
+            System.out.println("libro guardado");
             return ResponseEntity.ok("Libro guardado o actualizado exitosamente");
 
         } catch (Exception e) {

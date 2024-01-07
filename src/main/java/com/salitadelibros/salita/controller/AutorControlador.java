@@ -35,12 +35,24 @@ public class AutorControlador {
     @PostMapping
     public ResponseEntity<?> guardarNuevoAutor(@RequestBody Autor nuevoAutor) {
         try {
+            if (nuevoAutor == null) {
+                return new ResponseEntity<>("El autor proporcionado es nulo", HttpStatus.BAD_REQUEST);
+            }
+            Autor autorExtNombreApellido = autorServicio.findByNombreAutorAndApellidoAutor(nuevoAutor.getNombreAutor(), nuevoAutor.getApellidoAutor());
+
+
+            if (autorExtNombreApellido != null) {
+                return new ResponseEntity<>("Ya existe un autor con el mismo nombre y apellido", HttpStatus.BAD_REQUEST);
+            }
+
             servicioComun.saveOrUpdateAutor(nuevoAutor);
+
             return new ResponseEntity<>("Autor guardado exitosamente", HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error al guardar el autor: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {

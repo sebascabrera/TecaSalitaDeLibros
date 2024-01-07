@@ -13,4 +13,6 @@ public interface IlustradorServicio {
     void saveOrUpdate(Ilustrador ilustrador);
 
     void delete(Long id);
+
+    public Ilustrador findByNombreIlustradorAndApellidoIlustrador(String nombreIlustrador, String apellidoIlustrador);
 }

@@ -45,6 +45,7 @@ Vue.createApp({
         })
         .catch(error => {
           console.error(error);
+          alert('El Autor ya existe en la base de datos =)')
         });
     }
   }

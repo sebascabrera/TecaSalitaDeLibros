@@ -32,10 +32,19 @@ public class IlustradorControlador {
     @PostMapping
     public ResponseEntity<String> saveOrUpdate(@RequestBody Ilustrador nuevoIlustrador) {
         try {
+            if (nuevoIlustrador == null){
+                return new ResponseEntity<>("El Ilustrador proporcionado es nulo", HttpStatus.BAD_REQUEST);
+            }
+                Ilustrador ilustradorExistente = ilustradorServicio.findByNombreIlustradorAndApellidoIlustrador(nuevoIlustrador.getNombreIlustrador(), nuevoIlustrador.getApellidoIlustrador());
+           if (ilustradorExistente != null){
+               return new ResponseEntity<>("Ya existe un Ilustrador con el mismo nombre y apellido", HttpStatus.BAD_REQUEST);
+           }
+
             servicioComun.saveOrUpdateIlustrador(nuevoIlustrador);
+
             return new ResponseEntity<>("Ilustrador guardado exitosamente", HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error al guardar el Ilustrador: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

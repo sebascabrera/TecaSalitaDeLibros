@@ -29,7 +29,7 @@ public class CategoriaServicioImpl implements CategoriaServicio {
     public void delete(Long id){
         categoriaRepositorio.deleteById(id);
     }
-
+    @Override
     public Categoria findByPalabraCategoria(String palabraCategoria) {
 
         return categoriaRepositorio.findByPalabraCategoria(palabraCategoria);

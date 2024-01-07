@@ -6,4 +6,9 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource
 public interface IlustradorRepositorio extends JpaRepository<Ilustrador, Long> {
+    Ilustrador findByNombreIlustrador(String nombreIlustrador);
+
+    Ilustrador findByApellidoIlustrador(String apellidoIlustrador);
+
+    Ilustrador findByNombreIlustradorAndApellidoIlustrador(String nombreIlustrador, String apellidoIlustrador);
 }

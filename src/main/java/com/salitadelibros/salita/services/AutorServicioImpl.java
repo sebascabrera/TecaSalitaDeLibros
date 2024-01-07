@@ -33,4 +33,15 @@ public class AutorServicioImpl implements AutorServicio{
     public void delete(Long id) {
         autorRepositorio.deleteById(id);
     }
+    @Override
+    public Autor findByNombreAutor( String nombreAutor){
+        return autorRepositorio.findByNombreAutor(nombreAutor);
+    }
+    @Override
+    public Autor findByApellidoAutor(String apellidoAutor){
+        return autorRepositorio.findByApellidoAutor(apellidoAutor);
+    }
+    public Autor findByNombreAutorAndApellidoAutor(String nombreAutor, String apellidoAutor){
+        return autorRepositorio.findByNombreAutorAndApellidoAutor(nombreAutor, apellidoAutor);
+    }
 }

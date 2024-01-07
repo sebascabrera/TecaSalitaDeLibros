@@ -43,6 +43,7 @@ const app = Vue.createApp({
         })
         .catch(error => {
           console.error(error);
+          alert('El Ilustrador ya existe en la base de datos =)')
         });
     },
   },

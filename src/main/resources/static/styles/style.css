@@ -8,7 +8,7 @@
 }
 
 body {
-    background-color: #f1b8b8;
+    background-color: #f1c6c6;
      /* Tono de melocotón claro */
     font-family: 'Roboto Slab', serif;
     
@@ -31,7 +31,7 @@ header {
 #contenedorformularioLibro {
     max-width: 800px;
     margin: 20px auto;
-    background: #99f0b3; /* Fondo blanco roto */
+    background: #c0f0cd; /* Fondo blanco roto */
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sutil sombra */
