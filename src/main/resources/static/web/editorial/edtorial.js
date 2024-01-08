@@ -2,7 +2,7 @@ Vue.createApp({
     data() {
         return {
             nuevaEditorial: {
-                nombre: ''
+                nombreEditorial: ''
             }
         };
     },
@@ -22,7 +22,7 @@ Vue.createApp({
       },
         guardarNuevaEditorial() {
             // Capitalizar nombres y apellidos antes de enviarlos a la base de datos
-            this.nuevaEditorial.nombre = this.capitalizarPalabras(this.nuevaEditorial.nombre);
+            this.nuevaEditorial.nombreEditorial = this.capitalizarPalabras(this.nuevaEditorial.nombreEditorial);
   
             // Resto del código para enviar a la base de datos
             const url = '/api/editoriales';
@@ -31,7 +31,7 @@ Vue.createApp({
                 .then(response => {
                     console.log(response.data);
                     // Limpiar el formulario
-                    this.nuevaEditorial.nombre = '';
+                    this.nuevaEditorial.nombreEditorial = '';
   
                     // Mostrar mensaje de "Registro correcto"
                     alert('Registro correcto');

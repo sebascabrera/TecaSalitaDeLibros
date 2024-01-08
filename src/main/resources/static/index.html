@@ -13,6 +13,7 @@
 
 
 </head>
+
 <body>
     <style>
         [v-cloak] {
@@ -48,16 +49,17 @@
         <div class="row">
             <div class="col">
                 <h2 class="align-content-center">Salita de ingresos</h2>
-                <form id="contenedorformularioLibro" action="/api/libros/guardarLibro" method="post" class="container mt-5">
-                                                 <!-- Campos del formulario -->
+                <form id="contenedorformularioLibro" action="/api/libros/guardarLibro" method="post"
+                    class="container mt-5">
+                    <!-- Campos del formulario -->
                     <!-- Titulo  -->
                     <div class="mb-3">
                         <label for="titulo" class="form-label">Título:</label>
                         <input type="text" class="form-control" id="titulo" name="titulo" v-model="titulo" required>
                         <div class="invalid-feedback">Por favor, ingrese un título válido.</div>
                     </div>
-                      <!-- genero -->
-                      <div class="mb-3">
+                    <!-- genero -->
+                    <div class="mb-3">
                         <label for="genero" class="form-label">Género:</label>
                         <select v-model="genero" id="genero" name="genero" required>
                             <option value="POESIA">Poesía</option>
@@ -71,8 +73,8 @@
                         <select v-model="editorialExistente" class="form-select" name="editorialExistente"
                             id="editorialExistente">
                             <option value="" disabled>Seleccionar Editorial Existente</option>
-                            <option v-for="editorial in editoriales" :key="editorial.id" :value="editorial.id">
-                                {{ editorial.nombre }}
+                            <option v-for="editorial in editoriales" :key="editorial.id" :value="editorial">
+                                {{ editorial.nombreEditorial }}
                             </option>
                         </select>
                         <!-- Mostrar el campo de nueva editorial solo si es visible -->
@@ -80,13 +82,13 @@
                             <button type="button" @click="nuevaEditorialForm" class="btn btn-secondary">Registrar Nueva
                                 Editorial</button>
                         </div>
-                    </div>                  
+                    </div>
                     <!-- Categorías -->
                     <!-- Campo de selección para Categorías existentes -->
                     <div class="mb-3 categorias">
                         <label class="form-label labelCategoria">Categorías Existentes:</label>
                         <div v-for="categoria in categorias" :key="categoria.id" class="form-check itemsCategorias">
-                            <input type="checkbox" v-model="categoriaExistente" :value="categoria.id"
+                            <input type="checkbox" v-model="categoriaExistente" :value="categoria"
                                 class="form-check-input boxCategoria">
                             <label class="form-check-label">{{ categoria.palabraCategoria }}</label>
                         </div>
@@ -105,46 +107,60 @@
                     <!-- Autor -->
                     <!-- Campo de selección para autores existentes -->
                     <div class="mb-3">
-
+                        <label for="autorSeleccionado" class="form-label">Autor Existente:</label>
                         <select v-model="autorSeleccionado" class="form-select" id="autorSeleccionado"
-                            name="autorSeleccionado" multiple>
+                            name="autorSeleccionado">
                             <option value="" disabled>Seleccionar Autores Existentes</option>
-                            <option v-for="autor in autores" :key="autor.id" :value="autor.id">
+                            <option v-for="autor in autores" :key="autor.id" :value="autor">
                                 {{ autor.apellidoAutor + ', ' + autor.nombreAutor }}
                             </option>
                         </select>
-
                         <div>
                             <strong>Autores seleccionados:</strong>
                             <ul>
-                                <li v-for="autorId in autorSeleccionado" :key="autorId">
-                                    {{ getAutorById(autorId).apellidoAutor + ', ' + getAutorById(autorId).nombreAutor }}
+                                <li v-for="autorId in autorSeleccionado" :key="autor.id">
+                                    {{ autorId.apellidoAutor + ', ' + autorId.nombreAutor }}
                                 </li>
                             </ul>
                         </div>
-                    </div>
-                    <!-- Campos para ingresar un nuevo autor -->
-                    <!--  <a v-on:click="nuevoAutorForm($event)">Registrar Nuevo Autor</a>-->
-                    <div>
-                        <button type="button" @click="nuevoAutorForm" class="btn btn-secondary">Registrar Nuevo
-                            Autor</button>
+                        <!-- Campos para ingresar un nuevo autor -->
+                        <!--  <a v-on:click="nuevoAutorForm($event)">Registrar Nuevo Autor</a>-->
+                        <div>
+                            <button type="button" @click="nuevoAutorForm" class="btn btn-secondary">Registrar Nuevo
+                                Autor</button>
+                        </div>
                     </div>
                     <!-- ilustradores -->
                     <!-- Campo de selección para ilustradores existentes -->
                     <div class="mb-3">
-                        <label for="ilustradorSeleccionado" class="form-label">Seleccionar Ilustrador Existente:</label>
+                        <label for="ilustradorSeleccionado" class="form-label">Ilustrador Existente:</label>
                         <select v-model="ilustradorSeleccionado" class="form-select" id="ilustradorSeleccionado"
                             name="ilustradorSeleccionado">
                             <option value="" disabled>Seleccionar Ilustrador Existente</option>
-                            <option v-for="ilustrador in ilustradores" :key="ilustrador.id" :value="ilustrador.id">
+                            <option v-for="ilustrador in ilustradores" :key="ilustrador.id" :value="ilustrador">
                                 {{ ilustrador.nombreIlustrador + ', ' + ilustrador.apellidoIlustrador }}
                             </option>
                         </select>
+                        <div>
+                            <strong>Ilustrador seleccionados:</strong>
+                            <ul>
+                                <li v-for="ilustradorId in ilustradorSeleccionado" :key="ilustrador.id">
+                                    {{ ilustradorId.apellidoilustrador + ', ' + ilustradorId.nombreilustrador }}
+                                </li>
+                            </ul>
+                        </div>
+
                         <!-- Campos para ingresar un nuevo ilustrador -->
                         <div>
                             <button type="button" @click="nuevoIlustradorForm" class="btn btn-secondary">Registrar Nuevo
                                 Ilustrador</button>
                         </div>
+                    </div>
+                    <!-- Isbn  -->
+                    <div class="mb-3">
+                        <label for="isbn" class="form-label">ISBN:</label>
+                        <input type="text" class="form-control" id="isbn" name="isbn" v-model="isbn" required>
+                        <div class="invalid-feedback">Por favor, ingrese un isbn válido.</div>
                     </div>
                     <!-- Guardar -->
                     <div class="mb-3 align-content-center">
@@ -152,11 +168,12 @@
                         <button type="button" @click="enviarFormulario" class="btn btn-primary btnGuardar">Guardar
                             Libro</button>
                     </div>
-                </form>
             </div>
+            </form>
         </div>
     </div>
-    
+    </div>
+
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

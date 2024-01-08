@@ -14,7 +14,7 @@ public class EditorialDTO {
 
     public EditorialDTO(Editorial editorial) {
         id = editorial.getId();
-        nombre = editorial.getNombre();
+        nombre = editorial.getNombreEditorial();
         libros = editorial.getLibros().stream().map(libro -> new LibroDTO(libro)).collect(Collectors.toSet());
 
     }

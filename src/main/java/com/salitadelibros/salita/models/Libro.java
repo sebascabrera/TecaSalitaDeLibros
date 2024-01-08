@@ -1,6 +1,7 @@
 package com.salitadelibros.salita.models;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.util.MultiValueMap;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -47,6 +48,16 @@ public class Libro {
         this.fechaDeEdicion = fechaDeEdicion;
         this.genero = genero;
         this.isbn= isbn;
+    }
+
+    public Libro(MultiValueMap<String, String> libroData) {
+        if (libroData != null) {
+            // Extraer y asignar los datos del MultiValueMap a las propiedades del libro
+            this.titulo = libroData.getFirst("titulo");
+            this.fechaDeEdicion = LocalDate.parse(libroData.getFirst("fechaDeEdicion"));
+            this.genero = Genero.valueOf(libroData.getFirst("genero"));
+            this.isbn = libroData.getFirst("isbn");
+        }
     }
 
     // getters

@@ -10,13 +10,11 @@ import com.salitadelibros.salita.services.ServicioComun;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -48,10 +46,10 @@ public class LibroControlador {
                 .map(libro -> new LibroDTO((Libro) libro))
                 .collect(Collectors.toList());
 
-      //  List<String> categorias = libroServicio.getCategorias();
+        //  List<String> categorias = libroServicio.getCategorias();
 
-      //  response.put("libros", libroDTOList);
-      //  response.put("categoriasexistentes", categorias);
+        //  response.put("libros", libroDTOList);
+        //  response.put("categoriasexistentes", categorias);
 
         return response;
     }
@@ -67,99 +65,15 @@ public class LibroControlador {
     }
 
     @PostMapping("/guardarLibro")
-    public ResponseEntity<String> saveOrUpdateLibro(@RequestBody Libro libro) {
+    public ResponseEntity<String> saveOrUpdateLibro(@RequestParam MultiValueMap<String, String> datosPrincipales) {
         try {
-            System.out.println("Solicitud recibida: " + libro);
-            if (libro == null) {
-                return ResponseEntity.badRequest().body("El libro no puede ser nulo");
-            }
-            if (libro.getTitulo() == null || libro.getTitulo().isEmpty()) {
-                return ResponseEntity.badRequest().body("El título del libro es obligatorio");
-            }
-            if (libro.getGenero() == null) {
-                return ResponseEntity.badRequest().body("El género del libro es obligatorio");
-            }
-            if (libro.getFechaDeEdicion() == null) {
-                return ResponseEntity.badRequest().body("La fecha de edición del libro es obligatoria");
-            }
-            if (libro.getAutores() == null || libro.getAutores().isEmpty()) {
-                return ResponseEntity.badRequest().body("Debes asociar al menos un autor al libro");
-            }
-            if (libro.getIlustradores() == null || libro.getIlustradores().isEmpty()) {
-                return ResponseEntity.badRequest().body("Debes asociar al menos un ilustrador al libro");
-            }
+            Libro libro = new Libro(datosPrincipales);
 
-            // Guardar Titulo
-            String titulo = libro.getTitulo();
-            if(titulo == null){
-                return ResponseEntity.badRequest().body("El TITULO del libro es obligatoria");
-            }
-            // Asignar titulo al libro
-            libro.setTitulo(titulo);
-
-            // Guardar el Género (Enum)
-            Genero genero = libro.getGenero();
-            libro.setGenero(genero);
-
-            // Guardar las Categorias
-            Set<Categoria> categorias = libro.getCategorias()
-                    .stream()
-                    .map(LibroCategoria::getCategoria)
-                    .collect(Collectors.toSet());
-            for (Categoria categoria : categorias){
-                if(categoria.getId() == null){
-                    libro.addLibroCategoria(new LibroCategoria(libro, categoria));
-                }
-            }
-
-            // Guardar Editorial
-            Editorial editorialLibro = libro.getEditorial();
-            if (editorialLibro != null) {
-                if (editorialLibro.getId() != null) {
-                    libro.addEditorial(editorialLibro);
-                }
-            }
-
-            // Guardar Autores
-            Set<Autor> autores = libro.getAutores()
-                    .stream()
-                    .map(LibroAutor::getAutor)
-                    .collect(Collectors.toSet());
-            for (Autor autor : autores) {
-                if (autor.getId() != 0) {
-                    libro.addLibroAutor(new LibroAutor(libro, autor));
-                }
-            }
-
-            // Guardar Ilustradores
-            Set<Ilustrador> ilustradores = libro.getIlustradores()
-                    .stream()
-                    .map(LibroIlustrador::getIlustrador)
-                    .collect(Collectors.toSet());
-            for (Ilustrador ilustrador : ilustradores) {
-                if (ilustrador.getId() == null) {
-                    libro.addLibroIlustrador(new LibroIlustrador(libro, ilustrador));
-                }
-            }
-
-            // Fecha de Edición
-            LocalDate fechaDeEdicion = libro.getFechaDeEdicion();
-            if (fechaDeEdicion == null) {
-                return ResponseEntity.badRequest().body("La fecha de edición del libro es obligatoria");
-            }                     // Asignar la fecha de edición al libro
-            libro.setFechaDeEdicion(fechaDeEdicion);
-
-            // Gurdar ISBN
-            String isbn = libro.getIsbn();
-            if (isbn == null || isbn.isEmpty()){
-                return ResponseEntity.badRequest().body("El ISBN es obligatorio");
-            }            // Asignar ISBN al libro
-            libro.setIsbn(isbn);
-
-            // Guardar libro
+            // Guardar libro y obtener el ID
             servicioComun.saveOrUpdateLibro(libro);
-            System.out.println("libro guardado");
-            return ResponseEntity.ok("Libro guardado o actualizado exitosamente");
+
+            // Devolver el ID del nuevo libro
+            return ResponseEntity.ok().body("Libro guardado o actualizado exitosamente {\"id\":" + libro.getId() + "}");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -167,4 +81,51 @@ public class LibroControlador {
         }
     }
 
+    @PostMapping("/asociarDatos")
+    public ResponseEntity<String> asociarDatosLibro(@RequestParam Long libroId,
+                                                    @RequestBody Editorial editorial,
+                                                    @RequestBody Autor autor,
+                                                    @RequestBody Ilustrador ilustrador) {
+        try {
+            // Obtener el libro por ID
+            Optional<Libro> libroOptional = libroServicio.getLibro(libroId);
+
+            if (libroOptional.isPresent()) {
+                Libro libro = libroOptional.get();
+
+                // Guardar Editorial
+                libro.addEditorial(editorial);
+
+
+                // Guardar Autores
+                Set<Autor> autores = libro.getAutores()
+                        .stream()
+                        .map(LibroAutor::getAutor)
+                        .collect(Collectors.toSet());
+                for (Autor autorEnLoop : autores) {
+                    if (autorEnLoop.getId() != 0) {
+                        libro.addLibroAutor(new LibroAutor(libro, autor));
+                    }
+                }
+
+                // Guardar Ilustradores
+                Set<Ilustrador> ilustradores = libro.getIlustradores()
+                        .stream()
+                        .map(LibroIlustrador::getIlustrador)
+                        .collect(Collectors.toSet());
+                for (Ilustrador ilustradorEnLoop : ilustradores) {
+                    if (ilustradorEnLoop.getId() == null) {
+                        new LibroIlustrador(libro, ilustrador);
+                        libro.addLibroIlustrador(new LibroIlustrador(libro, ilustrador));
+                    }
+                }
+                return ResponseEntity.ok("Libro guardado o actualizado exitosamente");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró el libro con ID: " + libroId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar segunda etapa del libro: " + e.getMessage());
+        }
+    }
 }

@@ -6,20 +6,19 @@ Vue.createApp({
 
             categoriaExistente: [],
             categorias: [],
-            nuevaCategoria: {
-                palabraCategoria: ''
-            },
 
             editorialExistente: '',
             editoriales: [],
-            
+
             autorSeleccionado: [],
             autores: [],
 
-            ilustradorSeleccionado: '',
+            ilustradorSeleccionado: [],
             ilustradores: [],
 
-            fechaDeEdicion: ''
+            fechaDeEdicion: '',
+
+            isbn: ''
         }
     },
     watch: {
@@ -42,6 +41,9 @@ Vue.createApp({
             this.manejarSeleccion();
         },
         ilustradorSeleccionado: function (newValue, oldValue) {
+            this.manejarSeleccion();
+        },
+        isbn: function (newValue, oldValue) {
             this.manejarSeleccion();
         },
     },
@@ -67,6 +69,7 @@ Vue.createApp({
                 .then(response => {
                     console.log("Datos de editoriales:", response.data);
                     this.editoriales = response.data;
+
                 })
                 .catch(error => {
                     console.error("Error loading editoriales: ", error);
@@ -77,6 +80,7 @@ Vue.createApp({
                 .then(response => {
                     console.log("Datos de ilustradores:", response.data);
                     this.ilustradores = response.data;
+
                 })
                 .catch(error => {
                     console.error("Error loading ilustradores: ", error);
@@ -87,6 +91,7 @@ Vue.createApp({
                 .then((response) => {
                     console.log("Datos de categorias:", response.data);
                     this.categorias = response.data;
+
                 })
                 .catch((error) => {
                     alert("Error loading libros: " + error);
@@ -107,75 +112,69 @@ Vue.createApp({
         manejarSeleccion() {
             console.log("Titulo seleccionado:", this.titulo);
             console.log("genero seleccionado:", this.genero);
-            console.log("genero seleccionado:", this.categoriaExistente);
+            console.log("categoria seleccionada:", this.categorias);
             console.log("fecha De Edicion seleccionadas:", this.fechaDeEdicion);
-            console.log("editorial Existente seleccionada:", this.editorialExistente);
-            console.log("ilustrador Seleccionado :", this.ilustradorSeleccionado);
-            console.log("autor Seleccionado :", this.autorSeleccionado);
+            console.log("editorial Existente seleccionada:", this.editoriales);
+            console.log("ilustrador Seleccionado :", this.ilustradores);
+            console.log("autor Seleccionado :", this.autores);
+            console.log("ISBN Seleccionado :", this.isbn);
         },
-        getEditorialById(id) {
-            return this.editoriales.find(editorial => editorial.id === id) || {};
-        },
-        getAutorById(id) {
-            return this.autores.find(autor => autor.id === id) || {};
-        },
-        getIlustradorById(id) {
-            return this.ilustradores.find(ilustrador => ilustrador.id === id) || {};
-        },
-
-
         enviarFormulario() {
-            const autoresTransformados = this.autorSeleccionado.map(autor => {
-                return {
-                    nombreAutor: autor.nombreAutor,
-                    apellidoAutor: autor.apellidoAutor
-                };
-            })
             // Crear el objeto que se enviará al backend
-            const libroData = {
-                titulo: this.titulo,
-                genero: this.genero,
-                categorias: this.categoriaExistente ? this.categoriaExistente.map(categoria => categoria.id) : [],
-                editorial: this.getEditorialById(this.editorialExistente), // Obtener objeto completo de editorial
-                autor:this.autoresTransformados,                
-                ilustrador: this.getIlustradorById(this.ilustradorSeleccionado), // Obtener objeto completo de ilustrador
-                fechaDeEdicion: this.fechaDeEdicion
-                //     autor: this.autorSeleccionado
-                //     ? { id: this.autorSeleccionado }
-                //   : null,
+            const config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
             };
 
-            console.log("Datos enviados al servidor:", libroData);
+            const datosPrincipales = {
+                'titulo': this.titulo,
+                'genero': this.genero,
+                'categoria': this.categoriaExistente.join(','),
+                'fechaDeEdicion': this.formatearFecha(this.fechaDeEdicion),
+                'isbn': this.isbn,
+            };
 
-            // Luego, envía el formulario usando Axios
-            axios.post('/api/libros/guardarLibro', libroData)
+            axios.post('/api/libros/guardarLibro', datosPrincipales, config)
                 .then(response => {
-                    alert("Libro guardado o actualizado exitosamente");
-                    console.log("Libro guardado o actualizado exitosamente:", response.data);
-                    // Restablece los campos del formulario o realiza otras acciones necesarias
-                    this.titulo = '';
-                    this.genero = '';
-                    this.categorias = '';
-                    this.editorial = '';
-                    this.fechaDeEdicion = '';
-                    this.autor = '';
-                    this.ilustrador = '';
-                    this.fechaDeEdicion = '';
+                    const nuevoLibroId = response.data.id;
+                    this.enviarDatosAsociacion(nuevoLibroId);
                 })
                 .catch(error => {
-                    console.error("Error al procesar el libro:", error);
-                    console.log("Lista de lo enviado:", libroData);
-                    alert("Error al procesar el libro: " + error.response.data);
-                    // Maneja el error si es necesario
+                    // Manejar errores
+                });
+            console.log("Datos enviados al servidor:", datosPrincipales)
+        },
+        enviarDatosAsociacion(nuevoLibroId) {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            };
+            const datosAsociacion = {
+                'libroId': nuevoLibroId,
+                'editorial': this.editorialExistente,
+                'autor': this.autorSeleccionado,
+                'ilustradores': this.ilustradorSeleccionado,
+            };
+                console.log("previo al post asociarDatos: ", libroId, editorial, autor, ilustradores)
+            axios.post('/api/libros/asociarDatos', datosAsociacion, config)
+                .then(response => {
+                    alert("Libro guardado o actualizado exitosamente");
+                    // Restablecer campos del formulario o realizar otras acciones necesarias
                     this.titulo = '';
                     this.genero = '';
-                    this.categorias = '';
-                    this.editorial = '';
+                    this.categoriaExistente = [];
+                    this.editorialExistente = '';
                     this.fechaDeEdicion = '';
-                    this.autor = '';
-                    this.ilustrador = '';
-                    this.fechaDeEdicion = '';
+                    this.autorSeleccionado = [];
+                    this.ilustradorSeleccionado = [];
+                    this.isbn = '';
+                })
+                .catch(error => {
+                    // Manejar errores
                 });
+                console.log("Datos enviados al servidor:", datosAsociacion)
         },
         formatearFecha(fecha) {
             return fecha ? new Date(fecha).toISOString().split('T')[0] : null;

@@ -9,4 +9,6 @@ import java.util.List;
 @RepositoryRestResource
 public interface LibroRepositorio extends JpaRepository<Libro, Long> {
 
+    Libro findLibroById (Long id);
+
 }
