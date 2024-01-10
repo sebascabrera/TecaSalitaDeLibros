@@ -101,7 +101,7 @@
                     <!-- fecha De Edicion -->
                     <div class="mb-3">
                         <label for="fechaDeEdicion" class="form-label">Fecha de Edición:</label>
-                        <input type="date" class="form-control" id="fechaDeEdicion" name="fechaDeEdicion"
+                        <input type="text" class="form-control" id="fechaDeEdicion" name="fechaDeEdicion"
                             v-model="fechaDeEdicion" required>
                     </div>
                     <!-- Autor -->
@@ -112,17 +112,19 @@
                             name="autorSeleccionado">
                             <option value="" disabled>Seleccionar Autores Existentes</option>
                             <option v-for="autor in autores" :key="autor.id" :value="autor">
-                                {{ autor.apellidoAutor + ', ' + autor.nombreAutor }}
+                                {{  autor.apellidoAutor + ', ' + autor.nombreAutor }}
                             </option>
                         </select>
                         <div>
-                            <strong>Autores seleccionados:</strong>
+                      <!--       <strong>Autores seleccionados:</strong>
                             <ul>
-                                <li v-for="autorId in autorSeleccionado" :key="autor.id">
-                                    {{ autorId.apellidoAutor + ', ' + autorId.nombreAutor }}
+                                <li v-for="autor in autorSeleccionado" :key="autor.id">
+                                    {{ autorId ? autor.apellidoAutor + ', ' + autor.nombreAutor : 'Autor no definido' }}
                                 </li>
-                            </ul>
+                            </ul> -->
                         </div>
+
+
                         <!-- Campos para ingresar un nuevo autor -->
                         <!--  <a v-on:click="nuevoAutorForm($event)">Registrar Nuevo Autor</a>-->
                         <div>
@@ -130,6 +132,7 @@
                                 Autor</button>
                         </div>
                     </div>
+
                     <!-- ilustradores -->
                     <!-- Campo de selección para ilustradores existentes -->
                     <div class="mb-3">
@@ -142,12 +145,12 @@
                             </option>
                         </select>
                         <div>
-                            <strong>Ilustrador seleccionados:</strong>
+                         <!--    <strong>Ilustrador seleccionados:</strong>
                             <ul>
                                 <li v-for="ilustradorId in ilustradorSeleccionado" :key="ilustrador.id">
                                     {{ ilustradorId.apellidoilustrador + ', ' + ilustradorId.nombreilustrador }}
                                 </li>
-                            </ul>
+                            </ul> -->
                         </div>
 
                         <!-- Campos para ingresar un nuevo ilustrador -->

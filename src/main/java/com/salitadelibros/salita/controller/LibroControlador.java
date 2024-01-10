@@ -1,8 +1,9 @@
 package com.salitadelibros.salita.controller;
 
+import com.salitadelibros.salita.dtos.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.salitadelibros.salita.models.*;
-import com.salitadelibros.salita.dtos.EditorialDTO;
-import com.salitadelibros.salita.dtos.LibroDTO;
 import com.salitadelibros.salita.repositories.*;
 import com.salitadelibros.salita.services.LibroServicio;
 import com.salitadelibros.salita.services.LibroServicioImpl;
@@ -13,13 +14,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/libros")
 public class LibroControlador {
+
+    private static final Logger logger = LoggerFactory.getLogger(LibroControlador.class);
+
     @Autowired
     private LibroServicio libroServicio;
     @Autowired
@@ -36,6 +39,10 @@ public class LibroControlador {
     CategoriaRepositorio categoriaRepositorio;
     @Autowired
     private ServicioComun servicioComun;
+    @Autowired
+    private LibroIlustradorRepositorio libroIlustradorRepositorio;
+    @Autowired
+    private LibroAutorRepositorio libroAutorRepositorio;
 
     @GetMapping("/libros")
     public Map<String, Object> getLibros() {
@@ -71,61 +78,80 @@ public class LibroControlador {
 
             // Guardar libro y obtener el ID
             servicioComun.saveOrUpdateLibro(libro);
-
+            String idlibro = String.valueOf(libro.getId());
+            System.out.println("ID del nuevo libro: " + libro.getId());
+            logger.info("Iniciando asociarDatosLibro...{}", libro.getId());
             // Devolver el ID del nuevo libro
-            return ResponseEntity.ok().body("Libro guardado o actualizado exitosamente {\"id\":" + libro.getId() + "}");
-
+            return ResponseEntity.status(HttpStatus.CREATED).body("libro creado" + libro.getId());
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar el libro: " + e.getMessage());
         }
     }
-
     @PostMapping("/asociarDatos")
-    public ResponseEntity<String> asociarDatosLibro(@RequestParam Long libroId,
-                                                    @RequestBody Editorial editorial,
-                                                    @RequestBody Autor autor,
-                                                    @RequestBody Ilustrador ilustrador) {
+    public ResponseEntity<Object> asociarDatos(@RequestBody LibroDTO libroDTO){
         try {
             // Obtener el libro por ID
-            Optional<Libro> libroOptional = libroServicio.getLibro(libroId);
-
+            Optional<Libro> libroOptional = libroServicio.getLibro(libroDTO.getId());
+            logger.info("Iniciando asociarDatosLibro...{}", libroOptional);
+            // Guardar datos
             if (libroOptional.isPresent()) {
                 Libro libro = libroOptional.get();
-
+                logger.info("Iniciando asociarDatosLibro...{}", libro);
                 // Guardar Editorial
-                libro.addEditorial(editorial);
-
-
+                EditorialDTO editorialDTO = libroDTO.getEditorial();
+                if (editorialDTO != null) {
+                    Editorial editorial = new Editorial(editorialDTO.getNombreEditorial());
+                    libro.addEditorial(editorial);
+                }
                 // Guardar Autores
-                Set<Autor> autores = libro.getAutores()
-                        .stream()
-                        .map(LibroAutor::getAutor)
-                        .collect(Collectors.toSet());
-                for (Autor autorEnLoop : autores) {
-                    if (autorEnLoop.getId() != 0) {
-                        libro.addLibroAutor(new LibroAutor(libro, autor));
+                Set<LibroAutorDTO> autoresDTO = libroDTO.getAutores();
+                for (LibroAutorDTO libroAutorDTO : autoresDTO.stream().collect(Collectors.toSet())) {
+                    Autor autor = new Autor(libroAutorDTO.getAutorDTO().getNombreAutor(), libroAutorDTO.getAutorDTO().getApellidoAutor());
+                    if (autor.getId() != 0) {
+                        LibroAutor libroAutor = new LibroAutor();
+                        libro.addLibroAutor(libroAutor);
+                        libroAutor.setAutor(autor);
+                        libroAutor.setLibro(libro);
+                        logger.info("libroAutor...{}", libroAutor);
+                    }
+                }
+                // Guardar Ilustradores
+                Set<LibroIlustradorDTO> ilustradoresDTO = libroDTO.getIlustradores();
+                for (LibroIlustradorDTO libroIlustradorDTO : ilustradoresDTO.stream().collect(Collectors.toSet())) {
+                        Ilustrador ilustrador = new Ilustrador(libroIlustradorDTO.getIlustradorDTO().getNombreIlustrador()
+                                , libroIlustradorDTO.getIlustradorDTO().getApellidoIlustrador());
+                    if (ilustrador.getId() != 0) {
+                        LibroIlustrador libroIlustrador = new LibroIlustrador();
+                        libroIlustrador.setIlustrador(ilustrador);
+                        libroIlustrador.setLibro(libro);
+                        libro.addLibroIlustrador(libroIlustrador);
+                        logger.info("libroIlustrador...{}", libroIlustrador);
+                    }
+                }
+                // Guardar Categorias
+                Set<LibroCategoriaDTO> categoriaDTO = libroDTO.getCategorias();
+                for (LibroCategoriaDTO libroCategoriaDTO : categoriaDTO.stream().collect(Collectors.toSet())) {
+                    Categoria categoria = new Categoria(libroCategoriaDTO.getCategoriaDTO().getPalabraCategoria());
+                    if (categoria.getId() != null){
+                        LibroCategoria libroCategoria = new LibroCategoria();
+                        libroCategoria.setCategoria(categoria);
+                        libroCategoria.setLibro(libro);
+                        libro.addLibroCategoria(libroCategoria);
+                        logger.info("libroIlustrador...{}", libroCategoria);
                     }
                 }
 
-                // Guardar Ilustradores
-                Set<Ilustrador> ilustradores = libro.getIlustradores()
-                        .stream()
-                        .map(LibroIlustrador::getIlustrador)
-                        .collect(Collectors.toSet());
-                for (Ilustrador ilustradorEnLoop : ilustradores) {
-                    if (ilustradorEnLoop.getId() == null) {
-                        new LibroIlustrador(libro, ilustrador);
-                        libro.addLibroIlustrador(new LibroIlustrador(libro, ilustrador));
-                    }
-                }
                 return ResponseEntity.ok("Libro guardado o actualizado exitosamente");
             } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró el libro con ID: " + libroId);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró el libro con ID: " + libroDTO.getId());
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar segunda etapa del libro: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al procesar segunda etapa del libro: " + e.getMessage());
         }
     }
+
 }
+

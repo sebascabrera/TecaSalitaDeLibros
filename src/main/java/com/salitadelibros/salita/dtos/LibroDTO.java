@@ -15,7 +15,7 @@ public class LibroDTO {
     private EditorialDTO editorial;
     private Set<LibroAutorDTO> autores;
     private Set<LibroIlustradorDTO> ilustradores;
-    private LocalDate fechaDeEdicion;
+    private String fechaDeEdicion;
     private String isbn;
 
     // Constructores
@@ -75,7 +75,7 @@ public class LibroDTO {
         return ilustradores;
     }
 
-    public LocalDate getFechaDeEdicion() {
+    public String getFechaDeEdicion() {
         return fechaDeEdicion;
     }
 

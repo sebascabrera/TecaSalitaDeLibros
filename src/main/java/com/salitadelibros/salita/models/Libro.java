@@ -19,7 +19,7 @@ public class Libro {
     @Column(name = "Titulo", nullable = false)
     private String titulo;
     @Column(name = "fecha_de_edicion")
-    private LocalDate fechaDeEdicion;
+    private String fechaDeEdicion;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "editorial_id")
@@ -43,7 +43,7 @@ public class Libro {
     public Libro() {
     }
 
-    public Libro(String titulo, LocalDate fechaDeEdicion, Genero genero, String isbn) {
+    public Libro(String titulo, String fechaDeEdicion, Genero genero, String isbn) {
         this.titulo = titulo;
         this.fechaDeEdicion = fechaDeEdicion;
         this.genero = genero;
@@ -54,7 +54,7 @@ public class Libro {
         if (libroData != null) {
             // Extraer y asignar los datos del MultiValueMap a las propiedades del libro
             this.titulo = libroData.getFirst("titulo");
-            this.fechaDeEdicion = LocalDate.parse(libroData.getFirst("fechaDeEdicion"));
+            this.fechaDeEdicion = libroData.getFirst("fechaDeEdicion");
             this.genero = Genero.valueOf(libroData.getFirst("genero"));
             this.isbn = libroData.getFirst("isbn");
         }
@@ -90,7 +90,7 @@ public class Libro {
         return categorias;
     }
 
-    public LocalDate getFechaDeEdicion() {
+    public String getFechaDeEdicion() {
         return fechaDeEdicion;
     }
 
@@ -108,7 +108,7 @@ public class Libro {
         this.genero = genero;
     }
 
-    public void setFechaDeEdicion(LocalDate fechaDeEdicion) {
+    public void setFechaDeEdicion(String fechaDeEdicion) {
         this.fechaDeEdicion = fechaDeEdicion;
     }
 

@@ -20,6 +20,9 @@ public class Categoria {
 
     public Categoria() {
     }
+    public Categoria(String palabraCategoria){
+        this.palabraCategoria = palabraCategoria;
+    }
     //getters
 
     public Long getId() {

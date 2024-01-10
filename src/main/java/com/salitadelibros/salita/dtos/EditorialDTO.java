@@ -8,13 +8,17 @@ import java.util.stream.Collectors;
 public class EditorialDTO {
     private Long id;
 
-    private String nombre;
+    private String nombreEditorial;
 
     private Set<LibroDTO> libros;
 
+    public EditorialDTO(){
+
+    }
+
     public EditorialDTO(Editorial editorial) {
         id = editorial.getId();
-        nombre = editorial.getNombreEditorial();
+        nombreEditorial = editorial.getNombreEditorial();
         libros = editorial.getLibros().stream().map(libro -> new LibroDTO(libro)).collect(Collectors.toSet());
 
     }
@@ -23,8 +27,8 @@ public class EditorialDTO {
         return id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreEditorial() {
+        return nombreEditorial;
     }
 
     public Set<LibroDTO> getLibros() {
