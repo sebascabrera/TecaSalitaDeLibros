@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../styles/categoria.css">
+    <title>Categorías</title>
+</head>
+
+<body>
+    <div id="categoria">
+        <div class="h1">
+            <h1>Salita de Categorias</h1>
+        </div>
+        <div class="contenedor">
+            <div class="cabecera">
+                <h2>Formulario Nueva Categoria</h2>
+            </div>
+            <div>
+                <form @submit.prevent="guardarNuevaCategoria" id="formulario">
+                    <div class="form-control">
+                        <label for="palabraCategoria">Categoria:</label>
+                        <input v-model="nuevaCategoria.palabraCategoria" type="text" id="palabraCategoria" required>
+                        <p></p>
+                    </div>
+                    <div class="form-control">
+                        <button type="submit" class="btnGuardar">Guardar</button>
+                    </div>
+                    <div>
+                        <button type="button" @click="volverAlFormulario" class="btn btn-secondary btnVolver">Volver al formulario
+                            </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
+    <script src="./categoria.js"></script>
+</body>
+
+</html>

@@ -1,10 +1,7 @@
 package com.salitadelibros.salita.services;
 
 
-import com.salitadelibros.salita.models.Autor;
-import com.salitadelibros.salita.models.Editorial;
-import com.salitadelibros.salita.models.Ilustrador;
-import com.salitadelibros.salita.models.Libro;
+import com.salitadelibros.salita.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +16,8 @@ import org.springframework.stereotype.Service;
         private IlustradorServicio ilustradorServicio;
         @Autowired
         private AutorServicio autorServicio;
+        @Autowired
+        private CategoriaServicio categoriaServicio;
 
 
         public void saveOrUpdateLibro(Libro libro) {
@@ -37,6 +36,9 @@ import org.springframework.stereotype.Service;
 
     public void saveOrUpdateAutor(Autor autor) {
             autorServicio.saveOrUpdate(autor);
+    }
+    public void saveOrUpdateCategoria(Categoria categoria){
+            categoriaServicio.saveOrUpdate(categoria);
     }
     }
 

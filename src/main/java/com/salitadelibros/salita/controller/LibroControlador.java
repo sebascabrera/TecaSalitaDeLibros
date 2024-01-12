@@ -1,35 +1,27 @@
 package com.salitadelibros.salita.controller;
 
-import com.salitadelibros.salita.models.LibroIlustrador;
-import com.salitadelibros.salita.models.LibroAutor;
-import com.salitadelibros.salita.dtos.EditorialDTO;
+import com.salitadelibros.salita.dtos.*;
 import com.salitadelibros.salita.dtos.LibroDTO;
-import com.salitadelibros.salita.models.Autor;
-import com.salitadelibros.salita.models.Editorial;
-import com.salitadelibros.salita.models.Ilustrador;
-import com.salitadelibros.salita.models.Libro;
-import com.salitadelibros.salita.repositories.AutorRepositorio;
-import com.salitadelibros.salita.repositories.EditorialRepositorio;
-import com.salitadelibros.salita.repositories.IlustradorRepositorio;
-import com.salitadelibros.salita.repositories.LibroRepositorio;
-import com.salitadelibros.salita.services.LibroServicio;
-import com.salitadelibros.salita.services.LibroServicioImpl;
-import com.salitadelibros.salita.services.ServicioComun;
+import com.salitadelibros.salita.services.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.salitadelibros.salita.models.*;
+import com.salitadelibros.salita.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/libros")
 public class LibroControlador {
+
+    private static final Logger logger = LoggerFactory.getLogger(LibroControlador.class);
+
     @Autowired
     private LibroServicio libroServicio;
     @Autowired
@@ -43,7 +35,18 @@ public class LibroControlador {
     @Autowired
     private AutorRepositorio autorRepositorio;
     @Autowired
+    CategoriaRepositorio categoriaRepositorio;
+    @Autowired
     private ServicioComun servicioComun;
+    @Autowired
+    private LibroIlustradorRepositorio libroIlustradorRepositorio;
+    @Autowired
+    private LibroAutorRepositorio libroAutorRepositorio;
+    @Autowired
+    private AutorServicio autorServicio;
+    @Autowired
+    private LibroAutorServicio libroAutorServicio;
+
 
     @GetMapping("/libros")
     public Map<String, Object> getLibros() {
@@ -51,13 +54,13 @@ public class LibroControlador {
 
         List<LibroDTO> libroDTOList = libroServicio.getLibros()
                 .stream()
-                .map(libro -> new LibroDTO((Libro) libro))
+                .map(libro -> new LibroDTO((com.salitadelibros.salita.models.Libro) libro))
                 .collect(Collectors.toList());
 
-        List<String> categorias = libroServicio.getCategorias();
+        //  List<String> categorias = libroServicio.getCategorias();
 
-        response.put("libros", libroDTOList);
-        response.put("categoriasexistentes", categorias);
+        //  response.put("libros", libroDTOList);
+        //  response.put("categoriasexistentes", categorias);
 
         return response;
     }
@@ -73,60 +76,54 @@ public class LibroControlador {
     }
 
     @PostMapping("/guardarLibro")
-    public ResponseEntity<String> saveOrUpdateLibro(@RequestBody LibroDTO libroDTO) {
+    public ResponseEntity<String> saveOrUpdateLibro(@RequestParam MultiValueMap<String, String> datosPrincipales) {
         try {
-            System.out.println("Solicitud recibida: " + libroDTO);
-            if (libroDTO == null) {
-                return ResponseEntity.badRequest().body("El libro no puede ser nulo");
-            }
-            if (libroDTO.getTitulo() == null || v.isEmpty()) {
-                return ResponseEntity.badRequest().body("El título del libro es obligatorio");
-            }
-            if (libroDTO.getGeneroNombre() == null) {
-                return ResponseEntity.badRequest().body("El género del libro es obligatorio");
-            }
-            if (libroDTO.getFechaDeEdicion() == null) {
-                return ResponseEntity.badRequest().body("La fecha de edición del libro es obligatoria");
-            }
-            if (libroDTO.getAutor() == null || libroDTO.getAutor().isEmpty()) {
-                return ResponseEntity.badRequest().body("Debes asociar al menos un autor al libro");
-            }
-            if (libroDTO.getIlustrador() == null || libroDTO.getIlustrador().isEmpty()) {
-                return ResponseEntity.badRequest().body("Debes asociar al menos un ilustrador al libro");
-            }
+            com.salitadelibros.salita.models.Libro libro = new com.salitadelibros.salita.models.Libro(datosPrincipales);
 
-            Libro libro = new Libro(libroDTO.getTitulo(), libroDTO.getNombreEditorial(), libroDTO.getGeneroNombre(), libroDTO.getFechaDeEdicion());
-
-            // Guardar Ilustradores
-            Set<Ilustrador> ilustradores = libro.getLibrosIlustradores()
-                    .stream()
-                    .map(LibroIlustrador::getIlustrador)
-                    .collect(Collectors.toSet());
-
-            for (Ilustrador ilustrador : ilustradores) {
-                if (ilustrador.getId() == null) {
-                    ilustradorRepositorio.save(ilustrador);
-                }
-            }
-
-            // Guardar Autores
-            Set<Autor> autores = libro.getLibrosAutores()
-                    .stream()
-                    .map(LibroAutor::getAutor)
-                    .collect(Collectors.toSet());
-
-            for (Autor autor : autores) {
-                if (autor.getId() != 0) {
-                    autorRepositorio.save(autor);
-                }
-            }
+            // Guardar libro y obtener el ID
             servicioComun.saveOrUpdateLibro(libro);
-            return ResponseEntity.ok("Libro guardado o actualizado exitosamente");
+            String id = String.valueOf(libro.getId());
+            System.out.println("ID del nuevo libro: " + libro.getId());
+            logger.info("Iniciando asociarDatosLibro...{}", libro.getId());
+            // Devolver el ID del nuevo libro
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body("libro creado" + libro.getId());
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar el libro: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al procesar el libro: " + e.getMessage());
         }
     }
 
+    @PostMapping("/asociarDatos")
+    public ResponseEntity<Object> asociarDatos(@RequestParam Long[] autores, @RequestParam Long id) {
+        try {
+            logger.info("Recibidos autores: {}, id: {}", Arrays.toString(autores), id);
 
+
+            Libro libro = libroServicio.getLibroById(id);
+
+            for (Long i : autores) {
+                Autor autor = autorServicio.getAutorById(i);
+
+                logger.info("Obtenido autor con id {}: {}", i, autor);
+
+                if (autor != null) {
+                    // Utilizar una única declaración de LibroAutor y asignar el libro y autor en su constructor
+                    LibroAutor libroAutor = new LibroAutor(libro, autor);
+                    libroAutorServicio.saveOrUpdate(libroAutor);
+                    logger.info("Obtenido libroAutor {}", libroAutor);
+                    // Hacer algo con libroAutor si es necesario
+                } else {
+                    logger.error("No se encontró el autor con id {}", i);
+                }
+            }
+
+            return new ResponseEntity<>("Card created successfully", HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.error("Error al procesar la asociación de datos", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al procesar la asociación de datos: " + e.getMessage());
+        }
+    }
 }
