@@ -1,8 +1,6 @@
 package com.salitadelibros.salita.dtos;
 
-import com.salitadelibros.salita.models.Autor;
-import com.salitadelibros.salita.models.Ilustrador;
-import com.salitadelibros.salita.models.Libro;
+import com.salitadelibros.salita.models.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,8 +11,8 @@ public class LibroDTO {
     private String titulo;
     private String autor;  // Cambiado para ser más significativo
     private String ilustrador;
-    private String editorialNombre;  // Cambiado para extraer solo el nombre
-    private String generoNombre;  // Cambiado para extraer solo el nombre
+    private Editorial editorialNombre;  // Cambiado para extraer solo el nombre
+    private Genero generoNombre;  // Cambiado para extraer solo el nombre
     private List<String> categorias;
     private LocalDate fechaDeEdicion;
 
@@ -45,11 +43,11 @@ public class LibroDTO {
         return ilustrador;
     }
 
-    public String getEditorialNombre() {
+    public Editorial getNombreEditorial() {
         return editorialNombre;
     }
 
-    public String getGeneroNombre() {
+    public Genero getGeneroNombre() {
         return generoNombre;
     }
 

@@ -72,14 +72,14 @@ public class LibroControlador {
         return editorialDTOList;
     }
 
-    @PostMapping("/guardar-libro")
+    @PostMapping("/guardarLibro")
     public ResponseEntity<String> saveOrUpdateLibro(@RequestBody LibroDTO libroDTO) {
         try {
             System.out.println("Solicitud recibida: " + libroDTO);
             if (libroDTO == null) {
                 return ResponseEntity.badRequest().body("El libro no puede ser nulo");
             }
-            if (libroDTO.getTitulo() == null || libroDTO.getTitulo().isEmpty()) {
+            if (libroDTO.getTitulo() == null || v.isEmpty()) {
                 return ResponseEntity.badRequest().body("El título del libro es obligatorio");
             }
             if (libroDTO.getGeneroNombre() == null) {
@@ -95,7 +95,7 @@ public class LibroControlador {
                 return ResponseEntity.badRequest().body("Debes asociar al menos un ilustrador al libro");
             }
 
-            Libro libro = libroDTO.toEntity();
+            Libro libro = new Libro(libroDTO.getTitulo(), libroDTO.getNombreEditorial(), libroDTO.getGeneroNombre(), libroDTO.getFechaDeEdicion());
 
             // Guardar Ilustradores
             Set<Ilustrador> ilustradores = libro.getLibrosIlustradores()
