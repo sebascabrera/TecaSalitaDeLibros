@@ -13,7 +13,7 @@ public class Editorial {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
 
-    private String nombre;
+    private String nombreEditorial;
 
     @OneToMany(mappedBy = "editorial", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Libro> libros = new HashSet<>();
@@ -22,8 +22,8 @@ public class Editorial {
     public Editorial() {
     }
 
-    public Editorial(String nombre) {
-        this.nombre = nombre;
+    public Editorial(String nombreEditorial) {
+        this.nombreEditorial = nombreEditorial;
 
     }
 
@@ -33,8 +33,8 @@ public class Editorial {
         return id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreEditorial() {
+        return nombreEditorial;
     }
 
     public Set<Libro> getLibros() {
@@ -43,13 +43,13 @@ public class Editorial {
 
 // setters
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreEditorial(String nombreEditorial) {
+        this.nombreEditorial = nombreEditorial;
     }
 
     public void addLibro(Libro libro) {
         this.libros.add(libro); // agrego libro al Set<libro>
-        libro.setEditorial(this);// agrego la editorial al libro
+        libro.addEditorial(this) ;// agrego la editorial al libro
 
     }
 

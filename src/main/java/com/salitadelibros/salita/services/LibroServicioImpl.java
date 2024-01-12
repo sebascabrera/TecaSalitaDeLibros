@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class LibroServicioImpl implements LibroServicio {
@@ -35,13 +34,13 @@ public class LibroServicioImpl implements LibroServicio {
     public void delete(Long libroId) {
         libroRepositorio.deleteById(libroId);
     }
-
     @Override
-    public List<String> getCategorias() {
-        List<Libro> libros = libroRepositorio.findAll();
-        return libros.stream()
-                .flatMap(libro -> libro.getCategorias().stream())
-                .distinct()
-                .collect(Collectors.toList());
+    public Libro getLibroById(Long id) {
+        Optional<Libro> optionalLibro = libroRepositorio.findById(id);
+        if (optionalLibro.isPresent()) {
+            Libro libro = optionalLibro.get();
+            return libro;
+        }
+        return null;
     }
 }

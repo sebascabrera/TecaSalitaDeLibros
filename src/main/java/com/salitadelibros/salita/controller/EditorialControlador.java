@@ -17,19 +17,19 @@ public class EditorialControlador {
     private ServicioComun servicioComun;
     @Autowired
     private EditorialServicio editorialServicio;
+    @GetMapping("/editoriales")
+    public List<Editorial> getEditoriales(){
+        return editorialServicio.getEditoriales();
+    }
 
-
-    @PostMapping("/guardar-editorial")
+    @PostMapping
     public ResponseEntity<String> saveOrUpdateEditorial(@RequestBody Editorial editorial) {
         servicioComun.saveOrUpdateEditorial(editorial);
 
         return ResponseEntity.ok("Editorial guardada o actualizada exitosamente");
     }
 
-    @GetMapping("/editorial")
-    public List<Editorial> getEditoriales(){
-        return editorialServicio.getEditoriales();
-    }
+
 
 
 }

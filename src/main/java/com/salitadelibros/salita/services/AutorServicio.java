@@ -14,4 +14,12 @@ public interface AutorServicio {
     void saveOrUpdate(Autor autor);
 
     void delete(Long id);
+
+    public Autor findByNombreAutor( String nombreAutor);
+
+    public Autor findByApellidoAutor(String apellidoAutor);
+
+    public Autor findByNombreAutorAndApellidoAutor(String nombreAutor, String apellidoAutor);
+
+    public Autor getAutorById(Long id);
 }
