@@ -1,7 +1,6 @@
 package com.salitadelibros.salita.services;
 
 import com.salitadelibros.salita.models.Libro;
-import com.salitadelibros.salita.models.LibroCategoria;
 import com.salitadelibros.salita.repositories.LibroRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class LibroServicioImpl implements LibroServicio {
@@ -36,6 +34,13 @@ public class LibroServicioImpl implements LibroServicio {
     public void delete(Long libroId) {
         libroRepositorio.deleteById(libroId);
     }
-
-
+    @Override
+    public Libro getLibroById(Long id) {
+        Optional<Libro> optionalLibro = libroRepositorio.findById(id);
+        if (optionalLibro.isPresent()) {
+            Libro libro = optionalLibro.get();
+            return libro;
+        }
+        return null;
+    }
 }

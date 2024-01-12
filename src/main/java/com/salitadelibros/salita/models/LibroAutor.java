@@ -40,6 +40,12 @@ public class LibroAutor {
         return autor;
     }
 
+    public String getNombreAutor(){
+        return autor.getNombreAutor();
+    }
+    public String getApellidoAutor(){
+        return autor.getApellidoAutor();
+    }
     // Setters
 
     public void setLibro(Libro libro) {

@@ -12,4 +12,5 @@ public interface LibroServicio {
     void saveOrUpdate(Libro libro);
     void delete(Long id);
 
+    Libro getLibroById(Long id);
 }

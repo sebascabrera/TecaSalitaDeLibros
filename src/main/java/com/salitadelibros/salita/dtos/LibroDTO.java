@@ -2,7 +2,6 @@ package com.salitadelibros.salita.dtos;
 
 import com.salitadelibros.salita.models.*;
 
-import java.time.LocalDate;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,7 +22,7 @@ public class LibroDTO {
     public LibroDTO() {
     }
 
-    public LibroDTO(Libro libro) {
+    public LibroDTO(com.salitadelibros.salita.models.Libro libro) {
         id = libro.getId();
         titulo = libro.getTitulo();
         genero = libro.getGenero();

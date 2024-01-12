@@ -20,4 +20,6 @@ public interface AutorServicio {
     public Autor findByApellidoAutor(String apellidoAutor);
 
     public Autor findByNombreAutorAndApellidoAutor(String nombreAutor, String apellidoAutor);
+
+    public Autor getAutorById(Long id);
 }

@@ -82,6 +82,7 @@
                             <button type="button" @click="nuevaEditorialForm" class="btn btn-secondary">Registrar Nueva
                                 Editorial</button>
                         </div>
+                        {{editorialExistente}}
                     </div>
                     <!-- Categorías -->
                     <!-- Campo de selección para Categorías existentes -->
@@ -97,14 +98,16 @@
                             <button type="button" @click="nuevaCategoriaForm" class="btn btn-secondary">Registrar Nueva
                                 Categoria</button>
                         </div>
+                        {{categoriaExistente}}
                     </div>
+
                     <!-- fecha De Edicion -->
                     <div class="mb-3">
                         <label for="fechaDeEdicion" class="form-label">Fecha de Edición:</label>
                         <input type="text" class="form-control" id="fechaDeEdicion" name="fechaDeEdicion"
                             v-model="fechaDeEdicion" required>
                     </div>
-                    <!-- Autor -->
+                    <!-- AutorDTO -->
                     <!-- Campo de selección para autores existentes -->
                     <div class="mb-3">
                         <label for="autorSeleccionado" class="form-label">Autor Existente:</label>
@@ -119,14 +122,15 @@
                       <!--       <strong>Autores seleccionados:</strong>
                             <ul>
                                 <li v-for="autor in autorSeleccionado" :key="autor.id">
-                                    {{ autorId ? autor.apellidoAutor + ', ' + autor.nombreAutor : 'Autor no definido' }}
+                                    {{ autorId ? autor.apellidoAutor + ', ' + autor.nombreAutor : 'AutorDTO no definido' }}
                                 </li>
                             </ul> -->
+                            {{autorSeleccionado}}
                         </div>
 
 
                         <!-- Campos para ingresar un nuevo autor -->
-                        <!--  <a v-on:click="nuevoAutorForm($event)">Registrar Nuevo Autor</a>-->
+                        <!--  <a v-on:click="nuevoAutorForm($event)">Registrar Nuevo AutorDTO</a>-->
                         <div>
                             <button type="button" @click="nuevoAutorForm" class="btn btn-secondary">Registrar Nuevo
                                 Autor</button>

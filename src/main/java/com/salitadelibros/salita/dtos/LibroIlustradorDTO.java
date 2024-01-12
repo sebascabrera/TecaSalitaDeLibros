@@ -15,7 +15,7 @@ public class LibroIlustradorDTO {
     public LibroIlustradorDTO(LibroIlustrador libroIlustrador) {
         id = libroIlustrador.getId();
         ilustradorDTO = new IlustradorDTO(libroIlustrador.getIlustrador());
-        libroDTO = new LibroDTO (libroIlustrador.getLibro());
+        libroDTO = new LibroDTO(libroIlustrador.getLibro());
     }
 
   // getters

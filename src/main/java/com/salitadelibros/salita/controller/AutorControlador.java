@@ -47,7 +47,7 @@ public class AutorControlador {
 
             servicioComun.saveOrUpdateAutor(nuevoAutor);
 
-            return new ResponseEntity<>("Autor guardado exitosamente", HttpStatus.CREATED);
+            return new ResponseEntity<>("AutorDTO guardado exitosamente", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Error al guardar el autor: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -57,7 +57,7 @@ public class AutorControlador {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         autorServicio.delete(id);
-        return ResponseEntity.ok("Autor eliminado exitosamente");
+        return ResponseEntity.ok("AutorDTO eliminado exitosamente");
     }
 }
 

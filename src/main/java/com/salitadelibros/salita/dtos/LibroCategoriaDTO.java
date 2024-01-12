@@ -12,7 +12,7 @@ public class LibroCategoriaDTO {
     }
     public LibroCategoriaDTO(LibroCategoria libroCategoria) {
         id = libroCategoria.getId();
-        libroDTO = new LibroDTO (libroCategoria.getLibro());
+        libroDTO = new LibroDTO(libroCategoria.getLibro());
         categoriaDTO = new CategoriaDTO(libroCategoria.getCategoria());
     }
     //getters

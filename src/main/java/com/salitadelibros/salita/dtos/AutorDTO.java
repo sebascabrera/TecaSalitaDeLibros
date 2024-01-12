@@ -1,7 +1,5 @@
 package com.salitadelibros.salita.dtos;
 
-import com.salitadelibros.salita.models.Autor;
-
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -15,8 +13,8 @@ public class AutorDTO {
 
     }
 
-    // Método constructor que acepta una instancia de Autor
-    public AutorDTO(Autor autor) {
+    // Método constructor que acepta una instancia de AutorDTO
+    public AutorDTO(com.salitadelibros.salita.models.Autor autor) {
         id = autor.getId();
         nombreAutor = autor.getNombreAutor();
         apellidoAutor = autor.getApellidoAutor();
