@@ -11,14 +11,10 @@ Vue.createApp({
             editoriales: [],
 
             autorSeleccionado: [],
-            autores: [],
-            nombreAutor: '',
-            apellidoAutor: '',
+            autores: [],           
 
             ilustradorSeleccionado: [],
             ilustradores: [],
-            nombreIlustrador: '',
-            apellidoIlustrador: '',
 
             fechaDeEdicion: '',
 
@@ -135,7 +131,8 @@ Vue.createApp({
                     },
                 };
 
-                const response = await axios.post('/api/libros/guardarLibro', datosPrincipales, config);
+                const response = await axios.post('/api/libros/guardarLibro', datosPrincipales, config)
+                
 
                 if (response.data) {
                     const nuevoLibroIdstr = response.data;
@@ -144,12 +141,13 @@ Vue.createApp({
                     console.log("Se recibio del servidor: convertido: ", nuevoLibroId);
                     if (Number.isSafeInteger(Number(nuevoLibroId))) {
                         this.enviarDatosAsociacion(Number(nuevoLibroId));
+                        this.enviarDatosIlustrador(Number(nuevoLibroId));
+                        this.enviarDatosCategorias(Number(nuevoLibroId));
                     } else {
                         console.error("El valor de 'id' es nulo o indefinido.");
                     }
 
                 } else {
-                    // Manejar el caso en que no se recibe un ID válido
                     console.log("No se recibió un ID válido del servidor. response.data: ", response.data);
                 }
             } catch (error) {
@@ -163,30 +161,58 @@ Vue.createApp({
                         'Content-Type': 'application/json',
                     },
                 };
-                
-                const autores = [this.autorSeleccionado.id]; // Asegúrate de tener el valor correcto
-                               
-                
-
+                const autores = [this.autorSeleccionado.id];
                 axios.post(`/api/libros/asociarDatos?autores=${autores.join(',')}&id=${id}`, null, config)
                     .then(response => {
-                       console.log("autores post axios", autores)
-                        alert("Libro guardado o actualizado exitosamente");
-
-                        this.titulo = '';
-                        this.genero = '';
-                        this.categoriaExistente = [];
+                        console.log("autores post axios", autores);
+                        
+                         this.autorSeleccionado = [];                        
                         this.editorialExistente = '';
-                        this.fechaDeEdicion = '';
-                        this.autorSeleccionado = [];
-                        this.ilustradorSeleccionado = [];
-                        this.isbn = ''
-                            ;
-                    })
+                       })
             } catch (error) {
                 console.error("Error general al enviar datos de asociación al servidor:", error);
             }
-        }
+        },
+        enviarDatosIlustrador(id) {
+            try {
+                const config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+                const ilustradores = [this.ilustradorSeleccionado.id];
+                axios.post(`/api/libros/asociarIlustradores?ilustradores=${ilustradores.join(',')}&id=${id}`, null, config)
+                .then(response => {
+                    console.log("ilustradores post axios", ilustradores);
+                    this.ilustradorSeleccionado = [];
+                })
+            } catch (error) {
+                console.error("Error general al enviar datos de ilustradores al servidor:", error);
+            }
+        },
+        enviarDatosCategorias(id){
+            try{
+                const config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+                console.log("categorias pre axios", this.categoriaExistente);
+                const idsCategorias = this.categoriaExistente.map(categoria => categoria.id);
+                axios.post(`/api/libros/asociarCategorias?categorias=${idsCategorias.join(',')}&id=${id}`, null, config)
+                .then(response => {
+                    alert("Libro guardado o actualizado exitosamente");
+                    console.log("categorias post axios", idsCategorias);
+                    this.categoriaExistente = [];
+                    this.titulo = '';
+                    this.genero = '';
+                    this.fechaDeEdicion = '';
+                    this.isbn = '';
+                })
 
+            } catch (error) {
+                console.error("Error general al enviar datos de categorias al servidor:", error);
+            }
+        },
     }
 }).mount("#formularioLibro");

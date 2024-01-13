@@ -1,4 +1,4 @@
-package com.salitadelibros.salita.services;
+package com.salitadelibros.salita.services.services;
 
 import com.salitadelibros.salita.models.Ilustrador;
 
@@ -14,5 +14,7 @@ public interface IlustradorServicio {
 
     void delete(Long id);
 
-    public Ilustrador findByNombreIlustradorAndApellidoIlustrador(String nombreIlustrador, String apellidoIlustrador);
+    Ilustrador findByNombreIlustradorAndApellidoIlustrador(String nombreIlustrador, String apellidoIlustrador);
+
+    Ilustrador getIlustradorById(Long id);
 }

@@ -1,4 +1,4 @@
-package com.salitadelibros.salita.services;
+package com.salitadelibros.salita.services.services;
 
 import com.salitadelibros.salita.models.Editorial;
 import com.salitadelibros.salita.models.Libro;

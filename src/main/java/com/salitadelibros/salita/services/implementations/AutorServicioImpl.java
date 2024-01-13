@@ -1,7 +1,8 @@
-package com.salitadelibros.salita.services;
+package com.salitadelibros.salita.services.implementations;
 
 import com.salitadelibros.salita.models.Autor;
 import com.salitadelibros.salita.repositories.AutorRepositorio;
+import com.salitadelibros.salita.services.services.AutorServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AutorServicioImpl implements AutorServicio{
+public class AutorServicioImpl implements AutorServicio {
 
     @Autowired
     private AutorRepositorio autorRepositorio;

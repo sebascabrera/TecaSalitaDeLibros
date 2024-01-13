@@ -1,5 +1,7 @@
 package com.salitadelibros.salita.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -7,6 +9,7 @@ public class AutorDTO {
     private Long id;
     private String nombreAutor;
     private String apellidoAutor;
+    @JsonIgnore
     private Set<LibroAutorDTO> libros;
 
     public AutorDTO() {

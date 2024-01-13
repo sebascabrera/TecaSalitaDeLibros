@@ -1,5 +1,6 @@
 package com.salitadelibros.salita.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.salitadelibros.salita.models.Ilustrador;
 import com.salitadelibros.salita.models.LibroIlustrador;
 
@@ -11,6 +12,7 @@ public class IlustradorDTO {
     private String nombreIlustrador;
 
     private String apellidoIlustrador;
+    @JsonIgnore
     private Set<LibroIlustradorDTO> libros;
 
     // Constructores

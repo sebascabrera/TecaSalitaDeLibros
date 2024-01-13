@@ -1,4 +1,4 @@
-package com.salitadelibros.salita.services;
+package com.salitadelibros.salita.services.services;
 
 import com.salitadelibros.salita.models.Usuario;
 import com.salitadelibros.salita.repositories.UsuarioRepositorio;

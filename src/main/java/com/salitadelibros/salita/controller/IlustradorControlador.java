@@ -1,7 +1,8 @@
 package com.salitadelibros.salita.controller;
 
+import com.salitadelibros.salita.dtos.IlustradorDTO;
 import com.salitadelibros.salita.models.Ilustrador;
-import com.salitadelibros.salita.services.IlustradorServicio;
+import com.salitadelibros.salita.services.services.IlustradorServicio;
 import com.salitadelibros.salita.services.ServicioComun;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/ilustradores")
@@ -20,8 +23,14 @@ public class IlustradorControlador {
     private ServicioComun servicioComun;
 
     @GetMapping("/ilustradores")
-    public List<Ilustrador> getIlustradores() {
-        return ilustradorServicio.getIlustradores();
+    public Set<IlustradorDTO> getIlustradores() {
+
+        List<Ilustrador> listaIlustradores = ilustradorServicio.getIlustradores();
+        Set<IlustradorDTO> listaIlustradorDTO = listaIlustradores
+                .stream()
+                .map(ilustrador -> new IlustradorDTO(ilustrador))
+                .collect(Collectors.toSet());
+        return listaIlustradorDTO;
     }
 
     @GetMapping("/{id}")

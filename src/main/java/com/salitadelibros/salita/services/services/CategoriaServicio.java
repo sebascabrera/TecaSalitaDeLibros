@@ -1,4 +1,4 @@
-package com.salitadelibros.salita.services;
+package com.salitadelibros.salita.services.services;
 
 import com.salitadelibros.salita.models.Categoria;
 
@@ -16,4 +16,6 @@ public interface CategoriaServicio {
     void delete(Long id);
 
     public Categoria findByPalabraCategoria(String palabraCategoria);
+
+    public Categoria findCategoriaById(Long id);
 }
