@@ -49,7 +49,7 @@ public class CaetgoriaControlador {
 
                }
            }
-           return ResponseEntity.ok("Categoria guardada o actualizada exitosamente");
+           return ResponseEntity.ok("Categoria guardada exitosamente");
        }catch (Exception e) {
            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
        }

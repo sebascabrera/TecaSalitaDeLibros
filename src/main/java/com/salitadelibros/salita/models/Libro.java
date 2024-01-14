@@ -21,7 +21,7 @@ public class Libro {
     @Column(name = "fecha_de_edicion")
     private String fechaDeEdicion;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
 
@@ -52,7 +52,6 @@ public class Libro {
 
     public Libro(MultiValueMap<String, String> libroData) {
         if (libroData != null) {
-            // Extraer y asignar los datos del MultiValueMap a las propiedades del libro
             this.titulo = libroData.getFirst("titulo");
             this.fechaDeEdicion = libroData.getFirst("fechaDeEdicion");
             this.genero = Genero.valueOf(libroData.getFirst("genero"));
@@ -133,8 +132,10 @@ public class Libro {
         categorias.add(libroCategoria);
     }
 
-    public void addEditorial(Editorial editorial){
-        this.editorial = editorial;
-        editorial.getLibros().add(this);
+    public void addEditorial(Editorial editorial) {
+        if (this.editorial == null || !this.editorial.equals(editorial)) {
+            this.editorial = editorial;
+            editorial.getLibros().add(this);
+        }
     }
 }

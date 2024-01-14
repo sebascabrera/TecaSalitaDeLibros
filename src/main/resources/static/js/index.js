@@ -143,6 +143,7 @@ Vue.createApp({
                         this.enviarDatosAsociacion(Number(nuevoLibroId));
                         this.enviarDatosIlustrador(Number(nuevoLibroId));
                         this.enviarDatosCategorias(Number(nuevoLibroId));
+                        this.enviarDatosEditorial(Number(nuevoLibroId));
                     } else {
                         console.error("El valor de 'id' es nulo o indefinido.");
                     }
@@ -167,7 +168,7 @@ Vue.createApp({
                         console.log("autores post axios", autores);
                         
                          this.autorSeleccionado = [];                        
-                        this.editorialExistente = '';
+                       
                        })
             } catch (error) {
                 console.error("Error general al enviar datos de asociación al servidor:", error);
@@ -201,18 +202,33 @@ Vue.createApp({
                 const idsCategorias = this.categoriaExistente.map(categoria => categoria.id);
                 axios.post(`/api/libros/asociarCategorias?categorias=${idsCategorias.join(',')}&id=${id}`, null, config)
                 .then(response => {
-                    alert("Libro guardado o actualizado exitosamente");
+                    
                     console.log("categorias post axios", idsCategorias);
                     this.categoriaExistente = [];
-                    this.titulo = '';
-                    this.genero = '';
-                    this.fechaDeEdicion = '';
-                    this.isbn = '';
+                  
                 })
 
             } catch (error) {
                 console.error("Error general al enviar datos de categorias al servidor:", error);
             }
+        },
+        enviarDatosEditorial(id){
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+            console.log("editorial pre axios", this.editorialExistente);
+            const editorial = [this.editorialExistente.id];
+            axios.post(`/api/libros/asociarEditorial?editorial=${editorial.join(',')}&id=${id}`, null, config)
+            .then(response =>{
+                alert("Libro guardado o actualizado exitosamente");
+                this.titulo = '';
+                this.genero = '';
+                this.fechaDeEdicion = '';
+                this.isbn = '';
+                this.editorialExistente = [];
+            })
         },
     }
 }).mount("#formularioLibro");

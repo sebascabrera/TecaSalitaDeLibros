@@ -1,9 +1,8 @@
 package com.salitadelibros.salita.controller;
 
 import com.salitadelibros.salita.dtos.*;
-import com.salitadelibros.salita.dtos.LibroDTO;
+
 import com.salitadelibros.salita.services.*;
-import com.salitadelibros.salita.services.implementations.LibroServicioImpl;
 import com.salitadelibros.salita.services.services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,23 +26,11 @@ public class LibroControlador {
     @Autowired
     private LibroServicio libroServicio;
     @Autowired
-    private LibroRepositorio libroRepositorio;
-    @Autowired
     private EditorialRepositorio editorialRepositorio;
     @Autowired
-    private LibroServicioImpl libroServicioimpl;
-    @Autowired
-    private IlustradorRepositorio ilustradorRepositorio;
-    @Autowired
-    private AutorRepositorio autorRepositorio;
-    @Autowired
-    CategoriaRepositorio categoriaRepositorio;
+    private EditorialServicio editorialServicio;
     @Autowired
     private ServicioComun servicioComun;
-    @Autowired
-    private LibroIlustradorRepositorio libroIlustradorRepositorio;
-    @Autowired
-    private LibroAutorRepositorio libroAutorRepositorio;
     @Autowired
     private AutorServicio autorServicio;
     @Autowired
@@ -59,15 +46,15 @@ public class LibroControlador {
 
 
     @GetMapping("/libros")
-    public Map<String, Object> getLibros() {
-        Map<String, Object> response = new HashMap<>();
+    public List<LibroDTO> getLibros() {
 
-        List<LibroDTO> libroDTOList = libroServicio.getLibros()
+        List<Libro> libroLista = libroServicio.getLibros();
+        List<LibroDTO> libroDTOLista = libroLista
                 .stream()
-                .map(libro -> new LibroDTO((com.salitadelibros.salita.models.Libro) libro))
+                .map(libro -> new LibroDTO(libro))
                 .collect(Collectors.toList());
 
-        return response;
+        return libroDTOLista;
     }
 
     @RequestMapping("/editoriales")
@@ -104,7 +91,7 @@ public class LibroControlador {
     public ResponseEntity<Object> asociarDatos(@RequestParam Long[] autores, @RequestParam Long id) {
         try {
             logger.info("Recibidos autores: {}, id: {}", Arrays.toString(autores), id);
-            Libro libro = libroServicio.getLibroById(id);
+            com.salitadelibros.salita.models.Libro libro = libroServicio.getLibroById(id);
 
             for (Long i : autores) {
                 Autor autor = autorServicio.getAutorById(i);
@@ -133,7 +120,7 @@ public class LibroControlador {
     public ResponseEntity<Object> asociarIlustradores(@RequestParam Long[] ilustradores, @RequestParam Long id) {
         try {
             logger.info("Recibidos ilustradores: {}, id: {}", Arrays.toString(ilustradores), id);
-            Libro libro = libroServicio.getLibroById(id);
+            com.salitadelibros.salita.models.Libro libro = libroServicio.getLibroById(id);
 
             for (Long i : ilustradores) {
                 Ilustrador ilustrador = ilustradorServicio.getIlustradorById(i);
@@ -156,7 +143,7 @@ public class LibroControlador {
     public ResponseEntity<Object> asociarCategorias(@RequestParam Long[] categorias, @RequestParam Long id){
         try{
             logger.info("Recibidos ilustradores: {}, id: {}", Arrays.toString(categorias), id);
-            Libro libro = libroServicio.getLibroById(id);
+            com.salitadelibros.salita.models.Libro libro = libroServicio.getLibroById(id);
             for (Long i : categorias){
                 Categoria categoria= categoriaServicio.findCategoriaById(i);
                 if (categoria != null){
@@ -171,6 +158,26 @@ public class LibroControlador {
             logger.error("Error al procesar la asociación de datos de categorias", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al procesar la asociación de categorias: " + e.getMessage());
+        }
+    }
+    @PostMapping("/asociarEditorial")
+    public ResponseEntity<Object> asociarEditorial(@RequestParam Long[] editorial, @RequestParam Long id){
+        try{
+            logger.info("Recibido editorial: {}, id: {}", Arrays.toString(editorial), id);
+            com.salitadelibros.salita.models.Libro libro = libroServicio.getLibroById(id);
+            for (Long i : editorial){
+                logger.info("i es igual a : {}", i);
+                Editorial editorial1 = editorialServicio.getEditorialById(i);
+                if (editorial1 != null){
+                    libro.addEditorial(editorial1);
+                    servicioComun.saveOrUpdateLibro(libro);
+                }else {
+                    logger.error("La editorial es nula para el id: {}", i);
+                }
+            }return new ResponseEntity<>("Editorial asociada correctamente", HttpStatus.CREATED);
+        }catch (Exception e){
+            logger.error("Error al asociar Editorial ", e);
+            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar la asociacion de Editorial" +e.getMessage());
         }
     }
 }

@@ -22,7 +22,7 @@
     </style>
     <header>
         <div class="container row">
-            <nav class="navbar navbar-expand-lg navbar-light">
+            <nav class="navbar navbar-expand-lg ">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
@@ -39,16 +39,16 @@
             </nav>
             <div class="row">
                 <div class="col-lg-12 col-md-8">
-                    <h1>Salita de libros</h1>
+                    <h1>SALITA DE INGRESOS</h1>
                     <p class="col-12">Tu lugar para disfrutar de los mejores libros infantiles</p>
                 </div>
             </div>
         </div>
     </header>
-    <div id="formularioLibro" class="container" v-cloak>
+    <div id="formularioLibro" class="containerForm" v-cloak>
         <div class="row">
             <div class="col">
-                <h2 class="align-content-center">Salita de ingresos</h2>
+            <!--<h2 class="align-content-center">Salita de ingresos</h2> -->   
                 <form id="contenedorformularioLibro" action="/api/libros/guardarLibro" method="post"
                     class="container mt-5">
                     <!-- Campos del formulario -->
@@ -60,12 +60,16 @@
                     </div>
                     <!-- genero -->
                     <div class="mb-3">
+                        <div>
                         <label for="genero" class="form-label">Género:</label>
-                        <select v-model="genero" id="genero" name="genero" required>
+                    </div>
+                    <div>
+                        <select v-model="genero" id="genero" name="genero" class="modelGenero" required>
                             <option value="POESIA">Poesía</option>
                             <option value="TEATRO">Teatro</option>
                             <option value="NARRATIVA">Narrativa</option>
                         </select>
+                    </div>                      
                     </div>
                     <!-- Editorial -->
                     <div class="mb-3">

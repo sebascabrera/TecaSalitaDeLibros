@@ -1,7 +1,7 @@
 package com.salitadelibros.salita.models;
 
 import org.hibernate.annotations.GenericGenerator;
-
+import com.salitadelibros.salita.models.Ilustrador;
 import javax.persistence.*;
 
 @Entity
@@ -53,4 +53,6 @@ public class LibroIlustrador {
     public void setLibro(Libro libro) {
         this.libro = libro;
     }
+
+
 }

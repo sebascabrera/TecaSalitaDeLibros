@@ -14,63 +14,36 @@
 
 <body class="index-body">
     <div id="app">
-        <div class="toast-container position-absolute p-3 top-0 end-0" id="toastPlacement">
-            <!-- Toast para mostrar mensajes de error -->
-            <div id="danger-toast" data-bs-delay="2000"
-                class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive"
-                aria-atomic="true">
-                <div class="d-flex">
-                    <div class="toast-body">
-                        {{ errorMsg }}
+        <div class="imagen">
+            <div class="contenedor">
+                <h3 class="mb-4">Inicio de Sesión</h3>
+                <form id="formulario" class="signin-form" v-on:submit="signIn($event)">
+                    <div class="form-group mb-3">
+                        <label class="label" for="email">Email</label>
+                        <input v-model="email" id="email" type="email" class="form-control" placeholder="email@mail.com"
+                            required>
                     </div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
-                </div>
-            </div>
-        </div>
-        <div class="container index-container">
-            <div class="row justify-content-center">
-                <div class="col-md-12 col-lg-10">
-                    <div class="wrap d-md-flex justify-content-center bg-light shadow border-0 rounded-5">
-                        <!-- Contenido del formulario -->
-                        <div class="login-wrap p-4 p-lg-5 cabecera">
-                            <div class="d-flex ">
-                                <div class="w-100">
-                                    <h3 class="mb-4">Inicio de Sesión</h3>
-                                </div>
-                            </div >
-                            <form id="formulario" class="signin-form contenedor" v-on:submit="signIn($event)">
-                                <div class="form-group mb-3">
-                                    <label class="label" for="email">Email</label>
-                                    <input v-model="email" id="email" type="email" class="form-control" placeholder="email@mail.com" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label class="label" for="password">Contraseña</label>
-                                    <input v-model="password" id="password" type="password" class="form-control" placeholder="Contraseña" required autocomplete="off">
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="form-control btn btn-primary px-3">Iniciar Sesión</button>
-                                </div>
-                            </form>
-                            
-                           <!-- Agrega un enlace o botón para redirigir a la página de registro -->
-                           <div class="form-group mt-3">
-                            <a v-on:click ="registroLink($event)" class="btn btn-secondary">Registrarse</a>
-                        </div>
-  
-                        </div>
+                    <div class="form-group mb-3">
+                        <label class="label" for="password">Contraseña</label>
+                        <input v-model="password" id="password" type="password" class="form-control"
+                            placeholder="Contraseña" required autocomplete="off">
                     </div>
-                </div>
+                    <div class="form-group">
+                        <button type="submit" class="form-control btn btn-primary px-3">Iniciar Sesión</button>
+                    </div>
+                    <div class="form-group mt-3">
+                        <a v-on:click="registroLink($event)" class="btn btn-secondary">Registrarse</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
+    </div>
     <script src="https://unpkg.com/vue@3"></script>
     <script src="https://unpkg.com/vue-router@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./ingreso.js"></script>
-
 </body>
 
 </html>

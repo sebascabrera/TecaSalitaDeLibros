@@ -26,5 +26,11 @@ public class EditorialServicioImpl implements EditorialServicio {
         return editorialRepositorio.findAll();
     }
     @Override
-     public Optional<Editorial> getEditorial(Long id){ return editorialRepositorio.findById(id);}
+     public Editorial getEditorialById(Long id){
+        Optional<Editorial> optionalEditorial = editorialRepositorio.findById(id);
+        if (optionalEditorial.isPresent()){
+            Editorial editorial = optionalEditorial.get();
+            return editorial;
+        }
+        return null;}
 }
