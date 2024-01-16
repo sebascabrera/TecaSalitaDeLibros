@@ -66,6 +66,11 @@ label {
   color: #000000;
   font-size:xx-large;
 }
+.form-select[multiple], .form-select[size]:not([size="1"]) {
+  padding-right: 0.75rem;
+  background-image: none;
+  height: 4.5rem;
+}
 .modelGenero{
   padding: 0px 10px;
 }
@@ -76,6 +81,9 @@ input {
   border: 1px solid #8fa2ad;
   /* Borde gris azulado */
   border-radius: 5px;
+}
+.form-check-label{
+  font-size:medium;
 }
 /* Botones */
 .btn {
@@ -153,11 +161,19 @@ p {
 }
 
 .labelCategoria {
-  display: block;
+  display: flex;
+  flex-direction: column;
+}
+.ContenedorDeItemsCategorias{
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: space-evenly;
 }
 
 .itemsCategorias {
   display: flex;
+  align-items: center;
 }
 
 .boxCategoria {
@@ -176,4 +192,9 @@ p {
 
 input[type="text"] {
   appearance: none;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
 }

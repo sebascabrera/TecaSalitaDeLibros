@@ -48,7 +48,7 @@
     <div id="formularioLibro" class="containerForm" v-cloak>
         <div class="row">
             <div class="col">
-            <!--<h2 class="align-content-center">Salita de ingresos</h2> -->   
+                <!--<h2 class="align-content-center">Salita de ingresos</h2> -->
                 <form id="contenedorformularioLibro" action="/api/libros/guardarLibro" method="post"
                     class="container mt-5">
                     <!-- Campos del formulario -->
@@ -61,15 +61,15 @@
                     <!-- genero -->
                     <div class="mb-3">
                         <div>
-                        <label for="genero" class="form-label">Género:</label>
-                    </div>
-                    <div>
-                        <select v-model="genero" id="genero" name="genero" class="modelGenero" required>
-                            <option value="POESIA">Poesía</option>
-                            <option value="TEATRO">Teatro</option>
-                            <option value="NARRATIVA">Narrativa</option>
-                        </select>
-                    </div>                      
+                            <label for="genero" class="form-label">Género:</label>
+                        </div>
+                        <div>
+                            <select v-model="genero" id="genero" name="genero" class="modelGenero" required>
+                                <option value="POESIA">Poesía</option>
+                                <option value="TEATRO">Teatro</option>
+                                <option value="NARRATIVA">Narrativa</option>
+                            </select>
+                        </div>
                     </div>
                     <!-- Editorial -->
                     <div class="mb-3">
@@ -92,19 +92,22 @@
                     <!-- Campo de selección para Categorías existentes -->
                     <div class="mb-3 categorias">
                         <label class="form-label labelCategoria">Categorías Existentes:</label>
-                        <div v-for="categoria in categorias" :key="categoria.id" class="form-check itemsCategorias">
-                            <input type="checkbox" v-model="categoriaExistente" :value="categoria"
-                                class="form-check-input boxCategoria">
-                            <label class="form-check-label">{{ categoria.palabraCategoria }}</label>
+                        <div class="ContenedorDeItemsCategorias">
+                            <div v-for="categoria in categorias" :key="categoria.id" class="form-check itemsCategorias">
+                                <input type="checkbox" v-model="categoriaExistente" :value="categoria"
+                                    class="form-check-input boxCategoria">
+                                <label class="form-check-label">{{ categoria.palabraCategoria }}</label>
+                            </div>
                         </div>
                         <!-- Campos para ingresar una nueva Categorías -->
                         <div>
-                            <button type="button" @click="nuevaCategoriaForm" class="btn btn-secondary">Registrar Nueva
+                            <button type="button" @click="nuevaCategoriaForm" class="btn btn-secondary">Registrar
+                                Nueva
                                 Categoria</button>
                         </div>
                         {{categoriaExistente}}
-                    </div>
 
+                    </div>
                     <!-- fecha De Edicion -->
                     <div class="mb-3">
                         <label for="fechaDeEdicion" class="form-label">Fecha de Edición:</label>
@@ -115,20 +118,23 @@
                     <!-- Campo de selección para autores existentes -->
                     <div class="mb-3">
                         <label for="autorSeleccionado" class="form-label">Autor Existente:</label>
-                        <select v-model="autorSeleccionado" class="form-select" id="autorSeleccionado"
-                            name="autorSeleccionado">
+                        <select v-model="autorSeleccionado" class="form-select" id="autorSeleccionadorR"
+                            name="autorSeleccionado" multiple>
                             <option value="" disabled>Seleccionar Autores Existentes</option>
                             <option v-for="autor in autores" :key="autor.id" :value="autor">
-                                {{  autor.apellidoAutor + ', ' + autor.nombreAutor }}
+                                {{ autor.apellidoAutor + ', ' + autor.nombreAutor }}
                             </option>
                         </select>
                         <div>
-                      <!--       <strong>Autores seleccionados:</strong>
-                            <ul>
-                                <li v-for="autor in autorSeleccionado" :key="autor.id">
-                                    {{ autorId ? autor.apellidoAutor + ', ' + autor.nombreAutor : 'AutorDTO no definido' }}
-                                </li>
-                            </ul> -->
+                            <!--Prueba de multiple selector de autor
+                            <div class="form-group">
+                                <label for="autorSeleccionado">Autor Existente: prueba multiple</label>
+                                <select v-model="autorSeleccionado" name="autorSeleccionado" id="autorSeleccionado" class="selectpicker" multiple>
+                                    <option v-for="autor in autores" :key="autor.id" :value="autor">
+                                        {{ autor.apellidoAutor + ', ' + autor.nombreAutor }}
+                                    </option>
+                                </select>
+                            </div> -->
                             {{autorSeleccionado}}
                         </div>
 
@@ -146,14 +152,14 @@
                     <div class="mb-3">
                         <label for="ilustradorSeleccionado" class="form-label">Ilustrador Existente:</label>
                         <select v-model="ilustradorSeleccionado" class="form-select" id="ilustradorSeleccionado"
-                            name="ilustradorSeleccionado">
+                            name="ilustradorSeleccionado" multiple>
                             <option value="" disabled>Seleccionar Ilustrador Existente</option>
                             <option v-for="ilustrador in ilustradores" :key="ilustrador.id" :value="ilustrador">
                                 {{ ilustrador.nombreIlustrador + ', ' + ilustrador.apellidoIlustrador }}
                             </option>
                         </select>
                         <div>
-                         <!--    <strong>Ilustrador seleccionados:</strong>
+                            <!--    <strong>Ilustrador seleccionados:</strong>
                             <ul>
                                 <li v-for="ilustradorId in ilustradorSeleccionado" :key="ilustrador.id">
                                     {{ ilustradorId.apellidoilustrador + ', ' + ilustradorId.nombreilustrador }}
@@ -163,7 +169,8 @@
 
                         <!-- Campos para ingresar un nuevo ilustrador -->
                         <div>
-                            <button type="button" @click="nuevoIlustradorForm" class="btn btn-secondary">Registrar Nuevo
+                            <button type="button" @click="nuevoIlustradorForm" class="btn btn-secondary">Registrar
+                                Nuevo
                                 Ilustrador</button>
                         </div>
                     </div>

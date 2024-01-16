@@ -161,19 +161,25 @@ Vue.createApp({
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                };
-                const autores = [this.autorSeleccionado.id];
+                };        
+                let autores = [];        
+                if (this.autorSeleccionado.length > 1) {
+                    autores = this.autorSeleccionado.map(autor => autor.id);
+                } else {
+                    autores = [this.autorSeleccionado.id];
+                }        
                 axios.post(`/api/libros/asociarDatos?autores=${autores.join(',')}&id=${id}`, null, config)
                     .then(response => {
                         console.log("autores post axios", autores);
-                        
-                         this.autorSeleccionado = [];                        
-                       
-                       })
+                        this.autorSeleccionado = [];
+                    })
+                    .catch(error => {
+                        console.error("Error al enviar datos de asociación al servidor:", error);
+                    });
             } catch (error) {
                 console.error("Error general al enviar datos de asociación al servidor:", error);
             }
-        },
+        },        
         enviarDatosIlustrador(id) {
             try {
                 const config = {
@@ -181,7 +187,12 @@ Vue.createApp({
                         'Content-Type': 'application/json',
                     },
                 }
-                const ilustradores = [this.ilustradorSeleccionado.id];
+                let ilustradores = [];        
+                if (this.ilustradorSeleccionado.length > 1) {
+                    ilustradores = this.ilustradorSeleccionado.map(autor => autor.id);
+                } else {
+                    ilustradores = [this.ilustradorSeleccionado.id];
+                } 
                 axios.post(`/api/libros/asociarIlustradores?ilustradores=${ilustradores.join(',')}&id=${id}`, null, config)
                 .then(response => {
                     console.log("ilustradores post axios", ilustradores);

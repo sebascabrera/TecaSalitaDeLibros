@@ -20,7 +20,7 @@ Vue.createApp({
             axios.post('/auth/signin', `email=${this.email}&password=${this.password}`, config)
                 .then(response => window.location.href = "../../index.html")
                 .catch(() => {
-                    this.errorMsg = "Sign in failed, check the information";
+                    this.errorMsg = "Fallo de inicio, usuario no registrado";
                     this.errorToast.show();
                 });
         },
