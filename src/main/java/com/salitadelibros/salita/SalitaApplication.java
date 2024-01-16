@@ -2,14 +2,10 @@ package com.salitadelibros.salita;
 
 import com.salitadelibros.salita.models.*;
 import com.salitadelibros.salita.repositories.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Arrays;
 
 import static com.salitadelibros.salita.models.Genero.NARRATIVA;
 
@@ -27,8 +23,7 @@ public class SalitaApplication {
 									  EditorialRepositorio editorialRepositorio,
 									  LibroAutorRepositorio libroAutorRepositorio,
 									  LibroIlustradorRepositorio libroIlustradorRepositorio,
-									  LibroCategoriaRepositorio libroCategoriaRepositorio,
-									  UsuarioRepositorio usuarioRepositorio){
+									  LibroCategoriaRepositorio libroCategoriaRepositorio){
 
 		return (args -> {
 			Libro libro1 = new Libro("aventuras de Abril", "2024", NARRATIVA, "98798879787");
