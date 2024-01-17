@@ -1,6 +1,5 @@
 package com.salitadelibros.salita.models;
 
-import com.salitadelibros.salita.models.Roles;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
