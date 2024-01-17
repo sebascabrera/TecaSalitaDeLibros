@@ -116,8 +116,34 @@ Vue.createApp({
 
 
         },
+        capitalizarPalabras(frase) {            
+            const palabras = frase.split(' ');        
+            const palabrasCapitalizadas = palabras.map(palabra => {
+                return palabra.charAt(0).toUpperCase() + palabra.slice(1).toLowerCase();
+            });
+            if (palabrasCapitalizadas[0] === 'El' || palabrasCapitalizadas[0] === 'La' || palabrasCapitalizadas[0] === 'Los' || palabrasCapitalizadas[0] === 'Las') {
+                const nuevoTitulo = palabrasCapitalizadas.slice(1).join(' ') + ', ' + palabrasCapitalizadas[0];
+                return nuevoTitulo;
+            } else {            
+                return palabrasCapitalizadas.join(' ');
+            }
+        },
+        limiteDeISBN(codigo) {
+            codigo = codigo.trim(); 
+            if (!/^\d+$/.test(codigo)) {
+                alert("El ISBN es incorrecto. Debe contener solo números.");
+                this.isbn = this.isbn='';
+            } else if (codigo.length > 13) {
+                alert("El ISBN es incorrecto. No puede exceder los 13 dígitos.");
+                this.isbn = this.isbn='';
+            } else {
+                return codigo;
+            }
+        },
         async enviarFormulario() {
             try {
+                this.titulo = this.capitalizarPalabras(this.titulo);
+                this.isbn = this.limiteDeISBN(this.isbn);
                 const datosPrincipales = {
                     'titulo': this.titulo,
                     'genero': this.genero,
@@ -130,11 +156,13 @@ Vue.createApp({
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
                 };
-
-                const response = await axios.post('/api/libros/guardarLibro', datosPrincipales, config)
-                
-
-                if (response.data) {
+                if (this.isbn == null) {
+                    alert("Debe completar el ISBN");
+                    return; 
+                }
+                    const response = await axios.post('/api/libros/guardarLibro', datosPrincipales, config)
+                  
+                  if (response.data) {
                     const nuevoLibroIdstr = response.data;
                     const nuevoLibroId = BigInt(nuevoLibroIdstr.replace(/\D/g, ''));
                     console.log("Se recibio del servidor: response.data: ", response.data);

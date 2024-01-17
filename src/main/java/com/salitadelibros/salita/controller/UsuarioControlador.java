@@ -30,11 +30,11 @@ public class UsuarioControlador {
             @RequestParam String password) {
 
         if (nombreUsuario.isBlank() || email.isBlank() || password.isBlank()) {
-            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Falta informacion", HttpStatus.FORBIDDEN);
         }
 
         if (usuarioRepositorio.findByEmail(email) != null) {
-            return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("El mail corresponde a un usuario registrado", HttpStatus.FORBIDDEN);
         }
 
         // Crear un nuevo usuario y asignar roles
@@ -56,7 +56,7 @@ public class UsuarioControlador {
         if (authenticated) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("Fallo la autenticación", HttpStatus.UNAUTHORIZED);
         }
     }
 

@@ -59,7 +59,7 @@ public class SecurityConfiguration {
 
         return http.build();
     }
-
+//vacia caches cada vez que se hace la peticion al formLogin
     private void clearAuthenticationAttributes(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
