@@ -141,8 +141,9 @@ Vue.createApp({
             }
         },
         async enviarFormulario() {
-            try {
-                this.titulo = this.capitalizarPalabras(this.titulo);
+           try {
+              
+            this.titulo = this.capitalizarPalabras(this.titulo);
                 this.isbn = this.limiteDeISBN(this.isbn);
                 const datosPrincipales = {
                     'titulo': this.titulo,
@@ -156,10 +157,7 @@ Vue.createApp({
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
                 };
-                if (this.isbn == null) {
-                    alert("Debe completar el ISBN");
-                    return; 
-                }
+              
                     const response = await axios.post('/api/libros/guardarLibro', datosPrincipales, config)
                   
                   if (response.data) {
@@ -190,11 +188,13 @@ Vue.createApp({
                         'Content-Type': 'application/json',
                     },
                 };        
-                let autores = [];        
+                     let autores = [];  
                 if (this.autorSeleccionado.length > 1) {
                     autores = this.autorSeleccionado.map(autor => autor.id);
+                    console.log("autores en if", autores)
                 } else {
-                    autores = [this.autorSeleccionado.id];
+                     autores = [this.autorSeleccionado[0].id];
+                    console.log("autores en else", autores)
                 }        
                 axios.post(`/api/libros/asociarDatos?autores=${autores.join(',')}&id=${id}`, null, config)
                     .then(response => {
@@ -215,12 +215,12 @@ Vue.createApp({
                         'Content-Type': 'application/json',
                     },
                 }
-                let ilustradores = [];        
-                if (this.ilustradorSeleccionado.length > 1) {
+                let ilustradores = [];
+                if (this.ilustradorSeleccionado.length > 1) {                    
                     ilustradores = this.ilustradorSeleccionado.map(autor => autor.id);
-                } else {
-                    ilustradores = [this.ilustradorSeleccionado.id];
-                } 
+                } else if (this.ilustradorSeleccionado.length === 1) {                    
+                    ilustradores = [this.ilustradorSeleccionado[0].id];
+                }
                 axios.post(`/api/libros/asociarIlustradores?ilustradores=${ilustradores.join(',')}&id=${id}`, null, config)
                 .then(response => {
                     console.log("ilustradores post axios", ilustradores);

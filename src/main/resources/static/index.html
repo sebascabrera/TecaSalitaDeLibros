@@ -126,27 +126,13 @@
                             </option>
                         </select>
                         <div>
-                            <!--Prueba de multiple selector de autor
-                            <div class="form-group">
-                                <label for="autorSeleccionado">Autor Existente: prueba multiple</label>
-                                <select v-model="autorSeleccionado" name="autorSeleccionado" id="autorSeleccionado" class="selectpicker" multiple>
-                                    <option v-for="autor in autores" :key="autor.id" :value="autor">
-                                        {{ autor.apellidoAutor + ', ' + autor.nombreAutor }}
-                                    </option>
-                                </select>
-                            </div> -->
                             {{autorSeleccionado}}
                         </div>
-
-
-                        <!-- Campos para ingresar un nuevo autor -->
-                        <!--  <a v-on:click="nuevoAutorForm($event)">Registrar Nuevo AutorDTO</a>-->
                         <div>
                             <button type="button" @click="nuevoAutorForm" class="btn btn-secondary">Registrar Nuevo
                                 Autor</button>
                         </div>
                     </div>
-
                     <!-- ilustradores -->
                     <!-- Campo de selección para ilustradores existentes -->
                     <div class="mb-3">
@@ -159,14 +145,8 @@
                             </option>
                         </select>
                         <div>
-                            <!--    <strong>Ilustrador seleccionados:</strong>
-                            <ul>
-                                <li v-for="ilustradorId in ilustradorSeleccionado" :key="ilustrador.id">
-                                    {{ ilustradorId.apellidoilustrador + ', ' + ilustradorId.nombreilustrador }}
-                                </li>
-                            </ul> -->
+                            {{ilustradorSeleccionado}}
                         </div>
-
                         <!-- Campos para ingresar un nuevo ilustrador -->
                         <div>
                             <button type="button" @click="nuevoIlustradorForm" class="btn btn-secondary">Registrar
