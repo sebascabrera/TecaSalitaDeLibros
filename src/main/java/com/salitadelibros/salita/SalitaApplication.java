@@ -26,7 +26,7 @@ public class SalitaApplication {
 									  LibroCategoriaRepositorio libroCategoriaRepositorio){
 
 		return (args -> {
-			Libro libro1 = new Libro("aventuras de Abril", "2024", NARRATIVA, "98798879787");
+			Libro libro1 = new Libro("Aventuras De Abril", "2024", NARRATIVA, "98798879787");
 			libroRepositorio.save(libro1);
 			Editorial editorial1= new Editorial("AZ editores");
 			Editorial editorial2= new Editorial("Gato de Hojalata");

@@ -23,8 +23,9 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/web/ingreso/ingreso.html", "/web/js/**", "/web/css/**", "/web/img/**", "/h2-console").permitAll()
-                .antMatchers(HttpMethod.POST, "/signup", "/signin", "/logout", "/guardarLibro", "/asociarDatos").permitAll();
+                .antMatchers("/index.html", "/web/js/**", "/web/css/**", "/web/img/**", "/h2-console").permitAll()
+                .antMatchers(HttpMethod.POST, "/signup", "/signin", "/logout").permitAll()
+        .antMatchers(HttpMethod.POST,"/guardarLibro", "/asociarDatos","/asociarIlustradores","/asociarCategorias","/asociarEditorial", "/h2-console").hasAuthority("ADMIN");
 
 
         http.formLogin()

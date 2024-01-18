@@ -13,8 +13,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Objects;
+
 @Configuration
-public class  WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
+public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
@@ -29,10 +31,15 @@ public class  WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
         auth.userDetailsService(inputName -> {
             Usuario usuario = usuarioRepositorio.findByEmail(inputName);
             if (usuario != null) {
+                if (Objects.equals(usuario.getEmail(), "sebasfedele@gmail.com")) {
+                    return new User(usuario.getEmail(), usuario.getPassword(),
+                            AuthorityUtils.createAuthorityList("ADMIN"));
 
-                return new User(usuario.getEmail(), usuario.getPassword(),
+                } else {
+                    return new User(usuario.getEmail(), usuario.getPassword(),
                             AuthorityUtils.createAuthorityList("USUARIO"));
-            } else {
+                }
+            }else {
                 throw new UsernameNotFoundException("Usuario desconocido: " + inputName);
             }
         });
