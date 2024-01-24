@@ -12,7 +12,7 @@ Vue.createApp({
           return palabra.charAt(0).toUpperCase() + palabra.slice(1).toLowerCase();
       },
       volverAlFormulario(){
-        window.location.href = '../../index.html';
+        window.location.href = '../formulariodecarga/formulario.html';
     },
       guardarNuevaCategoria() {
           // Capitalizar categoria antes de enviarla a la base de datos

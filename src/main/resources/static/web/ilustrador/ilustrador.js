@@ -23,7 +23,7 @@ const app = Vue.createApp({
       return palabrasCapitalizadas.join(' ');
     },
     volverAlFormulario(){
-      window.location.href = '../../index.html';
+      window.location.href = '../formulariodecarga/formulario.html';
   },
     guardarNuevoIlustrador() {
       // Capitalizar nombres y apellidos antes de enviarlos a la base de datos

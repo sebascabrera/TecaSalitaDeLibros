@@ -8,6 +8,13 @@ Vue.createApp({
         };
     },
     methods: {
+        capitalizarPalabras(frase) {            
+            const palabras = frase.split(' ');
+            const palabrasCapitalizadas = palabras.map(palabra => {
+                return palabra.charAt(0).toUpperCase() + palabra.slice(1).toLowerCase();
+            });
+            return palabrasCapitalizadas.join(' ');
+        },
         signUp: function (event) {
             event.preventDefault();
             let config = {
@@ -15,6 +22,33 @@ Vue.createApp({
                     'content-type': 'application/x-www-form-urlencoded'
                 }
             };
+            this.nombreUsuario= this.capitalizarPalabras(this.nombreUsuario)
+            let regexEmail=/^(([^<>()\[\]\.,;:\s@\”]+(\.[^<>()\[\]\.,;:\s@\”]+)*)|(\”.+\”))@(([^<>()[\]\.,;:\s@\”]+\.)+[^<>()[\]\.,;:\s@\”]{2,})$/
+            if(!regexEmail.test(this.email)){
+                alert("El email no es valido")
+                return
+            };
+            let regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,15}$/;
+
+if (!regexPassword.test(this.password)) {
+    let mensaje = "El password es inválido. Asegúrese de cumplir con los siguientes requisitos:\n";    
+    if (!/(?=.*[a-z])/.test(this.password)) {
+        mensaje += "- Al menos una letra minúscula.\n";
+        }    
+    if (!/(?=.*[A-Z])/.test(this.password)) {
+        mensaje += "- Al menos una letra mayúscula.\n";
+    }    
+    if (!/(?=.*\d)/.test(this.password)) {
+        mensaje += "- Al menos un dígito.\n";
+    }    
+    if (!/(?=.*[$@$!%*?&])/.test(this.password)) {
+        mensaje += "- Al menos uno de los caracteres especiales: $, @, !, %, *, ?, &.\n";
+    }    
+    mensaje += "- Longitud entre 8 y 15 caracteres.";    
+    alert(mensaje);
+    return;
+}
+
             axios.post('/auth/signup', `nombreUsuario=${this.nombreUsuario.toLowerCase()}&email=${this.email}&password=${this.password}`, config)
                 .then(() => {
                     // redirigir a otra página
@@ -22,8 +56,7 @@ Vue.createApp({
                 })
                 .catch(() => {
                     this.errorMsg = "Falló el intento de registro";
-                    // Mostrar mensaje de error o manejar de alguna otra manera
-                    // Puedes utilizar un Toast o mostrarlo de alguna forma en tu interfaz
+                   
                 });
         },
     },
