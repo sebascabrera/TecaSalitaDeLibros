@@ -34,8 +34,8 @@ public class SalitaApplication {
 
 
 		return (args -> {
-			Libro libro1 = new Libro("Tengo un monstruo en el bolsillo", "1999", NARRATIVA, "9789500715737");
-			Libro libro2 = new Libro("El mar Preferido de los Piratas", "2024", POESIA, "9789504644569");
+			Libro libro1 = new Libro("Tengo un monstruo en el bolsillo", "1999", NARRATIVA, "9781400000463");
+			Libro libro2 = new Libro("Mar Preferido de los Piratas, El", "2024", POESIA, "9789504644569");
 			Libro libro3 = new Libro("Toda Mafalda", "2024", NARRATIVA, "9789505156948");
 			Libro libro4 = new Libro("Aventuras De Ceci", "2024", TEATRO, "98798879756");
 			Libro libro5 = new Libro("Cuidado con el Perro", "2016", POESIA, "9789504644477");

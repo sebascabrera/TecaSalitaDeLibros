@@ -12,7 +12,9 @@ Vue.createApp({
         loadLibros() {
             axios.get("/api/libros/libros")
                 .then(response => {                    ;
-                    this.libros = response.data;
+                    const librosTemp = response.data;
+                    librosTemp.sort((a, b) => (a.titulo > b.titulo) ? 1 : -1);
+                    this.libros = librosTemp;
                     console.log("Datos de libros:", response.data)                    
                     this.libros.forEach(libro => {
                         this.fetchCubierta(libro.isbn);
