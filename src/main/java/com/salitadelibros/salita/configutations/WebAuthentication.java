@@ -1,5 +1,6 @@
 package com.salitadelibros.salita.configutations;
 
+import com.salitadelibros.salita.models.Roles;
 import com.salitadelibros.salita.models.Usuario;
 import com.salitadelibros.salita.repositories.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +33,15 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
             Usuario usuario = usuarioRepositorio.findByEmail(inputName);
             if (usuario != null) {
                 if (Objects.equals(usuario.getEmail(), "sebasfedele@gmail.com")) {
+                    usuario.addRol(Roles.ADMIN);
                     return new User(usuario.getEmail(), usuario.getPassword(),
                             AuthorityUtils.createAuthorityList("ADMIN"));
-
                 } else {
+                    usuario.addRol(Roles.USUARIO);
                     return new User(usuario.getEmail(), usuario.getPassword(),
                             AuthorityUtils.createAuthorityList("USUARIO"));
                 }
+
             }else {
                 throw new UsernameNotFoundException("Usuario desconocido: " + inputName);
             }

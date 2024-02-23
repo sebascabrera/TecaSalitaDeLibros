@@ -11,71 +11,22 @@ body {
     display: flex;
     min-height: 100vh;
 }
-#app {
+.container{
     display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: stretch;
+    flex-direction: column
 }
-.imagen {
+.card{
+    margin: 10px;
+}
+.card-body{    
     display: flex;
-    background: url(https://img.freepik.com/free-vector/little-boy-reading-book-white-background_1308-88305.jpg) center/cover no-repeat;
-    min-width: 50%;
-    height: 100vh;
-    flex-direction: row-reverse;
-    
+    min-width: 100vh;
+    align-items: center;
 }
-.contenedor {
-    justify-content: center;
-    color: rgb(16, 85, 85);
-    border-radius: 2px;
-    box-shadow: 19px 20px 8px -9px;
-    overflow: hidden;
-    min-width: 50%;
-    max-width: 30%;
-    text-align: center;
-    flex-direction: column;
-    border-bottom: 1px solid #f0f0f0;  
-    margin: 20px 20px 0px 20px;
-    padding: 50px 50px 50px 50px;
-}
-.form-control {
-    padding-bottom: 20px;
-    margin-bottom: 7px;
-    position: relative;
-}
-.form-control label {
-    display: inline-block;
-    margin-bottom: 7px;
-    font-weight: 200;
-}
-.form-control input {
-    border: none;
-    background-color: #e6e3e6;
-    display: block;
-    font-family: inherit;
-    font-size: 16px;
-    padding: 12px;
-    width: 100%;
-}
-.form-control,
-input:focus {
-    outline: none;
-}
-#formulario {
-    padding: 20px 10px;
-}
-@media (max-width: 768px) {
-    #app {
-        flex-direction: column;
-        align-items: center;
-    }
-    .imagen {
-        width: 100%;
-        height: 100vh; 
-    }
-    .contenedor {
-        max-width: none;
-        width: 100%;
-    }
+.card-body img {
+    max-width: 100%;      
+    margin-left: auto; 
+    margin-right: 0; 
+    border: 2px solid #ffffff; 
+    border-radius: 8px; 
 }

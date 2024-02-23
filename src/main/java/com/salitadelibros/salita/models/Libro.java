@@ -138,4 +138,7 @@ public class Libro {
             editorial.getLibros().add(this);
         }
     }
+
+    public void addLibroCategoria(Categoria categoria1, Libro libro1) {
+    }
 }

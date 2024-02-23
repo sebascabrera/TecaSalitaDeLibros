@@ -82,7 +82,7 @@ Vue.createApp({
                 });
         },
         loadCategorias() {
-            axios.get("api/categorias/categorias")
+            axios.get("/api/categorias/categorias")
                 .then((response) => {
                     console.log("Datos de categorias:", response.data);
                     this.categorias = response.data;

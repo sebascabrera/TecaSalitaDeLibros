@@ -23,10 +23,11 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/index.html", "/web/js/**", "/web/css/**", "/web/img/**", "/h2-console").permitAll()
+                .antMatchers("/index.html").permitAll()
                 .antMatchers(HttpMethod.POST, "/signup", "/signin", "/logout").permitAll()
-        .antMatchers(HttpMethod.POST,"/guardarLibro", "/asociarDatos","/asociarIlustradores","/asociarCategorias","/asociarEditorial", "/h2-console").hasAuthority("ADMIN");
-
+                .antMatchers(HttpMethod.POST, "/signin").authenticated()
+        .antMatchers(HttpMethod.POST,"/guardarLibro", "/asociarDatos","/asociarIlustradores","/asociarCategorias","/asociarEditorial", "/h2-console").hasAuthority("ADMIN")
+        .antMatchers("api/**").authenticated();
 
         http.formLogin()
                 .usernameParameter("email")

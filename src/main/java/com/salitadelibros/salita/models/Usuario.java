@@ -66,13 +66,7 @@ public class Usuario {
         this.roles = roles;
     }
 
-    public void addRol(String rol) {
-        // mapear los roles
-        if ("USUARIO".equals(rol)) {
-            roles.add(Roles.USUARIO);
-        } else if ("ADMIN".equals(rol)) {
-            roles.add(Roles.ADMIN);
-        }
-
+    public void addRol(Roles rol) {
+        roles.add(rol);
     }
 }

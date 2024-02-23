@@ -56,6 +56,14 @@ public class LibroControlador {
 
         return libroDTOLista;
     }
+    @GetMapping("/isbn")
+    public  List<LibroDTO> getlibroisbn() {
+        List<Libro> libroLista = libroServicio.getLibros();
+        List<LibroDTO> libroDTOLista = libroLista.stream()
+                .map(libro -> new LibroDTO(libro))
+                .collect(Collectors.toList());
+        return libroDTOLista;
+    }
 
     @RequestMapping("/editoriales")
     public Set<EditorialDTO> getEditoriales() {
