@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -43,6 +44,23 @@ public class LibroControlador {
     CategoriaServicio categoriaServicio;
     @Autowired
     LibroCategoriaServicio libroCategoriaServicio;
+
+    @GetMapping("/atributos")
+    public ResponseEntity<List<String>> getAtributosLibro() {
+        try {
+            List<String> atributos = new ArrayList<>();
+            Field[] campos = LibroDTO.class.getDeclaredFields();
+            for (Field campo : campos) {
+                atributos.add(campo.getName());
+            }
+            return ResponseEntity.ok().body(atributos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonList("Error al obtener los atributos de LibroDTO: " + e.getMessage()));
+        }
+
+    }
 
 
     @GetMapping("/libros")

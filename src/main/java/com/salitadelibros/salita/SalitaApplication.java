@@ -47,7 +47,7 @@ public class SalitaApplication {
 
 			Editorial editorial1= new Editorial("AZ editores");
 			Editorial editorial2= new Editorial("Gato de Hojalata");
-			Editorial editorial3= new Editorial("lo que leo");
+			Editorial editorial3= new Editorial("Lo que leo");
 			editorialRepositorio.save(editorial1);
 			editorialRepositorio.save(editorial2);
 			editorialRepositorio.save(editorial3);
