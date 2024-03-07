@@ -57,9 +57,6 @@ public class UsuarioControlador {
         }
     }
     private boolean performAuthentication(String email, String password) {
-        // Lógica de autenticación básica
-        // Compara las credenciales con la base de datos u otro mecanismo de almacenamiento seguro
-        // Devuelve true si las credenciales son válidas, false en caso contrario
         Usuario usuario = usuarioRepositorio.findByEmail(email);
         return usuario != null && passwordEncoder.matches(password, usuario.getPassword());
     }

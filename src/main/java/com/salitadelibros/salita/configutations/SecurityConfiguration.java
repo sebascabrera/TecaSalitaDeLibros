@@ -29,6 +29,7 @@ public class SecurityConfiguration {
         .antMatchers(HttpMethod.POST,"/guardarLibro", "/asociarDatos","/asociarIlustradores","/asociarCategorias","/asociarEditorial", "/h2-console").hasAuthority("ADMIN")
         .antMatchers("api/**").authenticated();
 
+
         http.formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")

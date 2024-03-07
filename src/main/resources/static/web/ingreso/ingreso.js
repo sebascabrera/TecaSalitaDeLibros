@@ -5,6 +5,7 @@ Vue.createApp({
             valorBusqueda: '',
             checked: [],
             claves: [],
+            esAdmin: false,
             librosMostrados: 10,
         }
     },
@@ -12,6 +13,12 @@ Vue.createApp({
         this.loadLibros();
         this.loadAtributos();
 
+    },
+    mounted(){
+        const userRole = localStorage.getItem('userRole');
+        if (userRole === 'ADMIN') {
+            this.isAdmin = true;
+        }
     },
     methods: {
         loadAtributos() {
@@ -163,6 +170,23 @@ Vue.createApp({
             this.libros = this.librosTemp.slice(0, this.librosMostrados); 
             this.libros.slice(-1).forEach(libro => {
                 this.fetchCubierta(libro.isbn);
+            });
+        },
+        iniciarSesion() {
+            axios.post('/auth/signin', {
+                email: this.email,
+                password: this.password
+            })
+            .then(response => {                
+                if (response.data === 'ADMIN') {
+                    this.isAdmin = true;
+                    window.location.href = '/web/formulariodecarga/formulario.html';
+                } else {
+                    console.log('No tienes permisos para acceder al formulario');                   
+                }
+            })
+            .catch(error => {
+                console.error('Error al iniciar sesión:', error.response.data);
             });
         }
         

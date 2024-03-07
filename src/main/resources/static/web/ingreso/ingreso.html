@@ -23,6 +23,8 @@
                 <div class="col-lg-12 col-md-8 ">
                     <h1>SALITA DE LIBROS</h1>
                     <h5 class="col-12">Tu lugar para disfrutar de los mejores libros infantiles</h5>
+                    <p v-if="isAdmin">Acceso al formulario de modificación de libros:</p>
+                    <a v-if="isAdmin" href="../formulariodecarga/formulario.html">Nuevo libro</a>
                 </div>
                 <div class="form-control div-form-control">
                     <input type="text" v-on:keyup="filtro" class="form-control" v-model="valorBusqueda"
@@ -67,19 +69,24 @@
                         </ul>
                     </div>
                     <div>
-                        <h6>Categorias:</h6>
-                        <ul class="card-text">
-                            <li v-for="(categoria, categoriaIndex) in libro.categorias" :key="categoriaIndex">
-                                {{ categoria.palabraCategoria}}
-                                <!-- Añade una coma y un espacio después de cada autor excepto el último -->
-                            <li v-if="categoriaIndex < libro.categorias.length - 1">, </li>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
                         <h6>Editorial:</h6>
                         <ul class="card-text">
                             <li>{{ libro.editorial.nombreEditorial }}</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h6>Genero:</h6>
+                        <ul class="card-text">
+                            <li>{{ libro.genero }}</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h6>Categorias:</h6>
+                        <ul class="card-text">
+                            <li v-for="(categoria, categoriaIndex) in libro.categorias" :key="categoriaIndex">
+                                {{ categoria.palabraCategoria}}                               
+                            <li v-if="categoriaIndex < libro.categorias.length - 1">, </li>
+                            </li>
                         </ul>
                     </div>
                     <div>
