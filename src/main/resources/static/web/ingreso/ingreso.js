@@ -5,14 +5,27 @@ Vue.createApp({
             valorBusqueda: '',
             checked: [],
             claves: [],
+            autores: [],
+            librosFiltrados: [],
             esAdmin: false,
             librosMostrados: 10,
+            currentPage: 1,
+            pageSize: 10,
+        }
+    },
+    computed: {
+        totalPages() {
+            return Math.ceil(this.libros.length / this.pageSize);
+        },
+        librosPaginados() {
+            const startIndex = (this.currentPage - 1) * this.pageSize;
+            return this.libros.slice(startIndex, startIndex + this.pageSize);
         }
     },
     created() {
         this.loadLibros();
         this.loadAtributos();
-
+        this.loadAutores();
     },
     mounted(){
         const userRole = localStorage.getItem('userRole');
@@ -21,6 +34,16 @@ Vue.createApp({
         }
     },
     methods: {
+        nextPage() {
+            if (this.currentPage < this.totalPages) {
+                this.currentPage++;
+            }
+        },
+        previousPage() {
+            if (this.currentPage > 1) {
+                this.currentPage--;
+            }
+        },
         loadAtributos() {
             axios.get("/api/libros/atributos")
             .then(response => {
@@ -128,43 +151,63 @@ Vue.createApp({
                 });
         },
         filtro() {
-            if (this.valorBusqueda.trim() === '') {
+            if (this.valorBusqueda.trim() === '' && this.checked.length === 0) {
                 this.libros = this.librosTemp;
             } else {
-                this.libros = this.librosTemp.filter(libro => {                  
-                    const isSelected = this.checked.length === 0 || this.checked.some(clave => {                        
-                        if (clave === 'autores') {
-                            return libro.autores.some(autor => {
-                                return `${autor.nombreAutor} ${autor.apellidoAutor}`.toLowerCase().includes(this.valorBusqueda.toLowerCase());
-                            });
-                        }                        
-                        if (clave === 'ilustradores') {
-                            return libro.ilustradores.some(ilustrador => {
-                                return `${ilustrador.nombreIlustrador} ${ilustrador.apellidoIlustrador}`.toLowerCase().includes(this.valorBusqueda.toLowerCase());
-                            });
-                        }                        
-                        if (clave === 'categorias') {
-                            return libro.categorias && libro.categorias.some(categoria => {
-                                return `${categoria.palabraCategoria}`.toLowerCase().includes(this.valorBusqueda.toLowerCase());
-                            });
-                        }                    
-                        if (clave === 'editorial') {
-                            return libro.editorial.nombreEditorial.toLowerCase().includes(this.valorBusqueda.toLowerCase());
-                        }   
-                        if (clave === 'titulo') {
-                            console.log('Valor de libro.titulo:', libro.titulo);
-                            return libro.titulo.toLowerCase().includes(this.valorBusqueda.toLowerCase());
-                        } 
-                        if (clave === 'isbn') {
-                            console.log('Valor de libro.titulo:', libro.isbn);
-                            return libro.isbn.toLowerCase().includes(this.valorBusqueda.toLowerCase());
-                        }                     
-                        return false;
-                    });
-                    return isSelected;
+                let librosFiltrados = this.librosTemp.filter(libro => {
+                    if (this.valorBusqueda.trim() === '') return true; 
+                    return libro.titulo.toLowerCase().includes(this.valorBusqueda.toLowerCase()) ||
+                           libro.autores.some(autor => `${autor.nombreAutor} ${autor.apellidoAutor}`.toLowerCase().includes(this.valorBusqueda.toLowerCase())) ||
+                           libro.ilustradores.some(ilustrador => `${ilustrador.nombreIlustrador} ${ilustrador.apellidoIlustrador}`.toLowerCase().includes(this.valorBusqueda.toLowerCase())) ||
+                           (libro.categorias && libro.categorias.some(categoria => categoria.palabraCategoria.toLowerCase().includes(this.valorBusqueda.toLowerCase()))) ||
+                           libro.editorial.nombreEditorial.toLowerCase().includes(this.valorBusqueda.toLowerCase()) ||
+                           libro.isbn.toLowerCase().includes(this.valorBusqueda.toLowerCase())||
+                           libro.genero.toLowerCase().includes(this.valorBusqueda.toLowerCase())||
+                           libro.fechaDeEdicion.toLowerCase().includes(this.valorBusqueda.toLowerCase());
+
                 });
+                if (this.checked.length > 0) {
+                    librosFiltrados = librosFiltrados.filter(libro => {
+                        return this.checked.some(clave => {
+                            if (clave === 'autores') {
+                                return libro.autores.some(autor => `${autor.nombreAutor} ${autor.apellidoAutor}`.toLowerCase().includes(this.valorBusqueda.toLowerCase()));
+                            }
+                            if (clave === 'ilustradores') {
+                                return libro.ilustradores.some(ilustrador => `${ilustrador.nombreIlustrador} ${ilustrador.apellidoIlustrador}`.toLowerCase().includes(this.valorBusqueda.toLowerCase()));
+                            }
+                            if (clave === 'categorias') {
+                                return libro.categorias && libro.categorias.some(categoria => categoria.palabraCategoria.toLowerCase().includes(this.valorBusqueda.toLowerCase()));
+                            }
+                            if (clave === 'editorial') {
+                                return libro.editorial.nombreEditorial.toLowerCase().includes(this.valorBusqueda.toLowerCase());
+                            }
+                            if (clave === 'titulo') {
+                                return libro.titulo.toLowerCase().includes(this.valorBusqueda.toLowerCase());
+                            }
+                            if (clave === 'genero') {
+                                return libro.genero.toLowerCase().includes(this.valorBusqueda.toLowerCase());
+                            }
+                            if (clave === 'isbn') {
+                                return libro.isbn.toLowerCase().includes(this.valorBusqueda.toLowerCase());
+                            }
+                            if (clave === 'fechaDeEdicion') {
+                                return libro.fechaDeEdicion.toLowerCase().includes(this.valorBusqueda.toLowerCase());
+                            }
+                            return false;
+                        });
+                    });
+                }
+        
+                this.libros = librosFiltrados;
             }
         },
+        loadAutores() {
+            axios.get("/api/autores/autores")
+                .then(response => {
+                    console.log("Datos de autores:", response.data);
+                    this.autores = response.data
+                })
+        },   
         mostrarMasLibros() {
             this.librosMostrados += 10; 
             this.libros = this.librosTemp.slice(0, this.librosMostrados); 
@@ -188,7 +231,36 @@ Vue.createApp({
             .catch(error => {
                 console.error('Error al iniciar sesión:', error.response.data);
             });
+        },
+        toggleSeleccion(autor) {
+            autor.seleccionado = !autor.seleccionado;
+            this.aplicarFiltroPorAutor(autor);
+        },
+        aplicarFiltroPorAutor(autor) {
+            console.log("Autor seleccionado:", autor); // Verifica que el autor seleccionado sea el correcto
+            this.libros = this.librosTemp.filter(libro => {
+                console.log("Libro:", libro); // Verifica cada libro para asegurarte de que la estructura sea la esperada
+                return libro.autores.some(libroAutor => {
+                    console.log("Autor del libro:", libroAutor); // Verifica los autores de cada libro
+                    console.log("Comparando autor del libro con autor seleccionado:", libroAutor.id, autor.id); // Verifica si las comparaciones de identificadores son correctas
+                    return libroAutor.id === autor.id;
+                });
+            });
+            console.log("Libros filtrados:", this.librosFiltrados); // Verifica los libros filtrados después de aplicar el filtro
+        },
+        generarPDF() {
+            axios.get('/libros-pdf', {
+                responseType: 'blob' 
+            })
+            .then(response => {
+                const blob = new Blob([response.data], { type: 'application/pdf' }); // Crea un objeto Blob con la respuesta recibida
+                const url = window.URL.createObjectURL(blob); // Crea una URL para el Blob
+                window.open(url); // Abre una nueva ventana o pestaña con el PDF generado
+            })
+            .catch(error => {
+                console.error('Error al generar el PDF:', error);
+            });
         }
         
-    }
+    }   
 }).mount("#salitaDeLibros");

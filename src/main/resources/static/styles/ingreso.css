@@ -35,7 +35,28 @@ h5 {
     justify-content: center;
     margin-top: 20px;
 }
-
+.paginacion{
+    display: flex;
+    justify-content: right;
+    width: 50%;  
+}
+.global{
+    display: flex;    
+}
+#search-facets{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 30%;
+    border: 2px solid #212529;
+    border-radius: 8px;
+}
+.seleccionado :active{
+    color: rgb(181, 220, 253);
+}
+.seleccionado :visited{
+    color: #212529;
+}
 .div-form-control {
     display: flex;
     justify-content: center;

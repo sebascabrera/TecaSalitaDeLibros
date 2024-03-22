@@ -24,18 +24,17 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/index.html").permitAll()
-                .antMatchers(HttpMethod.POST, "/signup", "/signin", "/logout").permitAll()
-                .antMatchers(HttpMethod.POST, "/signin").authenticated()
+                .antMatchers(HttpMethod.POST, "/signup", "/signin", "/logout").permitAll() // es un arreglo de str
+                .antMatchers(HttpMethod.POST, "/signin").hasAnyAuthority("USUARIO", "ADMIN")
         .antMatchers(HttpMethod.POST,"/guardarLibro", "/asociarDatos","/asociarIlustradores","/asociarCategorias","/asociarEditorial", "/h2-console").hasAuthority("ADMIN")
-        .antMatchers("api/**").authenticated();
-
+        .antMatchers("api/**").hasAuthority("ADMIN");
 
         http.formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .loginPage("/auth/signin");
 
-        http.logout().logoutUrl("/auth/logout"); // el deslogueo le tiene que pegar a esta ruta- salir o cerrar cesion
+        http.logout().logoutUrl("/auth/logout").deleteCookies("JSESSIONID"); // el deslogueo le tiene que pegar a esta ruta- salir o cerrar cesion
 
         http.csrf().disable();
 
@@ -59,21 +58,18 @@ public class SecurityConfiguration {
 
         return http.build();
     }
-//vacia caches cada vez que se hace la peticion al formLogin
+
     private void clearAuthenticationAttributes(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
         }
     }
-
-    // Agregar el filtro CORS
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfig = new CorsConfiguration();
         corsConfig.applyPermitDefaultValues();
 
-        // Configurar según tus necesidades
         corsConfig.addAllowedMethod(HttpMethod.PUT);
         corsConfig.addAllowedMethod(HttpMethod.DELETE);
 
@@ -83,14 +79,5 @@ public class SecurityConfiguration {
         return new CorsFilter(source);
     }
 
-    // Definir un UserDetailsService y PasswordEncoder
-    // @Bean
-    // public UserDetailsService userDetailsService() {
-    //     // ...
-    // }
 
-    // @Bean
-    // public PasswordEncoder passwordEncoder() {
-    //     return new BCryptPasswordEncoder();
-    // }
 }

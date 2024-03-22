@@ -23,7 +23,7 @@ dependencies {
 	implementation 'org.postgresql:postgresql:42.2.24'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'com.h2database:h2:1.2.129'
-
+	implementation 'com.itextpdf:itext7-core:7.1.15'
 
 }
 

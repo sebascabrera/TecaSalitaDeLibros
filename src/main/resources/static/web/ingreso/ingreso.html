@@ -41,77 +41,96 @@
                 </div>
             </div>
     </header>
-    <div class="container">
-        <div v-for="(libro, index) in libros" :key="index" class="card text-center">
-            <div class="card-header">
-                <h5 class="card-title">{{ libro.titulo }}</h5>
+    <div class="paginacion">
+        <button @click="previousPage" :disabled="currentPage === 1">Anterior</button>
+        <span>Página {{ currentPage }} de {{ totalPages }}</span>
+        <button @click="nextPage" :disabled="currentPage === totalPages">Siguiente</button>
+    </div>
+    <div class="global">
+        <div id="search-facets">
+            <h2><a href="#" class="menu-collapse-toggle">Refinar su búsqueda</a></h2>
+            <h3 id="facet-authors">Autores</h3>
+            <ul class="menu-collapse">
+                <li v-for="autor in autores" :key="autor.id" :value="autor" @click="toggleSeleccion(autor)">
+                    <span :class="{ 'seleccionado': autor.seleccionado }">
+                        {{ autor.apellidoAutor }}, {{ autor.nombreAutor }}
+                    </span>
+                </li>
+            </ul>
+            <div>
+                <button @click="generarPDF" class="btn btn-primary">Imprimir PDF</button>
             </div>
-            <div class="card-body">
-                <div class="textos-cards">
-                    <div>
-                        <h6>Autores:</h6>
-                        <ul class="card-text">
-                            <li v-for="(autor, autorIndex) in libro.autores" :key="autorIndex">
-                                {{ autor.nombreAutor }} {{ autor.apellidoAutor }}
-                                <!-- Añade una coma y un espacio después de cada autor excepto el último -->
-                            <li v-if="autorIndex < libro.autores.length - 1">, </li>
-                            </li>
-                        </ul>
+        </div>
+        <div class="container">
+            <div v-for="(libro, index) in libros" :key="index" class="card text-center">
+                <div class="card-header">
+                    <h5 class="card-title">{{ libro.titulo }}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="textos-cards">
+                        <div>
+                            <h6>Autores:</h6>
+                            <ul class="card-text">
+                                <li v-for="(autor, autorIndex) in libro.autores" :key="autorIndex">
+                                    {{ autor.nombreAutor }} {{ autor.apellidoAutor }}
+                                <li v-if="autorIndex < libro.autores.length - 1">, </li>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h6>Ilustradores:</h6>
+                            <ul class="card-text">
+                                <li v-for="(ilustrador, ilustradorIndex) in libro.ilustradores" :key="ilustradorIndex">
+                                    {{ ilustrador.nombreIlustrador }} {{ ilustrador.apellidoIlustrador }}
+                                <li v-if="ilustradorIndex < libro.ilustradores.length - 1">, </li>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h6>Editorial:</h6>
+                            <ul class="card-text">
+                                <li>{{ libro.editorial.nombreEditorial }}</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h6>Genero:</h6>
+                            <ul class="card-text">
+                                <li>{{ libro.genero }}</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h6>Categorias:</h6>
+                            <ul class="card-text">
+                                <li v-for="(categoria, categoriaIndex) in libro.categorias" :key="categoriaIndex">
+                                    {{ categoria.palabraCategoria}}
+                                <li v-if="categoriaIndex < libro.categorias.length - 1">, </li>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h6>Fecha de Edición:</h6>
+                            <ul class="card-text">
+                                <li>{{ libro.fechaDeEdicion }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="img">
+                        <img :src="libro.cubiertaUrl" alt="Portada de libro" />
                     </div>
                     <div>
-                        <h6>Ilustradores:</h6>
-                        <ul class="card-text">
-                            <li v-for="(ilustrador, ilustradorIndex) in libro.ilustradores" :key="ilustradorIndex">
-                                {{ ilustrador.nombreIlustrador }} {{ ilustrador.apellidoIlustrador }}
-                                <!-- Añade una coma y un espacio después de cada autor excepto el último -->
-                            <li v-if="ilustradorIndex < libro.ilustradores.length - 1">, </li>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h6>Editorial:</h6>
-                        <ul class="card-text">
-                            <li>{{ libro.editorial.nombreEditorial }}</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h6>Genero:</h6>
-                        <ul class="card-text">
-                            <li>{{ libro.genero }}</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h6>Categorias:</h6>
-                        <ul class="card-text">
-                            <li v-for="(categoria, categoriaIndex) in libro.categorias" :key="categoriaIndex">
-                                {{ categoria.palabraCategoria}}                               
-                            <li v-if="categoriaIndex < libro.categorias.length - 1">, </li>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h6>Fecha de Edición:</h6>
-                        <ul class="card-text">
-                            <li>{{ libro.fechaDeEdicion }}</li>
-                        </ul>
+                        <a href="#" class="btn btn-primary">Ir a prestamo</a>
                     </div>
                 </div>
-                <div class="img">
-                    <img :src="libro.cubiertaUrl" alt="Portada de libro" />
+                <div class="card-footer text-muted">
+                    <h6>ISBN:</h6>
+                    <p class="card-text">{{ libro.isbn }}</p>
                 </div>
-                <div>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card-footer text-muted">
-                <h6>ISBN:</h6>
-                <p class="card-text">{{ libro.isbn }}</p>
             </div>
         </div>
     </div>
-   <!-- <div>
+    <!-- <div>
         <button v-if="librosMostrados < librosTemp.length" @click="mostrarMasLibros">Ver más</button>
-    </div> -->
+     -->
 
 </body>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
