@@ -1,16 +1,12 @@
 package com.salitadelibros.salita.services.services;
 
 import com.salitadelibros.salita.models.Usuario;
-import com.salitadelibros.salita.repositories.UsuarioRepositorio;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class UsuarioServicio {
+public interface UsuarioServicio {
 
-    @Autowired
-    UsuarioRepositorio usuarioRepositorio;
-    public void saveOrUpdate(Usuario usuario) {
-        usuarioRepositorio.save(usuario);
-    }
+    void saveOrUpdate(Usuario usuario);
+
+    Usuario findByEmail(String email);
+
+    boolean existsByNombreUsuario(String nombreUsuario);
 }

@@ -1,83 +1,60 @@
 package com.salitadelibros.salita.configutations;
 
+import com.salitadelibros.salita.filter.JwtFilter;
+import com.salitadelibros.salita.security.service.MyUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.WebAttributes;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/index.html").permitAll()
-                .antMatchers(HttpMethod.POST, "/signup", "/signin", "/logout").permitAll() // es un arreglo de str
+    @Autowired
+    private MyUserDetailsService myUserDetailsService;
+
+    @Autowired
+    private JwtFilter jwtFilter;
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .cors().and()
+                .authorizeRequests()
+                .antMatchers("/api/public", "/api/existuser/**", "/api/existusername/**","/sig-in/**", "/index.html/**")
+                .permitAll()
                 .antMatchers(HttpMethod.POST, "/signin").hasAnyAuthority("USUARIO", "ADMIN")
-        .antMatchers(HttpMethod.POST,"/guardarLibro", "/asociarDatos","/asociarIlustradores","/asociarCategorias","/asociarEditorial", "/h2-console").hasAuthority("ADMIN")
-        .antMatchers("api/**").hasAuthority("ADMIN");
-
-        http.formLogin()
+                .antMatchers(HttpMethod.POST, "/guardarLibro", "/asociarDatos", "/asociarIlustradores",
+                        "/asociarCategorias", "/asociarEditorial", "/h2-console").hasAuthority("ADMIN")
+                .antMatchers("/api/**").hasAuthority("ADMIN")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/sig-in")
                 .usernameParameter("email")
                 .passwordParameter("password")
-                .loginPage("/auth/signin");
+                .and()
+                .logout()
+                .logoutUrl("/auth/logout")
+                .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
+                .deleteCookies("JSESSIONID")
+                .and()
+                .sessionManagement()
+                .sessionFixation().none();
 
-        http.logout().logoutUrl("/auth/logout").deleteCookies("JSESSIONID"); // el deslogueo le tiene que pegar a esta ruta- salir o cerrar cesion
-
-        http.csrf().disable();
-
-        // Configuración CORS
-        http.cors();
-
-        // disabling frameOptions so h2-console can be accessed
-        http.headers().frameOptions().disable();
-
-        // if user is not authenticated, just send an authentication failure response
-        http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
-
-        // if login is successful, just clear the flags asking for authentication
-        http.formLogin().successHandler((req, res, auth) -> clearAuthenticationAttributes(req));
-
-        // if login fails, just send an authentication failure response
-        http.formLogin().failureHandler((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
-
-        // if logout is successful, just send a success response
-        http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
-
-        return http.build();
+        // Add JWT filter before UsernamePasswordAuthenticationFilter
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
-    private void clearAuthenticationAttributes(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-        }
-    }
     @Bean
-    public CorsFilter corsFilter() {
-        CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.applyPermitDefaultValues();
-
-        corsConfig.addAllowedMethod(HttpMethod.PUT);
-        corsConfig.addAllowedMethod(HttpMethod.DELETE);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfig);
-
-        return new CorsFilter(source);
+    public HttpStatusReturningLogoutSuccessHandler logoutSuccessHandler() {
+        return new HttpStatusReturningLogoutSuccessHandler();
     }
-
-
 }

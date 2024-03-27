@@ -6,6 +6,7 @@ import com.salitadelibros.salita.repositories.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -29,8 +30,8 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
 
     @Override
     public void init(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(inputName -> {
-            Usuario usuario = usuarioRepositorio.findByEmail(inputName);
+        auth.userDetailsService(email -> {
+            Usuario usuario = usuarioRepositorio.findByEmail(email);
             if (usuario != null) {
                 if (Objects.equals(usuario.getEmail(), "sebasfedele@gmail.com")) {
                     usuario.addRol(Roles.ADMIN);
@@ -41,9 +42,8 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
                     return new User(usuario.getEmail(), usuario.getPassword(),
                             AuthorityUtils.createAuthorityList("USUARIO"));
                 }
-
-            }else {
-                throw new UsernameNotFoundException("Usuario desconocido: " + inputName);
+            } else {
+                throw new UsernameNotFoundException("Usuario desconocido: " + email);
             }
         });
     }

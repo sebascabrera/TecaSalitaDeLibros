@@ -28,7 +28,7 @@
                 </div>
                 <div class="form-control div-form-control">
                     <input type="text" v-on:keyup="filtro" class="form-control" v-model="valorBusqueda"
-                        placeholder="texto"></label>
+                        placeholder="Ingrese su busqueda aquí"></label>
                 </div>
                 <div class="form-check check">
                     <template v-if="claves">
@@ -48,19 +48,32 @@
     </div>
     <div class="global">
         <div id="search-facets">
-            <h2><a href="#" class="menu-collapse-toggle">Refinar su búsqueda</a></h2>
-            <h3 id="facet-authors">Autores</h3>
-            <ul class="menu-collapse">
-                <li v-for="autor in autores" :key="autor.id" :value="autor" @click="toggleSeleccion(autor)">
-                    <span :class="{ 'seleccionado': autor.seleccionado }">
-                        {{ autor.apellidoAutor }}, {{ autor.nombreAutor }}
-                    </span>
+            <h3 class="refinar-busqueda">Refinar su búsqueda</h3>
+            <div>
+                <h4 id="facet-authors" class="facet">Autores</h4>
+                <ul class="menu-collapse">
+                    <li class="lista-facet" v-for="autor in autores" :key="autor.id" :value="autor" @click="toggleSeleccion(autor)">
+                        <span :class="{ 'seleccionado': autor.seleccionado }">
+                            {{ autor.apellidoAutor }}, {{ autor.nombreAutor }}
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div>
+               <h4 id="facet-ilustradores" class="facet">Ilustradores</h4>
+               <ul class="menu-collapse">
+                <li class="lista-facet" v-for="ilustrador in ilustradores" :key="ilustrador.id" :value="ilustrador" @click="toggleIlustrador(ilustrador)">
+                    <span :class="{ 'seleccionado': ilustrador.seleccionado }">
+                        {{ ilustrador.apellidoIlustrador}}, {{ilustrador.nombreIlustrador}}
+                    </span>                    
                 </li>
-            </ul>
+               </ul> 
+            </div>
             <div>
                 <button @click="generarPDF" class="btn btn-primary">Imprimir PDF</button>
             </div>
         </div>
+  <!-- Toggler -->
         <div class="container">
             <div v-for="(libro, index) in libros" :key="index" class="card text-center">
                 <div class="card-header">
@@ -133,6 +146,7 @@
      -->
 
 </body>
+</html>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
@@ -140,4 +154,3 @@
     crossorigin="anonymous"></script>
 <script src="./ingreso.js"></script>
 
-</html>

@@ -69,4 +69,8 @@ public class Usuario {
     public void addRol(Roles rol) {
         roles.add(rol);
     }
+
+    public Long getId() {
+        return id;
+    }
 }

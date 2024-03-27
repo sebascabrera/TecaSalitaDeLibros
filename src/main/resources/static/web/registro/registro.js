@@ -52,7 +52,7 @@ if (!regexPassword.test(this.password)) {
             axios.post('/auth/signup', `nombreUsuario=${this.nombreUsuario.toLowerCase()}&email=${this.email}&password=${this.password}`, config)
                 .then(() => {
                     // redirigir a otra página
-                    window.location.href = "../../index.html";
+                    window.location.href = "/index.html";
                 })
                 .catch(() => {
                     this.errorMsg = "Falló el intento de registro";

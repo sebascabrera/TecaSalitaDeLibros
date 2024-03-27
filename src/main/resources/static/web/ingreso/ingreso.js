@@ -6,6 +6,7 @@ Vue.createApp({
             checked: [],
             claves: [],
             autores: [],
+            ilustradores:[],
             librosFiltrados: [],
             esAdmin: false,
             librosMostrados: 10,
@@ -26,12 +27,7 @@ Vue.createApp({
         this.loadLibros();
         this.loadAtributos();
         this.loadAutores();
-    },
-    mounted(){
-        const userRole = localStorage.getItem('userRole');
-        if (userRole === 'ADMIN') {
-            this.isAdmin = true;
-        }
+        this.loadIlustradores();
     },
     methods: {
         nextPage() {
@@ -143,7 +139,7 @@ Vue.createApp({
                     console.log("URL de la imagen de la cubierta (API externa):", cubiertaUrl);
                     const libro = this.libros.find(libro => libro.isbn === isbn);
                     if (libro) {
-                        libro.cubiertaUrl = cubiertaUrl;
+                        libro.cubiertaUrl = data.url;
                     }
                 })
                 .catch(error => {
@@ -207,6 +203,16 @@ Vue.createApp({
                     console.log("Datos de autores:", response.data);
                     this.autores = response.data
                 })
+        },
+        loadIlustradores() {
+            axios.get("/api/ilustradores/ilustradores")
+                .then(response => {
+                    console.log("Datos de ilustradores:", response.data);
+                    this.ilustradores = response.data;
+                })
+                .catch(error => {
+                    console.error("Error loading ilustradores: ", error);
+                });
         },   
         mostrarMasLibros() {
             this.librosMostrados += 10; 
@@ -247,6 +253,21 @@ Vue.createApp({
                 });
             });
             console.log("Libros filtrados:", this.librosFiltrados); // Verifica los libros filtrados después de aplicar el filtro
+        },
+        toggleIlustrador(ilustrador) {
+            ilustrador.seleccionado = !ilustrador.seleccionado;
+            this.aplicarFiltroPorIlustrador(ilustrador);
+        },
+        aplicarFiltroPorIlustrador(ilustrador) {
+            console.log("ilustador seleccionado:", ilustrador);
+            this.libros = this.librosTemp.filter(libro => {
+                console.log("Libro en ilustrador", libro);
+                return libro.ilustradores.some(libroIlustrador => {
+                    console.log("Ilustrador del libro", libroIlustrador);
+                    console.log("Comparando Ilustrador del libro con Ilustrador seleccionado:", libroIlustrador.id, ilustrador.id);
+                    return libroIlustrador.id === ilustrador.id;
+                })
+            })
         },
         generarPDF() {
             axios.get('/libros-pdf', {
