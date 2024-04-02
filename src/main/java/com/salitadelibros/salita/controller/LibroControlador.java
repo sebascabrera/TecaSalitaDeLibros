@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/libros")
 public class LibroControlador {
 
-    private static final Logger logger = LoggerFactory.getLogger(LibroControlador.class);
+    public static final Logger logger = LoggerFactory.getLogger(LibroControlador.class);
 
     @Autowired
     private LibroServicio libroServicio;

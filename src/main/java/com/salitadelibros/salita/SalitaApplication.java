@@ -6,8 +6,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static com.salitadelibros.salita.models.Genero.*;
 
@@ -18,9 +16,7 @@ public class SalitaApplication {
 		SpringApplication.run(SalitaApplication.class, args);
 	}
 
-	public PasswordEncoder passwordEncoder() {
-		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-	}
+
 	@Bean
 	public CommandLineRunner initData(LibroRepositorio libroRepositorio,
 									  AutorRepositorio autorRepositorio,
@@ -121,7 +117,7 @@ public class SalitaApplication {
 			libroRepositorio.save(libro3);
 			libroRepositorio.save(libro4);
 			libroRepositorio.save(libro5);
-			Usuario usuario1 = new Usuario("Sebastian Cabrera", "sebasfedele@gmai.com", passwordEncoder().encode("!17Defebrero"));
+			Usuario usuario1 = new Usuario("Sebastian Cabrera", "sebasfedele@gmai.com", "!17Defebrero");
 			usuarioRepositorio.save(usuario1);
 			usuario1.addRol(Roles.ADMIN);
 			usuarioRepositorio.save(usuario1);

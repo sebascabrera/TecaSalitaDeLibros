@@ -21,10 +21,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.postgresql:postgresql:42.2.24'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'com.h2database:h2:1.2.129'
 	implementation 'com.itextpdf:itext7-core:7.1.15'
-	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+
 
 }
 
