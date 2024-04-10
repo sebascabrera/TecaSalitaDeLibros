@@ -85,23 +85,23 @@ Vue.createApp({
             axios.get("/api/categorias/categorias")
                 .then((response) => {
                     console.log("Datos de categorias:", response.data);
-                    this.categorias = response.data;
+                    this.categorias = response.data.sort((a, b) => a.palabraCategoria.localeCompare(b.palabraCategoria));
                 })
                 .catch((error) => {
                     alert("Error loading libros: " + error);
                 });
         },
         nuevaEditorialForm() {
-            window.location.href = '../editorial/editorial.html'
+            window.location.href = '/editorial.html'
         },
         nuevoAutorForm() {
-            window.location.href = '../autor/autor.html';
+            window.location.href = '/autor.html';
         },
         nuevoIlustradorForm() {
-            window.location.href = '../ilustrador/ilustrador.html';
+            window.location.href = '/ilustrador.html';
         },
         nuevaCategoriaForm() {
-            window.location.href = '../categoria/categoria.html';
+            window.location.href = '/categoria.html';
         },
         manejarSeleccion() {
             /*    console.log("Titulo seleccionado:", this.titulo);

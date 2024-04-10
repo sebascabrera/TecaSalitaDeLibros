@@ -154,20 +154,22 @@ public class SalitaApplication {
 			libroAutorRepositorio.save(libroAutor14);
 			Ilustrador ilustrador1 = new Ilustrador("Agustina", "Di Mauro");
 			Ilustrador ilustrador2 = new Ilustrador("Pablo", "Bernasconi");
+			Ilustrador ilustrador3 = new Ilustrador("Abril", "Di Mauro");
 			ilustradorRepositorio.save(ilustrador1);
 			ilustradorRepositorio.save(ilustrador2);
-
+			ilustradorRepositorio.save(ilustrador3);
 			LibroIlustrador libroIlustrador = new LibroIlustrador(libro1, ilustrador2);
 			LibroIlustrador libroIlustrador1 = new LibroIlustrador(libro5, ilustrador1);
 			LibroIlustrador libroIlustrador2 = new LibroIlustrador(libro2, ilustrador2);
-			LibroIlustrador libroIlustrador3 = new LibroIlustrador(libro3, ilustrador2);
+			LibroIlustrador libroIlustrador3 = new LibroIlustrador(libro5, ilustrador2);
 			LibroIlustrador libroIlustrador4 = new LibroIlustrador(libro4, ilustrador2);
+			LibroIlustrador libroIlustrador5 = new LibroIlustrador(libro3, ilustrador3);
 			libroIlustradorRepositorio.save(libroIlustrador2);
 			libroIlustradorRepositorio.save(libroIlustrador3);
 			libroIlustradorRepositorio.save(libroIlustrador4);
 			libroIlustradorRepositorio.save(libroIlustrador1);
 			libroIlustradorRepositorio.save(libroIlustrador);
-
+			libroIlustradorRepositorio.save(libroIlustrador5);
 			Categoria categoria1 = new Categoria("Pizza");
 			Categoria categoria2 = new Categoria("Aviones");
 			Categoria categoria3 = new Categoria("Fantasía");

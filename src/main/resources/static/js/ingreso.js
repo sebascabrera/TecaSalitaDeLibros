@@ -352,6 +352,8 @@ Vue.createApp({
                 console.error("Error al cerrar sesión:", error);               
             });
         },
-        
+        irAFormulario(){
+            window.location.href = "/formulario.html";
+        },
     }   
 }).mount("#salitaDeLibros");

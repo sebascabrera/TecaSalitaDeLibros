@@ -54,7 +54,7 @@
     <div class="global">
         <div id="search-facets">
             <h3 class="refinar-busqueda">Refinar su búsqueda</h3>
-            <div>
+            <div class="sub-refinar-busqueda">
                 <h4 id="facet-authors" class="facet">Autores</h4>
                 <ul class="menu-collapse">
                     <li class="lista-facet" v-for="autor in autores" :key="autor.id" :value="autor"
@@ -65,7 +65,7 @@
                     </li>
                 </ul>
             </div>
-            <div>
+            <div class="sub-refinar-busqueda">
                 <h4 id="facet-ilustradores" class="facet">Ilustradores</h4>
                 <ul class="menu-collapse">
                     <li class="lista-facet" v-for="ilustrador in ilustradores" :key="ilustrador.id" :value="ilustrador"
@@ -76,12 +76,11 @@
                     </li>
                 </ul>
             </div>
-            <div>
+            <div class="sub-refinar-busqueda">
                 <h4 id="facet-authors" class="facet">Categorias</h4>
                 <ul class="menu-collapse">
-                    <li class="lista-facet" v-for="categoria in categorias" :key="categoriaid" :value="categoria"
-                        @click="toggleSeleccion(categoria)">
-                        <span :class="{ 'seleccionado': categoria.seleccionada }">
+                    <li class="lista-facet" v-for="categoria in categorias" :key="categoria.id">
+                        <span :class="{ 'seleccionada': categoria.seleccionada }" @click="toggleCategoria(categoria)">
                             {{ categoria.palabraCategoria }}
                         </span>
                     </li>
@@ -89,12 +88,17 @@
             </div>
             <div>
                 <div>
-                    <button @click="generarPDF" class="btn btn-primary">Imprimir PDF</button>
+                    <button @click="generarPDF" class="btn btn-primary">Imprimir PDF - título -</button>
                 </div>
             </div>
             <div>
                 <div>
-                    <button @click="generarPDFAutor" class="btn btn-primary">Imprimir PDF por Autor</button>
+                    <button @click="generarPDFAutor" class="btn btn-primary">Imprimir PDF - autor -</button>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <button @click="irAFormulario" class="btn btn-success">Ir a ingreso de libros</button>
                 </div>
             </div>
         </div>
@@ -166,10 +170,18 @@
             </div>
         </div>
     </div>
-    <!-- <div>
-        <button v-if="librosMostrados < librosTemp.length" @click="mostrarMasLibros">Ver más</button>
-     -->
-
+    <footer>
+        <div class="sub-header">
+            <div class="paginacion">
+                <button @click="previousPage" :disabled="currentPage === 1">Anterior</button>
+                <span>Página {{ currentPage }} de {{ totalPages }}</span>
+                <button @click="nextPage" :disabled="currentPage === totalPages">Siguiente</button>
+            </div>
+            <div>
+                <button v-on:click="logOut($event)" class="btn btn-danger">Salir</button>
+            </div>
+        </div>
+    </footer>
 </body>
 
 </html>

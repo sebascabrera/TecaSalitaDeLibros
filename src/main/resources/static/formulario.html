@@ -58,6 +58,40 @@
                         <input type="text" class="form-control" id="titulo" name="titulo" v-model="titulo" required>
                         <div class="invalid-feedback">Por favor, ingrese un título válido.</div>
                     </div>
+                                        <!-- AutorDTO -->
+                    <!-- Campo de selección para autores existentes -->
+                    <div class="mb-3">
+                        <label for="autorSeleccionado" class="form-label">Autor Existente:</label>
+                        <select v-model="autorSeleccionado" class="form-select" id="autorSeleccionadorR"
+                            name="autorSeleccionado" multiple>
+                            <option value="" disabled>Seleccionar Autores Existentes</option>
+                            <option v-for="autor in autores" :key="autor.id" :value="autor">
+                                {{ autor.apellidoAutor + ', ' + autor.nombreAutor }}
+                            </option>
+                        </select>
+                        <div>
+                            <button type="button" @click="nuevoAutorForm" class="btn btn-secondary">Registrar Nuevo
+                                Autor</button>
+                        </div>
+                    </div>
+                                        <!-- ilustradores -->
+                    <!-- Campo de selección para ilustradores existentes -->
+                    <div class="mb-3">
+                        <label for="ilustradorSeleccionado" class="form-label">Ilustrador Existente:</label>
+                        <select v-model="ilustradorSeleccionado" class="form-select" id="ilustradorSeleccionado"
+                            name="ilustradorSeleccionado" multiple>
+                            <option value="" disabled>Seleccionar Ilustrador Existente</option>
+                            <option v-for="ilustrador in ilustradores" :key="ilustrador.id" :value="ilustrador">
+                                {{ ilustrador.nombreIlustrador + ', ' + ilustrador.apellidoIlustrador }}
+                            </option>
+                        </select>
+                        <!-- Campos para ingresar un nuevo ilustrador -->
+                        <div>
+                            <button type="button" @click="nuevoIlustradorForm" class="btn btn-secondary">Registrar
+                                Nuevo
+                                Ilustrador</button>
+                        </div>
+                    </div>
                     <!-- genero -->
                     <div class="mb-3">
                         <div>
@@ -70,6 +104,24 @@
                                 <option value="NARRATIVA">Narrativa</option>
                             </select>
                         </div>
+                    </div>
+                                        <!-- Categorías -->
+                    <!-- Campo de selección para Categorías existentes -->
+                    <div class="mb-3 categorias">
+                        <label class="form-label labelCategoria">Categorías Existentes:</label>
+                        <div class="ContenedorDeItemsCategorias">
+                            <div v-for="categoria in categorias" :key="categoria.id" class="form-check itemsCategorias">
+                                <input type="checkbox" v-model="categoriaExistente" :value="categoria"
+                                    class="form-check-input boxCategoria">
+                                <label class="form-check-label">{{ categoria.palabraCategoria }}</label>
+                            </div>
+                        </div>
+                        <!-- Campos para ingresar una nueva Categorías -->
+                        <div>
+                            <button type="button" @click="nuevaCategoriaForm" class="btn btn-secondary">Registrar
+                                Nueva
+                                Categoria</button>
+                        </div>            
                     </div>
                     <!-- Editorial -->
                     <div class="mb-3">
@@ -87,64 +139,11 @@
                                 Editorial</button>
                         </div>                        
                     </div>
-                    <!-- Categorías -->
-                    <!-- Campo de selección para Categorías existentes -->
-                    <div class="mb-3 categorias">
-                        <label class="form-label labelCategoria">Categorías Existentes:</label>
-                        <div class="ContenedorDeItemsCategorias">
-                            <div v-for="categoria in categorias" :key="categoria.id" class="form-check itemsCategorias">
-                                <input type="checkbox" v-model="categoriaExistente" :value="categoria"
-                                    class="form-check-input boxCategoria">
-                                <label class="form-check-label">{{ categoria.palabraCategoria }}</label>
-                            </div>
-                        </div>
-                        <!-- Campos para ingresar una nueva Categorías -->
-                        <div>
-                            <button type="button" @click="nuevaCategoriaForm" class="btn btn-secondary">Registrar
-                                Nueva
-                                Categoria</button>
-                        </div>                  
-
-                    </div>
                     <!-- fecha De Edicion -->
                     <div class="mb-3">
                         <label for="fechaDeEdicion" class="form-label">Fecha de Edición:</label>
                         <input type="text" class="form-control" id="fechaDeEdicion" name="fechaDeEdicion"
                             v-model="fechaDeEdicion" required>
-                    </div>
-                    <!-- AutorDTO -->
-                    <!-- Campo de selección para autores existentes -->
-                    <div class="mb-3">
-                        <label for="autorSeleccionado" class="form-label">Autor Existente:</label>
-                        <select v-model="autorSeleccionado" class="form-select" id="autorSeleccionadorR"
-                            name="autorSeleccionado" multiple>
-                            <option value="" disabled>Seleccionar Autores Existentes</option>
-                            <option v-for="autor in autores" :key="autor.id" :value="autor">
-                                {{ autor.apellidoAutor + ', ' + autor.nombreAutor }}
-                            </option>
-                        </select>
-                        <div>
-                            <button type="button" @click="nuevoAutorForm" class="btn btn-secondary">Registrar Nuevo
-                                Autor</button>
-                        </div>
-                    </div>
-                    <!-- ilustradores -->
-                    <!-- Campo de selección para ilustradores existentes -->
-                    <div class="mb-3">
-                        <label for="ilustradorSeleccionado" class="form-label">Ilustrador Existente:</label>
-                        <select v-model="ilustradorSeleccionado" class="form-select" id="ilustradorSeleccionado"
-                            name="ilustradorSeleccionado" multiple>
-                            <option value="" disabled>Seleccionar Ilustrador Existente</option>
-                            <option v-for="ilustrador in ilustradores" :key="ilustrador.id" :value="ilustrador">
-                                {{ ilustrador.nombreIlustrador + ', ' + ilustrador.apellidoIlustrador }}
-                            </option>
-                        </select>
-                        <!-- Campos para ingresar un nuevo ilustrador -->
-                        <div>
-                            <button type="button" @click="nuevoIlustradorForm" class="btn btn-secondary">Registrar
-                                Nuevo
-                                Ilustrador</button>
-                        </div>
                     </div>
                     <!-- Isbn  -->
                     <div class="mb-3">
