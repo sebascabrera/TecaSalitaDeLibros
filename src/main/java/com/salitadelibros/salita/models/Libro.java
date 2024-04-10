@@ -59,6 +59,8 @@ public class Libro {
         }
     }
 
+
+
     // getters
     // id tiene solo get
     public Long getId() {

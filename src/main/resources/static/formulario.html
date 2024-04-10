@@ -85,8 +85,7 @@
                         <div>
                             <button type="button" @click="nuevaEditorialForm" class="btn btn-secondary">Registrar Nueva
                                 Editorial</button>
-                        </div>
-                        {{editorialExistente}}
+                        </div>                        
                     </div>
                     <!-- Categorías -->
                     <!-- Campo de selección para Categorías existentes -->
@@ -104,8 +103,7 @@
                             <button type="button" @click="nuevaCategoriaForm" class="btn btn-secondary">Registrar
                                 Nueva
                                 Categoria</button>
-                        </div>
-                        {{categoriaExistente}}
+                        </div>                  
 
                     </div>
                     <!-- fecha De Edicion -->
@@ -126,9 +124,6 @@
                             </option>
                         </select>
                         <div>
-                            {{autorSeleccionado}}
-                        </div>
-                        <div>
                             <button type="button" @click="nuevoAutorForm" class="btn btn-secondary">Registrar Nuevo
                                 Autor</button>
                         </div>
@@ -144,9 +139,6 @@
                                 {{ ilustrador.nombreIlustrador + ', ' + ilustrador.apellidoIlustrador }}
                             </option>
                         </select>
-                        <div>
-                            {{ilustradorSeleccionado}}
-                        </div>
                         <!-- Campos para ingresar un nuevo ilustrador -->
                         <div>
                             <button type="button" @click="nuevoIlustradorForm" class="btn btn-secondary">Registrar

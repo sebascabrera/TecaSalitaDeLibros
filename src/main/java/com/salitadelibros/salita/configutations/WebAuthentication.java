@@ -1,43 +1,27 @@
 package com.salitadelibros.salita.configutations;
 
-import com.salitadelibros.salita.models.Usuario;
 import com.salitadelibros.salita.repositories.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.GlobalAuthenticationConfigurerAdapter;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
     @Autowired
-    UsuarioRepositorio usuarioRepositorio;
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
     @Override
     public void init(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(inputName-> {
-            Usuario usuario = usuarioRepositorio.findByEmail(inputName);
-
-            if( usuario!=null){
-                if (usuario.getEmail().equals("sebasfedele@gmail.com")){
-                    return new User(usuario.getEmail(), usuario.getPassword(),
-                            AuthorityUtils.createAuthorityList("ADMIN"));
-                }
-                return new User(usuario.getEmail(), usuario.getPassword(),
-                        AuthorityUtils.createAuthorityList("USUARIO"));
-            } else {
-                throw new UsernameNotFoundException("Unknown user: "+ inputName);
-            }
-        });
-
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder);
     }
-
 }
