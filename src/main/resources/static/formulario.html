@@ -78,13 +78,13 @@
                     <!-- Campo de selección para ilustradores existentes -->
                     <div class="mb-3">
                         <label for="ilustradorSeleccionado" class="form-label">Ilustrador Existente:</label>
-                        <select v-model="ilustradorSeleccionado" class="form-select" id="ilustradorSeleccionado"
-                            name="ilustradorSeleccionado" multiple>
+                        <select v-model="ilustradoresSeleccionados" class="form-select" id="ilustradorSeleccionado" name="ilustradorSeleccionado" multiple>
                             <option value="" disabled>Seleccionar Ilustrador Existente</option>
                             <option v-for="ilustrador in ilustradores" :key="ilustrador.id" :value="ilustrador">
                                 {{ ilustrador.nombreIlustrador + ', ' + ilustrador.apellidoIlustrador }}
                             </option>
                         </select>
+                    
                         <!-- Campos para ingresar un nuevo ilustrador -->
                         <div>
                             <button type="button" @click="nuevoIlustradorForm" class="btn btn-secondary">Registrar

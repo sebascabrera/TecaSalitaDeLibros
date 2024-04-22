@@ -163,7 +163,7 @@ Vue.createApp({
         },
         filtro() {
             if (this.valorBusqueda.trim() === '' && this.checked.length === 0) {
-                this.libros = this.libros;
+                this.libros = this.librosOriginales.slice(0, this.librosMostrados);
             } else {
                 let librosFiltrados = this.libros.filter(libro => {
                     if (this.valorBusqueda.trim() === '') return true; 
@@ -212,7 +212,8 @@ Vue.createApp({
                 this.libros = librosFiltrados;
             }
             if (this.valorBusqueda.trim() === '' && this.checked.length === 0) {
-                this.libros = this.libros;
+                this.librosMostrados = this.librosPorPagina; 
+                this.libros = this.librosOriginales.slice(0, this.librosMostrados);
             }
         },
         loadAutores() {

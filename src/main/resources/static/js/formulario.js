@@ -14,6 +14,7 @@ Vue.createApp({
             autores: [],           
 
             ilustradorSeleccionado: [],
+            ilustradoresSeleccionados: [],
             ilustradores: [],
 
             fechaDeEdicion: '',

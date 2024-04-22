@@ -23,8 +23,6 @@
                 <div class="col-lg-12 col-md-8 h1-salita">
                     <h1>SALITA DE LIBROS</h1>
                     <h5 class="col-12">Tu lugar para disfrutar de los mejores libros infantiles</h5>
-                    <p v-if="isAdmin">Acceso al formulario de modificación de libros:</p>
-                    <a v-if="isAdmin" href="formulario.html">Nuevo libro</a>
                 </div>
                 <div class="form-control div-form-control">
                     <input type="text" v-on:keyup="filtro" class="form-control" v-model="valorBusqueda"
