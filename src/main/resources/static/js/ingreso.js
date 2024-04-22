@@ -6,9 +6,22 @@ Vue.createApp({
             valorBusqueda: '',
             checked: [],
             claves: [],
+
             autores: [],
+            autoresMostrados: 10,
+            autoresPorPagina: 10,
+            autoresOriginales:[],
+
             ilustradores:[],
+            ilustradoresMostrados: 10,
+            ilustradoresPorPagina: 10,
+            ilustradoresOriginales:[],
+
             categorias: [],
+            categoriasMostrados: 10,
+            categoriasPorPagina: 10,
+            categoriasOriginales:[],
+
             librosFiltrados: [],
             esAdmin: false,
             librosMostrados: 10,
@@ -198,12 +211,15 @@ Vue.createApp({
         
                 this.libros = librosFiltrados;
             }
+            if (this.valorBusqueda.trim() === '' && this.checked.length === 0) {
+                this.libros = this.libros;
+            }
         },
         loadAutores() {
             axios.get("/api/autores/autores")
                 .then(response => {
                     console.log("Datos de autores:", response.data);
-                    this.autores = response.data.sort((a, b) => {                        
+                    this.autoresOriginales = response.data.sort((a, b) => {                        
                         const apellidoA = a.apellidoAutor; 
                         const apellidoB = b.apellidoAutor;        
                         if (apellidoA < apellidoB) {
@@ -214,16 +230,17 @@ Vue.createApp({
                         }
                         return 0; 
                     });
+                    this.autores = this.autoresOriginales.slice(0, 10);  
                 })
                 .catch(error => {
                     console.error("Error cargando autores: ", error);
-                });
+                });                
         },
         loadIlustradores() {
             axios.get("/api/ilustradores/ilustradores")
                 .then(response => {
                     console.log("Datos de ilustradores:", response.data);
-                    this.ilustradores = response.data.sort((a, b) =>{
+                    this.ilustradoresOriginales = response.data.sort((a, b) =>{
                         const apellidoA = a.apellidoIlustrador; 
                         const apellidoB = b.apellidoIlustrador;        
                         if (apellidoA < apellidoB) {
@@ -233,17 +250,31 @@ Vue.createApp({
                             return 1;
                         }
                         return 0; 
-                    });                    
+                    }); 
+                    this.ilustradores = this.ilustradoresOriginales.slice(0, this.ilustradoresMostrados);                   
                 })
                 .catch(error => {
                     console.error("Error cargando ilustradores: ", error);
                 });
         },
+        cargarMasIlustradores() {
+            this.ilustradoresMostrados += this.ilustradoresPorPagina;
+            this.ilustradores = this.ilustradoresOriginales.slice(0, this.ilustradoresMostrados);
+        },
+        cargarMasAutores() {
+            this.autoresMostrados += this.autoresPorPagina;
+            this.autores = this.autoresOriginales.slice(0, this.autoresMostrados);
+        },
+        cargarMasCategorias() {
+            this.categoriasMostrados += this.categoriasPorPagina;
+            this.categorias = this.categoriasOriginales.slice(0, this.categoriasMostrados);
+        },        
         loadCategorias() {
             axios.get("/api/categorias/categorias")
             .then(response => {
                 console.log("Datos de categorias:", response.data);
-                this.categorias = response.data;
+                this.categoriasOriginales = response.data;
+                this.categorias = this.categoriasOriginales.slice(0, 10); 
             })
             .catch(error => {
                 console.error("Error cargando categorias: ", error);
@@ -288,9 +319,9 @@ Vue.createApp({
                     })
                 })
             } else {
-                this.libros = this.librosOriginales.slice(); // Restaura la lista original de libros
+                this.libros = this.librosOriginales.slice(); 
             }
-            console.log("Libros filtrados:", this.libros); // Verifica los libros filtrados después de aplicar el filtro
+            console.log("Libros filtrados:", this.libros); 
         },
         toggleCategoria(categoria) {
             categoria.seleccionada = !categoria.seleccionada;

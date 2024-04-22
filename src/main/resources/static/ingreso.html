@@ -64,17 +64,19 @@
                         </span>
                     </li>
                 </ul>
+                <button @click="cargarMasAutores" class="btn btn-light">Cargar más autores</button>
             </div>
             <div class="sub-refinar-busqueda">
                 <h4 id="facet-ilustradores" class="facet">Ilustradores</h4>
                 <ul class="menu-collapse">
                     <li class="lista-facet" v-for="ilustrador in ilustradores" :key="ilustrador.id" :value="ilustrador"
-                        @click="toggleIlustrador(ilustrador)">
+                    @click="toggleIlustrador(ilustrador)">
                         <span :class="{ 'seleccionado': ilustrador.seleccionado }">
                             {{ ilustrador.apellidoIlustrador}}, {{ilustrador.nombreIlustrador}}
                         </span>
                     </li>
                 </ul>
+                <button @click="cargarMasIlustradores" class="btn btn-light">Cargar más ilustradores</button>
             </div>
             <div class="sub-refinar-busqueda">
                 <h4 id="facet-authors" class="facet">Categorias</h4>
@@ -85,6 +87,7 @@
                         </span>
                     </li>
                 </ul>
+                <button @click="cargarMasCategorias" class="btn btn-light">Cargar más categorias</button>
             </div>
             <div>
                 <div>
