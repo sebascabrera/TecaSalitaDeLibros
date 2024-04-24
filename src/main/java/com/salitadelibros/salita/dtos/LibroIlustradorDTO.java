@@ -4,8 +4,8 @@ import com.salitadelibros.salita.models.LibroIlustrador;
 
 public class LibroIlustradorDTO {
     private Long id;
-    private IlustradorDTO ilustradorDTO;
-    private LibroDTO libroDTO;
+    private IlustradorDTO ilustrador;
+    private LibroDTO libro;
 
     //constructores
 
@@ -14,8 +14,8 @@ public class LibroIlustradorDTO {
 
     public LibroIlustradorDTO(LibroIlustrador libroIlustrador) {
         id = libroIlustrador.getId();
-        ilustradorDTO = new IlustradorDTO(libroIlustrador.getIlustrador());
-        libroDTO = new LibroDTO(libroIlustrador.getLibro());
+        libro = new LibroDTO(libroIlustrador.getLibro());
+        ilustrador = new IlustradorDTO(libroIlustrador.getIlustrador());
     }
 
   // getters
@@ -24,11 +24,11 @@ public class LibroIlustradorDTO {
         return id;
     }
 
-    public IlustradorDTO getIlustradorDTO() {
-        return ilustradorDTO;
+    public IlustradorDTO getIlustrador() {
+        return ilustrador;
     }
 
-    public LibroDTO getLibroDTO() {
-        return libroDTO;
+    public LibroDTO getLibro() {
+        return libro;
     }
 }

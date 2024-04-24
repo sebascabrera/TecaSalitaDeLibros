@@ -5,15 +5,16 @@ import com.salitadelibros.salita.models.*;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+
 public class LibroDTO {
 
     private Long id;
     private String titulo;
     private Genero genero;
-    private Set<LibroCategoriaDTO> categorias;
+    private Set<CategoriaDTO> categorias;
     private EditorialDTO editorial;
-    private Set<LibroAutorDTO> autores;
-    private Set<LibroIlustradorDTO> ilustradores;
+    private Set<AutorDTO> autores;
+    private Set<IlustradorDTO> ilustradores;
     private String fechaDeEdicion;
     private String isbn;
 
@@ -22,22 +23,23 @@ public class LibroDTO {
     public LibroDTO() {
     }
 
-    public LibroDTO(com.salitadelibros.salita.models.Libro libro) {
+    public LibroDTO(Libro libro) {
         id = libro.getId();
         titulo = libro.getTitulo();
         genero = libro.getGenero();
         categorias = libro.getCategorias()
                 .stream()
-                .map(libroCategoria -> new LibroCategoriaDTO(libroCategoria))
+                .map(categorias -> new CategoriaDTO(categorias
+                        .getCategoria()))
                 .collect(Collectors.toSet());
         editorial = new EditorialDTO(libro.getEditorial());
         autores = libro.getAutores()
                 .stream()
-                .map(libroAutor -> new LibroAutorDTO(libroAutor))
+                .map(autores -> new AutorDTO(autores.getAutor()))
                 .collect(Collectors.toSet());
         ilustradores = libro.getIlustradores()
                 .stream()
-                .map(libroIlustrador -> new LibroIlustradorDTO(libroIlustrador))
+                .map(ilustradores -> new IlustradorDTO(ilustradores.getIlustrador()))
                 .collect(Collectors.toSet());
         fechaDeEdicion = libro.getFechaDeEdicion();
         isbn = libro.getIsbn();
@@ -58,7 +60,7 @@ public class LibroDTO {
         return genero;
     }
 
-    public Set<LibroCategoriaDTO> getCategorias() {
+    public Set<CategoriaDTO> getCategorias() {
         return categorias;
     }
 
@@ -66,11 +68,11 @@ public class LibroDTO {
         return editorial;
     }
 
-    public Set<LibroAutorDTO> getAutores() {
+    public Set<AutorDTO> getAutores() {
         return autores;
     }
 
-    public Set<LibroIlustradorDTO> getIlustradores() {
+    public Set<IlustradorDTO> getIlustradores() {
         return ilustradores;
     }
 

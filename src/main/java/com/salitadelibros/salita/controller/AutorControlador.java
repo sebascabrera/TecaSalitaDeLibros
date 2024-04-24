@@ -1,7 +1,8 @@
 package com.salitadelibros.salita.controller;
 
+import com.salitadelibros.salita.dtos.AutorDTO;
 import com.salitadelibros.salita.models.Autor;
-import com.salitadelibros.salita.services.AutorServicio;
+import com.salitadelibros.salita.services.services.AutorServicio;
 import com.salitadelibros.salita.services.ServicioComun;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/autores")
@@ -21,8 +24,15 @@ public class AutorControlador {
 
 
     @GetMapping("/autores")
-    public List<Autor> getAutores() {
-        return autorServicio.getAutores();
+    public Set<AutorDTO> getAutores() {
+
+       List<Autor> listaDeAutores = autorServicio.getAutores();
+        Set<AutorDTO> listaDeAutoresDTO = listaDeAutores
+                .stream()
+                .map(autor -> new AutorDTO(autor))
+                .collect(Collectors.toSet());
+
+        return listaDeAutoresDTO;
     }
 
     @GetMapping("/{id}")
@@ -47,7 +57,7 @@ public class AutorControlador {
 
             servicioComun.saveOrUpdateAutor(nuevoAutor);
 
-            return new ResponseEntity<>("AutorDTO guardado exitosamente", HttpStatus.CREATED);
+            return new ResponseEntity<>("Autor guardado exitosamente", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Error al guardar el autor: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -57,7 +67,7 @@ public class AutorControlador {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         autorServicio.delete(id);
-        return ResponseEntity.ok("AutorDTO eliminado exitosamente");
+        return ResponseEntity.ok("Autor eliminado exitosamente");
     }
 }
 
