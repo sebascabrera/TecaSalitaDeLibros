@@ -22,7 +22,10 @@ body {
 
 h1 {
     font-family: 'Galada', cursive;
+    margin: 10px;
+    color: #3a3958;
     text-align: center;
+    text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
 h2, h3, h4{
     text-align: center;
@@ -33,6 +36,8 @@ h4{
 .refinar-busqueda{
     color: rgb(7, 7, 46);
     margin: 10px;  
+    font-family: cursive;
+    text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
 h5 {
     display: flex;
@@ -44,18 +49,33 @@ h5 {
 .lista-facet{
     font-size: medium;
 }
+.lista-facet span {
+    cursor: pointer; 
+}
 .navBar {
+    background-image: url('../assets/Fondo\ Salita\ de\ Libros.jpg');
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    justify-content: center;    
+}
+.h1-salita{
+    font-family: fangsong;
+}
+.sub-header{
+    display: flex;
+    align-items: center;
 }
 .paginacion{
     display: flex;
-    justify-content: right;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
     width: 100%;  
 }
 .global{
     display: flex;    
+}
+.sub-refinar-busqueda{
+    margin-bottom: 10px;
 }
 #search-facets{
     display: flex;
@@ -65,8 +85,11 @@ h5 {
     /*border: 2px solid #212529;*/
     border-radius: 8px;
 }
-.seleccionado :active{
-    color: rgb(181, 220, 253);
+.seleccionado{
+    color: rgb(51, 233, 19);
+}
+.seleccionada{
+    color: rgb(51, 233, 19);
 }
 .seleccionado :visited{
     color: #4678ab;
@@ -75,8 +98,8 @@ h5 {
     display: flex;
     justify-content: center;
     width: 70%;
+    border-color: black;
 }
-
 .card-header {
     background-color: #d3d3d361;
 }
@@ -101,6 +124,10 @@ h5 {
 .form-check-label {
     margin: 5px;
     padding: 3px;
+}
+
+button{
+margin: 10px;
 }
 
 .container {
@@ -143,7 +170,7 @@ h6 {
     max-height: 100%;
     min-width: 150px;
     min-height: 200px;
-    max-width: 100%;
+    max-width: 3%;
     max-height: 200px;
     border: 2px solid #212529;
     border-radius: 8px;
@@ -151,8 +178,13 @@ h6 {
     justify-content: center;
     align-items:end;
     align-items: center;
+    overflow: hidden;
 }
-
+.img img {
+    max-width: 100%; 
+    height: auto; 
+    object-fit: cover; 
+}
 .card-footer {
     display: flex;
     justify-content: center;

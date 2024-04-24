@@ -6,51 +6,53 @@ Vue.createApp({
             password: "",
             errorMsg: "",
             showSignUp: false,
-            errorToast: null,
+            showErrorToast: false
         };
     },
     methods: {
         signIn: function (event) {
             event.preventDefault();
             console.log("se hizo click en login")
+            console.log("se envia mail:", this.email)
+            console.log("se envia password:", this.password)
             // Validación de campos
             if (!this.email || !this.password) {
                 this.errorMsg = "Por favor, ingresa tu correo electrónico y contraseña.";
-                this.errorToast.show();
+                this.showErrorToast = true; // Mostramos el toast de error
                 return;
             }
-
-            // Realizar autenticación
             let config = {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             };
-            axios.post('/sig-in/auth/signin', { email: this.email, password: this.password }, config)
-            .then(response => {
-               
-                window.location.href = response.data.redirectUrl;
-                console.log("respuesta de login: ", response.data)
-            })
-            .catch(error => {
-                if (error.response && error.response.status === 401) {
-                    this.errorMsg = "Credenciales inválidas. Por favor, verifica tu correo electrónico y contraseña.";
-                } else {
-                    this.errorMsg = "Se produjo un error durante el inicio de sesión. Por favor, inténtalo de nuevo más tarde.";
-                }
-                if (this.errorToast) {
-                    this.errorToast.show();
-                }
-            });
-            
+            // axios.post('/auth/signin',`email=${this.email}&password=${this.password}`, config)
+            axios.post('/auth/signin', { email: this.email, password: this.password }, config)
+                .then(response => {
+                    if (response.status === 200) {
+                        window.location.href = "/ingreso.html";
+                    }
+                })
+                .catch(error => {
+                    if (error.response && error.response.status === 401) {
+                        this.errorMsg = " Por favor, verifica tu correo electrónico y contraseña. O registrarse =)";
+                        this.showErrorToast = true;
+                    } else {
+                        this.errorMsg = "Se produjo un error durante el inicio de sesión. Por favor, inténtalo de nuevo más tarde.";
+                        this.showErrorToast = true;
+                    }
+
+                    var myToast = new bootstrap.Toast(document.getElementById('errorToast'));
+                    myToast.show();
+
+                    this.email = "";
+                    this.password = "";
+                });
         },
-        registroLink: function(event) {
+        registroLink: function (event) {
             event.preventDefault();
-            window.location.href = 'web/registro/registro.html';
+            window.location.href = 'registro.html';
             console.log("se hizo click en registro")
         }
-    },
-    mounted: function () {
-        this.errorToast = new bootstrap.Toast(document.getElementById('danger-toast'));
     }
 }).mount('#app');

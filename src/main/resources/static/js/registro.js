@@ -40,10 +40,7 @@ if (!regexPassword.test(this.password)) {
     }    
     if (!/(?=.*\d)/.test(this.password)) {
         mensaje += "- Al menos un dígito.\n";
-    }    
-    if (!/(?=.*[$@$!%*?&])/.test(this.password)) {
-        mensaje += "- Al menos uno de los caracteres especiales: $, @, !, %, *, ?, &.\n";
-    }    
+    }      
     mensaje += "- Longitud entre 8 y 15 caracteres.";    
     alert(mensaje);
     return;

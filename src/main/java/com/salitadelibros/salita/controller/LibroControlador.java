@@ -61,8 +61,6 @@ public class LibroControlador {
         }
 
     }
-
-
     @GetMapping("/libros")
     public List<LibroDTO> getLibros() {
 

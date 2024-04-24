@@ -104,6 +104,13 @@ input {
 .btnGuardar {
   justify-content: center;
 }
+.btnVolver{
+  background: #aff0be;
+  justify-content: center;
+}
+.btnVolver:hover{
+  background: #45be75;
+}
 .btnGuardarContenedor {
   align-items: center;
 
