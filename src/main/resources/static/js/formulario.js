@@ -14,7 +14,6 @@ Vue.createApp({
             autores: [],           
 
             ilustradorSeleccionado: [],
-            ilustradoresSeleccionados: [],
             ilustradores: [],
 
             fechaDeEdicion: '',
@@ -103,6 +102,9 @@ Vue.createApp({
         },
         nuevaCategoriaForm() {
             window.location.href = '/categoria.html';
+        },
+        volverAInicio() {
+            window.location.href = '/ingreso.html';
         },
         manejarSeleccion() {
             /*    console.log("Titulo seleccionado:", this.titulo);
