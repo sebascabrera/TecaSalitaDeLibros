@@ -16,10 +16,9 @@ body {
     min-height: 100vh;
     font-size: 100%;
     line-height: normal;
-    background-color: #dad9fb;
+    background-color: #c3c2e0;
 
 }
-
 h1 {
     font-family: 'Galada', cursive;
     margin: 10px;
@@ -53,7 +52,8 @@ h5 {
     cursor: pointer; 
 }
 .navBar {
-    background-image: url('../assets/Fondo\ Salita\ de\ Libros.jpg');
+     /*background-image: url('../assets/Fondo\ Salita\ de\ Libros.jpg'); */
+    background-color: #d8d1fbdf;
     display: flex;
     justify-content: center;    
 }
