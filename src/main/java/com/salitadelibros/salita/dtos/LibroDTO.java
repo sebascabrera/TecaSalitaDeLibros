@@ -18,6 +18,8 @@ public class LibroDTO {
     private String fechaDeEdicion;
     private String isbn;
 
+    private String comentario;
+
     // Constructores
 
     public LibroDTO() {
@@ -43,6 +45,7 @@ public class LibroDTO {
                 .collect(Collectors.toSet());
         fechaDeEdicion = libro.getFechaDeEdicion();
         isbn = libro.getIsbn();
+        comentario = libro.getComentario();
     }
 
 
@@ -83,5 +86,7 @@ public class LibroDTO {
     public String getIsbn() {
         return isbn;
     }
+
+    public String getComentario() { return comentario; }
 
 }

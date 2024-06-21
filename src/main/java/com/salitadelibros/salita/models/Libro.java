@@ -32,6 +32,8 @@ public class Libro {
 
     private String isbn;
 
+    private String comentario;
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "libro", cascade = CascadeType.ALL)
     private Set<LibroIlustrador> ilustradores = new HashSet<>();
 
@@ -43,11 +45,12 @@ public class Libro {
     public Libro() {
     }
 
-    public Libro(String titulo, String fechaDeEdicion, Genero genero, String isbn) {
+    public Libro(String titulo, String fechaDeEdicion, Genero genero, String isbn, String comentario) {
         this.titulo = titulo;
         this.fechaDeEdicion = fechaDeEdicion;
         this.genero = genero;
         this.isbn= isbn;
+        this.comentario = comentario;
     }
 
     public Libro(MultiValueMap<String, String> libroData) {
@@ -56,6 +59,7 @@ public class Libro {
             this.fechaDeEdicion = libroData.getFirst("fechaDeEdicion");
             this.genero = Genero.valueOf(libroData.getFirst("genero"));
             this.isbn = libroData.getFirst("isbn");
+            this.comentario = libroData.getFirst("comentario");
         }
     }
 
@@ -98,6 +102,9 @@ public class Libro {
     public String getIsbn() {
         return isbn;
     }
+    public String getComentario() {
+        return comentario;
+    }
 
     //y setters
 
@@ -115,6 +122,9 @@ public class Libro {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
     }
 
     //metodos de add
@@ -143,4 +153,6 @@ public class Libro {
 
     public void addLibroCategoria(Categoria categoria1, Libro libro1) {
     }
+
+
 }

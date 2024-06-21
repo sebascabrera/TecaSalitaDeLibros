@@ -22,7 +22,7 @@
     </style>
     <header>
         <div class="container row">
-            <nav class="navbar navbar-expand-lg ">
+            <!--   <nav class="navbar navbar-expand-lg ">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
@@ -36,7 +36,7 @@
                         </li>
                     </ul>
                 </div>
-            </nav>
+            </nav>-->
             <div class="row">
                 <div class="col-lg-12 col-md-8">
                     <h1>SALITA DE INGRESOS</h1>
@@ -58,10 +58,10 @@
                         <input type="text" class="form-control" id="titulo" name="titulo" v-model="titulo" required>
                         <div class="invalid-feedback">Por favor, ingrese un título válido.</div>
                     </div>
-                                        <!-- AutorDTO -->
+                    <!-- AutorDTO -->
                     <!-- Campo de selección para autores existentes -->
                     <div class="mb-3">
-                        <label for="autorSeleccionado" class="form-label">Autor Existente:</label>
+                        <label for="autorSeleccionado" class="form-label">Autor:</label>
                         <select v-model="autorSeleccionado" class="form-select" id="autorSeleccionadorR"
                             name="autorSeleccionado" multiple>
                             <option value="" disabled>Seleccionar Autores Existentes</option>
@@ -74,16 +74,17 @@
                                 Autor</button>
                         </div>
                     </div>
-                                        <!-- ilustradores -->
+                    <!-- ilustradores -->
                     <!-- Campo de selección para ilustradores existentes -->
                     <div class="mb-3">
-                        <label for="ilustradorSeleccionado" class="form-label">Ilustrador Existente:</label>
-                        <select v-model="ilustradorSeleccionado" class="form-select" id="ilustradorSeleccionado" name="ilustradorSeleccionado" multiple>
+                        <label for="ilustradorSeleccionado" class="form-label">Ilustrador:</label>
+                        <select v-model="ilustradorSeleccionado" class="form-select" id="ilustradorSeleccionado"
+                            name="ilustradorSeleccionado" multiple>
                             <option value="" disabled>Seleccionar Ilustrador Existente</option>
                             <option v-for="ilustrador in ilustradores" :key="ilustrador.id" :value="ilustrador">
                                 {{ ilustrador.nombreIlustrador + ', ' + ilustrador.apellidoIlustrador }}
                             </option>
-                        </select>                    
+                        </select>
                         <!-- Campos para ingresar un nuevo ilustrador -->
                         <div>
                             <button type="button" @click="nuevoIlustradorForm" class="btn btn-secondary">Registrar
@@ -104,10 +105,10 @@
                             </select>
                         </div>
                     </div>
-                                        <!-- Categorías -->
+                    <!-- Categorías -->
                     <!-- Campo de selección para Categorías existentes -->
                     <div class="mb-3 categorias">
-                        <label class="form-label labelCategoria">Categorías Existentes:</label>
+                        <label class="form-label labelCategoria">Categorías:</label>
                         <div class="ContenedorDeItemsCategorias">
                             <div v-for="categoria in categorias" :key="categoria.id" class="form-check itemsCategorias">
                                 <input type="checkbox" v-model="categoriaExistente" :value="categoria"
@@ -120,31 +121,41 @@
                             <button type="button" @click="nuevaCategoriaForm" class="btn btn-secondary">Registrar
                                 Nueva
                                 Categoria</button>
-                        </div>            
+                        </div>
                     </div>
                     <!-- Editorial -->
                     <div class="mb-3">
-                        <label for="editorialExistente" class="form-label">Editorial Existente:</label>
-                        <select v-model="editorialExistente" class="form-select" name="editorialExistente"
-                            id="editorialExistente">
-                            <option value="" disabled>Seleccionar Editorial Existente</option>
-                            <option v-for="editorial in editoriales" :key="editorial.id" :value="editorial">
-                                {{ editorial.nombreEditorial }}
-                            </option>
-                        </select>
+                        <div class="editorialExistente-fecha">
+                            <div class="edtorialExistente-nueva-editorial">
+                                <label for="editorialExistente" class="form-label">Editorial:</label>
+                                <select v-model="editorialExistente" class="form-select" name="editorialExistente"
+                                    id="editorialExistente">
+                                    <option value="" disabled>Seleccionar Editorial Existente</option>
+                                    <option v-for="editorial in editoriales" :key="editorial.id" :value="editorial">
+                                        {{ editorial.nombreEditorial }}
+                                    </option>
+                                </select>
+                            </div>
+                            <!-- fecha De Edicion -->
+                            <div class="fechaDeEdicion">
+                                <label for="fechaDeEdicion" class="form-label">Fecha:</label>
+                                <input type="text" class="form-control" id="fechaDeEdicion" name="fechaDeEdicion"
+                                    v-model="fechaDeEdicion" required>
+                            </div>
+                        </div>
                         <!-- nueva editorial -->
                         <div>
-                            <button type="button" @click="nuevaEditorialForm" class="btn btn-secondary">Registrar Nueva
+                            <button type="button" @click="nuevaEditorialForm" class="btn btn-secondary">Registrar
+                                Nueva
                                 Editorial</button>
-                        </div>                        
+                        </div>
                     </div>
-                    <!-- fecha De Edicion -->
+                    <!-- Abstract  -->
                     <div class="mb-3">
-                        <label for="fechaDeEdicion" class="form-label">Fecha de Edición:</label>
-                        <input type="text" class="form-control" id="fechaDeEdicion" name="fechaDeEdicion"
-                            v-model="fechaDeEdicion" required>
+                        <label for="comentario" class="form-label">Abstract:</label>
+                        <input type="text" class="form-control" id="comentario" name="comentario" v-model="comentario" required>                        
                     </div>
-                    <!-- Isbn  -->
+                    <!-- ISBN  -->
                     <div class="mb-3">
                         <label for="isbn" class="form-label">ISBN:</label>
                         <input type="text" class="form-control" id="isbn" name="isbn" v-model="isbn" required>
@@ -155,8 +166,9 @@
                         <!-- Botón de envío -->
                         <button type="button" @click="enviarFormulario" class="btn btn-primary btnGuardar">Guardar
                             Libro</button>
-                                                    <!-- Botón de volver a inicio -->
-                        <button type="button" @click="volverAInicio" class="btn btn-success btnVolver">Volver a Inicio</button>
+                        <!-- Botón de volver a inicio -->
+                        <button type="button" @click="volverAInicio" class="btn btn-success btnVolver">Volver a
+                            Inicio</button>
                     </div>
             </div>
             </form>

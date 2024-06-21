@@ -33,7 +33,7 @@ public class SecurityBeansConfig {
                 Usuario usuario = usuarioRepositorio.findByEmail(inputName);
                 if (usuario != null) {
                     System.out.println("loadUserByUsername: usuario nulo");
-                    if (usuario.getEmail().equals("sebasfedele@gmail.com")) {
+                    if (usuario.getEmail().equals("salitadelibros@admin.com")) {
                         return new User(usuario.getEmail(), usuario.getPassword(),
                                 AuthorityUtils.createAuthorityList("ADMIN"));
                     }
