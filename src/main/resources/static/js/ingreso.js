@@ -27,6 +27,9 @@ Vue.createApp({
             librosMostrados: 15,
             currentPage: 1,
             pageSize: 10,
+
+            showModal: false,
+            abstractContent:''
         }
     },
     computed: {
@@ -46,6 +49,11 @@ Vue.createApp({
         this.loadCategorias();
     },
     methods: {
+        openModal(comentario) {
+            var ventanaEmergente = window.open('', '_blank');
+            ventanaEmergente.document.write('<html><head><title>Comentario del Libro</title></head><body><h1>Comentario del Libro</h1><p>' + comentario + '</p></body></html>');
+            ventanaEmergente.focus();
+        },
         nextPage() {
             if (this.currentPage < this.totalPages) {
                 this.currentPage++;
@@ -58,14 +66,27 @@ Vue.createApp({
         },
         loadAtributos() {
             axios.get("/api/libros/atributos")
-                .then(response => {
-                    const data = response.data;
-                    for (let i = 0; i < data.length; i++) {
-                        if (data[i] !== 'fechaDeEdicion' && data[i] !== 'id') {
-                            this.claves.push(data[i]);
-                        }
-                    }
-                })
+            .then(response => {
+                const data = response.data;
+                const priorityOrder = ['titulo', 'autores', 'ilustradores', 'editorial', 'categorias', 'genero', 'isbn'];
+                const orderedClaves = [];
+
+                // Separar las claves prioritarias y las demás, excluyendo 'comentario'
+                const priorityClaves = data.filter(item => priorityOrder.includes(item));
+                const otherClaves = data.filter(item => !priorityOrder.includes(item) && item !== 'fechaDeEdicion' && item !== 'id' && item !== 'comentario');
+
+                // Ordenar las claves prioritarias según el orden definido
+                priorityClaves.sort((a, b) => priorityOrder.indexOf(a) - priorityOrder.indexOf(b));
+
+                // Ordenar alfabéticamente las otras claves
+                otherClaves.sort((a, b) => a.localeCompare(b));
+
+                // Combinar ambas listas
+                this.claves = [...priorityClaves, ...otherClaves];
+            })
+            .catch(error => {
+                console.error("Error al cargar atributos:", error);
+            });
         },
         loadLibros() {
             axios.get("/api/libros/libros")
@@ -384,5 +405,11 @@ Vue.createApp({
         irAFormulario() {
             window.location.href = "/formulario.html";
         },
+        openModal() {
+            this.showModal = true;            
+            console.log("se hizo click en el modal");            
+        },
     }
-}).mount("#salitaDeLibros");
+}).mount("#salitaDeLibros")
+
+

@@ -109,11 +109,11 @@ public class PdfControlador {
             Color colorActual = alternarColor ? color1 : color2;
             table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getId().toString())));
             table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getTitulo())));
+            table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getAutores().stream().map(autor -> autor.getNombreAutor() + " " + autor.getApellidoAutor()).collect(Collectors.joining(", ")))));
+            table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getIlustradores().stream().map(ilustrador -> ilustrador.getNombreIlustrador() + " " + ilustrador.getApellidoIlustrador()).collect(Collectors.joining(", ")))));
             table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getGenero().toString())));
             table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getCategorias().stream().map(CategoriaDTO::getPalabraCategoria).collect(Collectors.joining(", ")))));
             table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getEditorial().getNombreEditorial())));
-            table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getAutores().stream().map(autor -> autor.getNombreAutor() + " " + autor.getApellidoAutor()).collect(Collectors.joining(", ")))));
-            table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getIlustradores().stream().map(ilustrador -> ilustrador.getNombreIlustrador() + " " + ilustrador.getApellidoIlustrador()).collect(Collectors.joining(", ")))));
             table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getFechaDeEdicion())));
             table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getIsbn())));
             alternarColor = !alternarColor;
@@ -201,10 +201,10 @@ public class PdfControlador {
             table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getId().toString())));
             table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getAutores().stream().map(autor -> autor.getNombreAutor() + " " + autor.getApellidoAutor()).collect(Collectors.joining(", ")))));
             table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getTitulo())));
+            table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getIlustradores().stream().map(ilustrador -> ilustrador.getNombreIlustrador() + " " + ilustrador.getApellidoIlustrador()).collect(Collectors.joining(", ")))));
             table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getGenero().toString())));
             table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getCategorias().stream().map(CategoriaDTO::getPalabraCategoria).collect(Collectors.joining(", ")))));
             table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getEditorial().getNombreEditorial())));
-            table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getIlustradores().stream().map(ilustrador -> ilustrador.getNombreIlustrador() + " " + ilustrador.getApellidoIlustrador()).collect(Collectors.joining(", ")))));
             table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getFechaDeEdicion())));
             table.addCell(new Cell().setBackgroundColor(colorActual).add(new Paragraph(libro.getIsbn())));
             alternarColor = !alternarColor;
