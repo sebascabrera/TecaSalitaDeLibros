@@ -20,7 +20,7 @@ public class SalitaApplication {
 		SpringApplication.run(SalitaApplication.class, args);
 	}
 
-
+/*
 	@Bean
 	public CommandLineRunner initData(LibroRepositorio libroRepositorio,
 									  AutorRepositorio autorRepositorio,
@@ -34,20 +34,20 @@ public class SalitaApplication {
 
 
 		return (args -> {
-			Libro libro1 = new Libro("Tengo un monstruo en el bolsillo", "1999", NARRATIVA, "9781400000463");
-			Libro libro2 = new Libro("Mar Preferido de los Piratas, El", "2024", POESIA, "9789504644569");
-			Libro libro3 = new Libro("Toda Mafalda", "2024", NARRATIVA, "9789505156948");
-			Libro libro4 = new Libro("Aventuras De Ceci", "2024", TEATRO, "98798879756");
-			Libro libro5 = new Libro("Cuidado con el Perro", "2016", POESIA, "9789504644477");
-			Libro libro6 = new Libro("La razon populista", "2009", NARRATIVA, "9789505576357");
-			Libro libro7 = new Libro("¿Cuanta verdad necesita el hombre?", "2013",NARRATIVA, "9789876701792");
-			Libro libro8 = new Libro("Venas abiertas de America Latina", "2015", NARRATIVA, "9789876295116");
-			Libro libro9 = new Libro("Nueva Gramatica basica", "2009", NARRATIVA, "9788467034714");
-			Libro libro10 = new	Libro("Hobbit", "2014", POESIA, "9789505470631");
-			Libro libro11 = new	Libro("Memorias Del Aguila y del Jaguar", "2015", POESIA, "9789875668157");
-			Libro libro12 = new	Libro("zonceras Argentinas y otras yerbas", "2011", NARRATIVA, "9789504926238");
-			Libro libro13 = new	Libro("Historia de la filosofia medieval", "2014", POESIA, "9786071613929");
-			Libro libro14 = new Libro("Cristianismo primitivo y paideia Griega","2012", NARRATIVA, "9789681620301");
+			Libro libro1 = new Libro("Tengo un monstruo en el bolsillo", "1999", NARRATIVA, "9781400000463", "Este es un comentario");
+			Libro libro2 = new Libro("Mar Preferido de los Piratas, El", "2024", POESIA, "9789504644569", "Este es un comentario");
+			Libro libro3 = new Libro("Toda Mafalda", "2024", NARRATIVA, "9789505156948", "Este es un comentario");
+			Libro libro4 = new Libro("Aventuras De Ceci", "2024", TEATRO, "98798879756", "Este es un comentario");
+			Libro libro5 = new Libro("Cuidado con el Perro", "2016", POESIA, "9789504644477", "Este es un comentario");
+			Libro libro6 = new Libro("La razon populista", "2009", NARRATIVA, "9789505576357", "Este es un comentario");
+			Libro libro7 = new Libro("¿Cuanta verdad necesita el hombre?", "2013",NARRATIVA, "9789876701792", "Este es un comentario");
+			Libro libro8 = new Libro("Venas abiertas de America Latina", "2015", NARRATIVA, "9789876295116", "Este es un comentario");
+			Libro libro9 = new Libro("Nueva Gramatica basica", "2009", NARRATIVA, "9788467034714", "Este es un comentario");
+			Libro libro10 = new	Libro("Hobbit", "2014", POESIA, "9789505470631", "Este es un comentario");
+			Libro libro11 = new	Libro("Memorias Del Aguila y del Jaguar", "2015", POESIA, "9789875668157", "Este es un comentario");
+			Libro libro12 = new	Libro("zonceras Argentinas y otras yerbas", "2011", NARRATIVA, "9789504926238", "Este es un comentario");
+			Libro libro13 = new	Libro("Historia de la filosofia medieval", "2014", POESIA, "9786071613929", "Este es un comentario");
+			Libro libro14 = new Libro("Cristianismo primitivo y paideia Griega","2012", NARRATIVA, "9789681620301", "Este es un comentario");
 			libroRepositorio.save(libro14);
 			libroRepositorio.save(libro1);
 			libroRepositorio.save(libro2);
@@ -256,8 +256,12 @@ public class SalitaApplication {
 			libroRepositorio.save(libro12);
 			libroRepositorio.save(libro13);
 			libroRepositorio.save(libro14);
+			Usuario usuario1 = new Usuario("Dimas", "cedimauro@gmail.com", passwordEncoder.encode("!17Defebrero"));
+			usuarioRepositorio.save(usuario1);
 
 	});
 }
+*/
+
 
 }

@@ -80,7 +80,14 @@ public class LibroControlador {
                 .collect(Collectors.toList());
         return libroDTOLista;
     }
-
+    @GetMapping("/cometario")
+    public  List<LibroDTO> getlibrocometario() {
+        List<Libro> libroLista = libroServicio.getLibros();
+        List<LibroDTO> libroDTOLista = libroLista.stream()
+                .map(libro -> new LibroDTO(libro))
+                .collect(Collectors.toList());
+        return libroDTOLista;
+    }
     @RequestMapping("/editoriales")
     public Set<EditorialDTO> getEditoriales() {
         List<Editorial> listaEditorial = editorialRepositorio.findAll();
