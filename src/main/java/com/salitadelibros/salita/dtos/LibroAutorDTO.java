@@ -2,10 +2,11 @@ package com.salitadelibros.salita.dtos;
 
 import com.salitadelibros.salita.models.LibroAutor;
 
+
 public class LibroAutorDTO {
     private Long id;
-    private LibroDTO libroDTO;
-    private AutorDTO autorDTO;
+    private LibroDTO libro;
+    private AutorDTO autor;
 
     //constructores
     public LibroAutorDTO(){
@@ -14,20 +15,20 @@ public class LibroAutorDTO {
 
     public LibroAutorDTO(LibroAutor libroAutor) {
         id = libroAutor.getId();
-        libroDTO = new LibroDTO(libroAutor.getLibro());
-        autorDTO = new AutorDTO(libroAutor.getAutor());
+        libro = new LibroDTO(libroAutor.getLibro());
+        autor = new AutorDTO(libroAutor.getAutor());
     }
 
     public Long getId() {
         return id;
     }
 
-    public LibroDTO getLibroDTO() {
-        return libroDTO;
+    public LibroDTO getLibro() {
+        return libro;
     }
 
-    public AutorDTO getAutorDTO() {
-        return autorDTO;
+    public AutorDTO getAutor() {
+        return autor;
     }
 }
 

@@ -1,10 +1,9 @@
 package com.salitadelibros.salita.controller;
 
+import com.salitadelibros.salita.dtos.CategoriaDTO;
 import com.salitadelibros.salita.models.Categoria;
-import com.salitadelibros.salita.models.Editorial;
-import com.salitadelibros.salita.models.LibroCategoria;
 import com.salitadelibros.salita.repositories.CategoriaRepositorio;
-import com.salitadelibros.salita.services.CategoriaServicio;
+import com.salitadelibros.salita.services.services.CategoriaServicio;
 import com.salitadelibros.salita.services.ServicioComun;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,8 +25,15 @@ public class CaetgoriaControlador {
     CategoriaRepositorio categoriaRepositorio;
 
     @GetMapping("/categorias")
-    public List<Categoria> getCategorias() {
-        return categoriaServicio.getCategorias();
+    public Set<CategoriaDTO> getCategorias() {
+
+        List<Categoria>categoriaLista =  categoriaServicio.getCategorias();
+        Set<CategoriaDTO> categoriaDTOLista = categoriaLista
+                .stream()
+                .map(categoria -> new CategoriaDTO(categoria))
+                .collect(Collectors.toSet());
+
+        return categoriaDTOLista;
     }
 
     @PostMapping
@@ -43,7 +49,7 @@ public class CaetgoriaControlador {
 
                }
            }
-           return ResponseEntity.ok("Categoria guardada o actualizada exitosamente");
+           return ResponseEntity.ok("Categoria guardada exitosamente");
        }catch (Exception e) {
            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
        }

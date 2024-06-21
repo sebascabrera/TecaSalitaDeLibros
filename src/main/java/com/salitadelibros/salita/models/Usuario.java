@@ -1,6 +1,5 @@
 package com.salitadelibros.salita.models;
 
-import com.salitadelibros.salita.models.Roles;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -67,13 +66,11 @@ public class Usuario {
         this.roles = roles;
     }
 
-    public void addRol(String rol) {
-        // mapear los roles
-        if ("USUARIO".equals(rol)) {
-            roles.add(Roles.USUARIO);
-        } else if ("ADMIN".equals(rol)) {
-            roles.add(Roles.ADMIN);
-        }
+    public void addRol(Roles rol) {
+        roles.add(rol);
+    }
 
+    public Long getId() {
+        return id;
     }
 }

@@ -1,181 +1,223 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@1,900&display=swap'); 
-/* Reset de estilos y configuración básica */
+@import url('https://fonts.googleapis.com/css2?family=Galada&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Galada&family=Salsa&display=swap');
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
-
 body {
-    background-color: #f1c6c6;
-     /* Tono de melocotón claro */
-    font-family: 'Roboto Slab', serif;
-    
+  background-color: #e2e2e2;
+  /* Tono de melocotón claro */
+  font-family: 'Galada', cursive;
+
 }
 header {
+  background-image: url(https://static.vecteezy.com/system/resources/thumbnails/008/990/237/small_2x/single-continuous-line-drawing-little-girl-student-or-preschooler-flying-on-magic-book-happy-kids-flying-on-the-book-knowledge-power-concept-dynamic-one-line-draw-graphic-design-illustration-vector.jpg);
   display: flex;
   flex-direction: row;
-    justify-content: space-evenly;
-    background-color: #efbbff;
-    padding: 10px 0;
+  justify-content: space-evenly;
+  background-color: #ffffff;
+  padding: 10px 0;
 }
-.row{
+.row {
   display: flex;
   align-items: center;
   text-align: center;
   justify-content: center;
 }
-
-/* Contenedor principal */
+.col {
+  background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsRrM5EDQyU8ss8pv3is-m64awD8we43UU2a4CIaK3xipaFmLgQQ436IyAfJye6npUZNs&usqp=CAU);
+}
+.containerForm {
+  background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsRrM5EDQyU8ss8pv3is-m64awD8we43UU2a4CIaK3xipaFmLgQQ436IyAfJye6npUZNs&usqp=CAU);
+}
 #contenedorformularioLibro {
-    max-width: 800px;
-    margin: 20px auto;
-    background: #c0f0cd; /* Fondo blanco roto */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sutil sombra */
-    display: flex;
-    flex-direction: column;
-}
-
-/* Encabezado y título */
-h1{
+  max-width: 800px;
+  margin: 20px auto;
+  background: #ebd9b4;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
-    color: #445e68; /* Azul claro apagado */   
-    font-family: 'Raleway', sans-serif;
-  align-items: center;
+  flex-direction: column;
+  font-family: 'Salsa', cursive;
 }
-h2{
-  color: #445e68;
+/* Encabezado y título */
+h1 {
+  justify-content: center;
+  display: flex;
+  color: #ec643771;
+  font: weight 1500px;  
+  align-items: center;
+  
+}
+h2 {
+  color: #8edbf9;
   margin: 10px 15px;
   font-family: 'Raleway', sans-serif;
 }
-
 /* Formulario de carga de datos */
 form {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 /* Etiquetas y entradas de formulario */
 label {
-    color: #3f4b50;
-    font-size: large;
+  color: #000000;
+  font-size:xx-large;
 }
-
+.form-select[multiple], .form-select[size]:not([size="1"]) {
+  padding-right: 0.75rem;
+  background-image: none;
+  height: 4.5rem;
+}
+.modelGenero{
+  padding: 0px 10px;
+}
 input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #8fa2ad; /* Borde gris azulado */
-    border-radius: 5px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #8fa2ad;
+  /* Borde gris azulado */
+  border-radius: 5px;
 }
-
+.form-check-label{
+  font-size:medium;
+}
 /* Botones */
 .btn {
-    background: #f0b5af; /* Tono de rosa melocotón */
-    color: #273a47;
-    padding: 10px 20px;
-    margin: 20px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
+  background: #f0b5af;
+  /* Tono de rosa melocotón */
+  color: #472731;
+  padding: 10px 20px;
+  margin: 20px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
-
 .btn:hover {
-    background: #be4d45; /* Tono de rosa melocotón más oscuro al pasar el ratón */
+  background: #be4d45;
+  /* Tono de rrgb(194, 108, 102)ocotón más oscuro al pasar el ratón */
 }
-.btnGuardar{
-  
+.btnGuardar {
   justify-content: center;
-  
-  
 }
-.btnGuardarContenedor{
+.btnVolver{
+  background: #aff0be;
+  justify-content: center;
+}
+.btnVolver:hover{
+  background: #45be75;
+}
+.btnGuardarContenedor {
   align-items: center;
-  
+
 }
 /* Tabla de libros */
 .table {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
-/* Estilo para el modal */
-.modal-content {
-    background: #ff8037; /* Fondo del modal - tono melocotón claro */
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.navbar {
+  border-radius: 0;
 }
 
-/* Texto dentro del modal */
-.modal-body,
-.modal-title,
-.modal-footer {
-    color: #557a95;
+.navbar-brand {
+  font-size: 2em;
+  color: #000000;
+}
+.nav-link{
+  color: #000;
+}
+.nav-link:hover{
+  color: #656565;
+}
+.navbar-nav li a {
+  font-size: 1.5em;
 }
 
-/* Estilo para las filas de la tabla dentro del modal */
-.modal-body table tbody tr {
-    background: #388b73; /* Fondo blanco */
+.img-fluid {
+  max-width: 100%;
+  height: auto;
 }
 
-  
-  .navbar {
-    border-radius: 0;
-  }
-  
-  .navbar-brand {
-    font-size: 2em;
-  }
-  
-  .navbar-nav li a {
-    font-size: 1.5em;
-  }
-  
-  .img-fluid {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  h1 {
-    font-size: 2.5em;
-    text-align: center
-  }
-  h2 {
-    
-    text-align: center
-  }
-  p {
-    font-size: 1.5em;
-    align-items: center;
-  }
-  .categorias{
-    margin: auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  .labelCategoria{
-    display: block;
-  }
-  .itemsCategorias{
-    display: flex;
-  }
-  .boxCategoria{
-    margin-right: 3px;
-  }
-.mb-3{
+h1 {
+  font-size: 2.5em;
+  text-align: center
+}
+
+h2 {
+
+  text-align: center
+}
+
+p {
+  font-size: 1.5em;
+  align-items: center;
+}
+
+.categorias {
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.labelCategoria {
+  display: flex;
+  flex-direction: column;
+}
+.ContenedorDeItemsCategorias{
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: space-evenly;
+}
+
+.itemsCategorias {
+  display: flex;
+  align-items: center;
+}
+
+.boxCategoria {
+  margin-right: 3px;
+}
+
+.mb-3 {
   padding: 50px;
   border-width: 20px;
-  border: 5px solid #808083;
+  border: 5px solid #fefbff;
   display: block;
   max-width: 100%;
   min-width: 100%;
   border-radius: 10px;
 }
+.editorialExistente-fecha{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.edtorialExistente-nueva-editorial{
+  flex: 70%;
+  display: flex;
+  flex-direction: column;
+}
+.fechaDeEdicion{
+  flex: 30%;
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+  margin-left: 20px;
+}
 input[type="text"] {
   appearance: none;
+  margin: 0px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
 }

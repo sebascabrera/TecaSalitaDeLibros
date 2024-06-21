@@ -4,16 +4,16 @@ import com.salitadelibros.salita.models.LibroCategoria;
 
 public class LibroCategoriaDTO {
     private Long id;
-    private LibroDTO libroDTO;
-    private CategoriaDTO categoriaDTO;
+    private LibroDTO libro;
+    private CategoriaDTO categoria;
 
     //Constructores
     public LibroCategoriaDTO() {
     }
     public LibroCategoriaDTO(LibroCategoria libroCategoria) {
         id = libroCategoria.getId();
-        libroDTO = new LibroDTO(libroCategoria.getLibro());
-        categoriaDTO = new CategoriaDTO(libroCategoria.getCategoria());
+        libro = new LibroDTO(libroCategoria.getLibro());
+        categoria = new CategoriaDTO(libroCategoria.getCategoria());
     }
     //getters
 
@@ -23,10 +23,10 @@ public class LibroCategoriaDTO {
     }
 
     public LibroDTO getLibroDTO() {
-        return libroDTO;
+        return libro;
     }
 
     public CategoriaDTO getCategoriaDTO() {
-        return categoriaDTO;
+        return categoria;
     }
 }
