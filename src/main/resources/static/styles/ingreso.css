@@ -118,10 +118,12 @@ h5 {
 
 .seleccionado {
     color: rgb(51, 233, 19);
+    font-family: system-ui;
 }
 
 .seleccionada {
     color: rgb(51, 233, 19);
+    font-family: system-ui;
 }
 
 .seleccionado :visited {
@@ -142,6 +144,13 @@ h5 {
 .card-title {
     font-family: "Permanent Marker", cursive;
     margin: 5px
+}
+.card-text:last-child {
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-content: center;
 }
 
 .row {
@@ -244,8 +253,29 @@ ol li {
     align-items: center;
 }
 
-@media (max-height: 440px){
+/* Media query para pantallas menores a 768px de ancho y 440px de alto */
+@media (max-width: 768px) and (max-height: 440px){
     .card-body {
         flex-direction: column;
     }
+}
+
+/* Media query para pantallas menores a 768px de ancho y 440px de alto */
+@media (max-width: 425px) and (max-height: 440px){
+    .card-body {
+        flex-direction: column;
+    }
+    .textos-cards {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+    }
+    .check {
+        display: flex;
+        justify-content: space-evenly;
+        gap: 3;
+        flex-direction: column;
+}
 }

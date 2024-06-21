@@ -20,7 +20,7 @@ public class SalitaApplication {
 		SpringApplication.run(SalitaApplication.class, args);
 	}
 
-
+/*
 	@Bean
 	public CommandLineRunner initData(LibroRepositorio libroRepositorio,
 									  AutorRepositorio autorRepositorio,
@@ -261,5 +261,7 @@ public class SalitaApplication {
 
 	});
 }
+*/
+
 
 }

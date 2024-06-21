@@ -49,7 +49,7 @@ Vue.createApp({
         this.loadCategorias();
     },
     methods: {
-        openModal(comentario) {
+        openwind(comentario) {
             var ventanaEmergente = window.open('', '_blank');
             ventanaEmergente.document.write('<html><head><title>Comentario del Libro</title></head><body><h1>Comentario del Libro</h1><p>' + comentario + '</p></body></html>');
             ventanaEmergente.focus();
