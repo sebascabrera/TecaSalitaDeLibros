@@ -16,9 +16,14 @@ body {
     min-height: 100vh;
     font-size: 100%;
     line-height: normal;
-    background-color: #c3c2e0;
-
+    background: #654ea3;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #eaafc8, #654ea3);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #eaafc8, #654ea3);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+
 h1 {
     font-family: 'Galada', cursive;
     margin: 10px;
@@ -26,87 +31,126 @@ h1 {
     text-align: center;
     text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
-h2, h3, h4{
+
+h2,
+h3,
+h4 {
     text-align: center;
+    font-family: 'Galada'
 }
-h4{
+
+h4 {
     font-size: medium;
 }
-.refinar-busqueda{
+
+.refinar-busqueda {
     color: rgb(7, 7, 46);
-    margin: 10px;  
-    font-family: cursive;
+    margin: 10px;
+    font-family: 'Galada', cursive;
     text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
+
 h5 {
     display: flex;
     justify-content: center;
 }
-.facet{
+
+.facet {
     text-decoration: underline;
 }
-.lista-facet{
+
+.lista-facet {
     font-size: medium;
 }
+
 .lista-facet span {
-    cursor: pointer; 
+    cursor: pointer;
 }
+
 .navBar {
-     /*background-image: url('../assets/Fondo\ Salita\ de\ Libros.jpg'); */
+    /*background-image: url('../assets/Fondo\ Salita\ de\ Libros.jpg'); */
     background-color: #d8d1fbdf;
     display: flex;
-    justify-content: center;    
+    justify-content: center;
 }
-.h1-salita{
+
+.h1-salita {
     font-family: fangsong;
 }
-.sub-header{
+
+.sub-header {
     display: flex;
     align-items: center;
 }
-.paginacion{
+
+.paginacion {
     display: flex;
     align-items: center;
     margin: 10px;
     padding: 10px;
-    width: 100%;  
+    width: 100%;
 }
-.global{
-    display: flex;    
+.btn-paginacion{
+    padding: 5px;
+    margin: 10px;
+    border-radius: 5px;
 }
-.sub-refinar-busqueda{
+.superContenedor {
+    display: flex;
+    justify-content: center
+}
+
+.global {
+    display: flex;
+}
+
+.sub-refinar-busqueda {
     margin-bottom: 10px;
 }
-#search-facets{
+
+#search-facets {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 30%;
     /*border: 2px solid #212529;*/
     border-radius: 8px;
 }
-.seleccionado{
+
+.seleccionado {
     color: rgb(51, 233, 19);
+    font-family: system-ui;
 }
-.seleccionada{
+
+.seleccionada {
     color: rgb(51, 233, 19);
+    font-family: system-ui;
 }
-.seleccionado :visited{
+
+.seleccionado :visited {
     color: #4678ab;
 }
+
 .div-form-control {
     display: flex;
     justify-content: center;
     width: 70%;
     border-color: black;
 }
+
 .card-header {
     background-color: #d3d3d361;
 }
 
 .card-title {
-    font-family: 'Galada', cursive;
+    font-family: "Permanent Marker", cursive;
     margin: 5px
+}
+.card-text:last-child {
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-content: center;
 }
 
 .row {
@@ -126,8 +170,8 @@ h5 {
     padding: 3px;
 }
 
-button{
-margin: 10px;
+button {
+    margin: 10px;
 }
 
 .container {
@@ -160,8 +204,24 @@ h6 {
     float: left;
 }
 
+ul,
+ol {
+    list-style-type: none;
+    /* Elimina el marcador predeterminado */
+    padding: 5px;
+    /* Elimina el padding izquierdo */
+    margin: 0;
+    /* Elimina el margen por defecto */
+}
+
+ul li,
+ol li {
+    margin: 5px;
+    padding: 5px;
+}
+
 .textos-cards {
-    display: flex;    
+    display: flex;
     flex-direction: row;
 }
 
@@ -176,17 +236,46 @@ h6 {
     border-radius: 8px;
     background-color: darkgrey;
     justify-content: center;
-    align-items:end;
+    align-items: end;
     align-items: center;
     overflow: hidden;
 }
+
 .img img {
-    max-width: 100%; 
-    height: auto; 
-    object-fit: cover; 
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
 }
+
 .card-footer {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* Media query para pantallas menores a 768px de ancho y 440px de alto */
+@media (max-width: 768px) and (max-height: 440px){
+    .card-body {
+        flex-direction: column;
+    }
+}
+
+/* Media query para pantallas menores a 768px de ancho y 440px de alto */
+@media (max-width: 425px) and (max-height: 440px){
+    .card-body {
+        flex-direction: column;
+    }
+    .textos-cards {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+    }
+    .check {
+        display: flex;
+        justify-content: space-evenly;
+        gap: 3;
+        flex-direction: column;
+}
 }
